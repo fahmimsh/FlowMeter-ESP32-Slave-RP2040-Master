@@ -29,15 +29,18 @@ union mbFloatInt{
   } values;
   uint16_t words[25];
 };
-mbFloatInt mbFloat[MaxId], mbFloat_Write[MaxId], mbFloat_Write_OPC[MaxId];
+mbFloatInt mbFloat[MaxId], mbFloat_Write[MaxId];;
 struct CoilBool { bool coil[10]; bool inputDiscrete[2]; };
-CoilBool coilBool[MaxId], coilBool_Write[MaxId], coilBool_Write_OPC[MaxId];
+CoilBool coilBool[MaxId], coilBool_Write[MaxId];
 uint8_t countStepMbmaster[MaxId];
 bool mbFlagReadSlaveid[MaxId];
 
 unsigned long timePrevIsConnectTCP;
 bool stateLed, IsConnectTCP, mb_flagCoil[14];
 uint16_t mb_holdRegister[5];
+bool mb1_write_coil, mb2_write_coil, mb1_write_rhd, mb2_write_rhd;
+uint8_t mb1_write_coil_startAddress, mb2_write_coil_startAddress, mb1_write_coil_length, mb2_write_coil_length;
+uint8_t mb1_write_rhd_startAddress, mb2_write_rhd_startAddress, mb1_write_rhd_length, mb2_write_rhd_length;
 //ADD FLAG CON TCP, poll mbslave -> id 0-9
 uint8_t mb1_sizeDiscreateInput = (sizeof(coilBool[0].inputDiscrete) / sizeof(coilBool[0].inputDiscrete[0])) + (sizeof(X) / sizeof(X[0]) + 2);
 uint8_t mb2_sizeDiscreateInput = (sizeof(coilBool[1].inputDiscrete) / sizeof(coilBool[1].inputDiscrete[0])) + (sizeof(X) / sizeof(X[0]) + 2);
@@ -53,12 +56,13 @@ Bounce2::Button btn[6];
 ModbusRTUMaster mbMaster(Serial1);
 ModbusSlave mb[2] = {ModbusSlave(idFlow1), ModbusSlave(idFlow2)};
 Modbus mbs(Serial2, mb, 2);
-StaticTask_t xTaskBuffer_slaveid1, xTaskBuffer_slaveid2;
-StackType_t xStack_slaveid1[400], xStack_slaveid2[400];
+StaticTask_t xTaskBuffer_slaveid1, xTaskBuffer_slaveid2, xTaskBuffer_slaveid1_write_coil, xTaskBuffer_slaveid2_write_coil, xTaskBuffer_slaveid1_write_rhd, xTaskBuffer_slaveid2_write_rhd;
+StackType_t xStack_slaveid1[400], xStack_slaveid2[400], xStack_slaveid1_write_coil[200], xStack_slaveid2_write_coil[200], xStack_slaveid1_write_rhd[200], xStack_slaveid2_write_rhd[200];
 SemaphoreHandle_t xSemaphore = NULL;
 StaticSemaphore_t xMutexBuffer;
 
 void TaskslaveId1(void *pvParameters), TaskslaveId2(void *pvParameters);
+void TaskslaveId1_write_coil(void *pvParameters), TaskslaveId2_write_coil(void *pvParameters), TaskslaveId1_write_rhd(void *pvParameters), TaskslaveId2_write_rhd(void *pvParameters);
 void read_slave(uint8_t id);
 uint8_t mb1_ReadDiscreteInput(uint8_t fc, uint16_t address, uint16_t length);
 uint8_t mb1_Coil(uint8_t fc, uint16_t address, uint16_t length);
@@ -93,17 +97,53 @@ void setup() {
   for (uint8_t i = 0; i < size_item_I; i++) opc.addItem(ItemI[i], opc_readwrite, opc_int, itemInt);
   for (uint8_t i = 0; i < size_item_F; i++) opc.addItem(ItemF[i], opc_readwrite, opc_float, itemFloat);
   xSemaphore = xSemaphoreCreateMutexStatic(&xMutexBuffer);
-  xTaskCreateStatic(TaskslaveId1, "TaskslaveId1", 400, NULL, configMAX_PRIORITIES - 1, xStack_slaveid1, &xTaskBuffer_slaveid1);
-  xTaskCreateStatic(TaskslaveId2, "TaskslaveId2", 400, NULL, configMAX_PRIORITIES - 1, xStack_slaveid2, &xTaskBuffer_slaveid2);
+  xTaskCreateStatic(TaskslaveId1, "TaskslaveId1", 400, NULL, configMAX_PRIORITIES - 2, xStack_slaveid1, &xTaskBuffer_slaveid1);
+  xTaskCreateStatic(TaskslaveId2, "TaskslaveId2", 400, NULL, configMAX_PRIORITIES - 2, xStack_slaveid2, &xTaskBuffer_slaveid2);
+  xTaskCreateStatic(TaskslaveId1_write_coil, "TaskslaveId1_write_coil", 200, NULL, configMAX_PRIORITIES - 1, xStack_slaveid1_write_coil, &xTaskBuffer_slaveid1_write_coil);
+  xTaskCreateStatic(TaskslaveId2_write_coil, "TaskslaveId2_write_coil", 200, NULL, configMAX_PRIORITIES - 1, xStack_slaveid2_write_coil, &xTaskBuffer_slaveid2_write_coil);
+  xTaskCreateStatic(TaskslaveId1_write_rhd, "TaskslaveId1_write_rhd", 200, NULL, configMAX_PRIORITIES - 1, xStack_slaveid1_write_rhd, &xTaskBuffer_slaveid1_write_rhd);
+  xTaskCreateStatic(TaskslaveId2_write_rhd, "TaskslaveId2_write_rhd", 200, NULL, configMAX_PRIORITIES - 1, xStack_slaveid2_write_rhd, &xTaskBuffer_slaveid2_write_rhd);
 }
 void loop() {
   if(IsConnectTCP && millis() - timePrevIsConnectTCP >= 5000) IsConnectTCP = false;
-  opc.processOPCCommands();
   mbs.poll();
+  opc.processOPCCommands();
   vTaskDelay(pdMS_TO_TICKS(1)); // Ganti delay dengan vTaskDelay
 }
 void TaskslaveId1(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(1); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(200)); } }
 void TaskslaveId2(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(2); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(200)); } }
+void TaskslaveId1_write_coil(void *pvParameters){ 
+  (void)pvParameters; while (1) {
+    xSemaphoreTake(xSemaphore, portMAX_DELAY); 
+    if(mb1_write_coil){ mbMaster.writeMultipleCoils(1, mb1_write_coil_startAddress, coilBool_Write[0].coil, mb1_write_coil_length); mb1_write_coil = false; }
+    xSemaphoreGive(xSemaphore);
+  vTaskDelay(pdMS_TO_TICKS(1));
+  }
+} 
+void TaskslaveId2_write_coil(void *pvParameters){
+  (void)pvParameters; while (1) {
+    xSemaphoreTake(xSemaphore, portMAX_DELAY);
+    if(mb2_write_coil){ mbMaster.writeMultipleCoils(2, mb2_write_coil_startAddress, coilBool_Write[1].coil, mb2_write_coil_length); mb2_write_coil = false; }
+    xSemaphoreGive(xSemaphore);
+    vTaskDelay(pdMS_TO_TICKS(1));
+  }
+}
+void TaskslaveId1_write_rhd(void *pvParameters) {
+  (void)pvParameters; while (1) {
+    xSemaphoreTake(xSemaphore, portMAX_DELAY);
+      if(mb1_write_rhd){ mbMaster.writeMultipleHoldingRegisters(1, mb1_write_rhd_startAddress, mbFloat_Write[0].words, mb1_write_rhd_length); mb1_write_rhd = false; }
+    xSemaphoreGive(xSemaphore);
+    vTaskDelay(pdMS_TO_TICKS(1));
+  }
+}
+void TaskslaveId2_write_rhd(void *pvParameters){
+  (void)pvParameters; while (1) {
+    xSemaphoreTake(xSemaphore, portMAX_DELAY);
+      if(mb2_write_rhd){ mbMaster.writeMultipleHoldingRegisters(2, mb2_write_rhd_startAddress, mbFloat_Write[1].words, mb2_write_rhd_length); mb2_write_rhd = false; }
+    xSemaphoreGive(xSemaphore);
+    vTaskDelay(pdMS_TO_TICKS(1));
+  }
+}
 void read_slave(uint8_t id){
   if(countStepMbmaster[id-1] ++ > 3) countStepMbmaster[id-1] = 0;
   switch (countStepMbmaster[id-1]){
@@ -139,7 +179,9 @@ uint8_t mb1_Coil(uint8_t fc, uint16_t address, uint16_t length){
     }
   }
   if(!IsWrite) return STATUS_OK;
-  mbMaster.writeMultipleCoils(1, address, coilBool_Write[0].coil, ((address + length) >= 10) ? (length - ((address + length) - 10)) : length);
+  mb1_write_coil_length = ((address + length) >= 10) ? (length - ((address + length) - 10)) : length;
+  mb1_write_coil_startAddress = address;
+  mb1_write_coil = true;
   return STATUS_OK;
 }
 uint8_t mb1_HoldRegister(uint8_t fc, uint16_t address, uint16_t length){
@@ -156,7 +198,9 @@ uint8_t mb1_HoldRegister(uint8_t fc, uint16_t address, uint16_t length){
     }
   }
   if(!IsWrite) return STATUS_OK;
-  mbMaster.writeMultipleHoldingRegisters(1, address, mbFloat_Write[0].words, ((address + length) >= 25) ? (length - ((address + length) - 25)) : length);
+  mb1_write_rhd_length = ((address + length) >= 25) ? (length - ((address + length) - 25)) : length;
+  mb1_write_rhd_startAddress = address;
+  mb1_write_rhd = true;
   return STATUS_OK;
 }
 uint8_t mb2_ReadDiscreteInput(uint8_t fc, uint16_t address, uint16_t length){
@@ -186,7 +230,9 @@ uint8_t mb2_Coil(uint8_t fc, uint16_t address, uint16_t length){
     }
   }
   if(!IsWrite) return STATUS_OK;
-  mbMaster.writeMultipleCoils(2, address, coilBool_Write[1].coil, ((address + length) >= 10) ? (length - ((address + length) - 10)) : length);
+  mb2_write_coil_length = ((address + length) >= 10) ? (length - ((address + length) - 10)) : length;
+  mb2_write_coil_startAddress = address;
+  mb2_write_coil = true;
   return STATUS_OK;
 }
 uint8_t mb2_HoldRegister(uint8_t fc, uint16_t address, uint16_t length){
@@ -203,12 +249,15 @@ uint8_t mb2_HoldRegister(uint8_t fc, uint16_t address, uint16_t length){
     }
   }
   if(!IsWrite) return STATUS_OK;
-  mbMaster.writeMultipleHoldingRegisters(2, address, mbFloat_Write[1].words, ((address + length) >= 25) ? (length - ((address + length) - 25)) : length);
+  mb2_write_rhd_length = ((address + length) >= 25) ? (length - ((address + length) - 25)) : length;
+  mb2_write_rhd_startAddress = address;
+  mb2_write_rhd = true;
   return STATUS_OK;
 }
 bool itemDisCreated(const char *itemID, const opcOperation opcOP, const bool value){
+  Serial.println(itemID);
   timePrevIsConnectTCP = millis(); if(!IsConnectTCP) IsConnectTCP = true;
-  if(opcOP) return false;
+  if(opcOP != (enum opcOperation)opc_read) return false;
   for (uint8_t i = 0; i < size_item_D; i++){
     if(i < 2 && !strcmp(itemID, ItemD[i])) return coilBool[0].inputDiscrete[i];
     else if(i >= 2 && i < 4 && !strcmp(itemID, ItemD[i])) return coilBool[1].inputDiscrete[i-2];
@@ -219,15 +268,15 @@ bool itemDisCreated(const char *itemID, const opcOperation opcOP, const bool val
 }
 bool itemDisCoil(const char *itemID, const opcOperation opcOP, const bool value){
   timePrevIsConnectTCP = millis(); if(!IsConnectTCP) IsConnectTCP = true;
-  if(opcOP){
-    Serial.print(value); Serial.println(itemID);
+  if(opcOP == (enum opcOperation)opc_write){
     for (uint8_t i = 0; i < size_item_C; i++){
-      if(i < 10 && !strcmp(itemID, ItemC[i])) mbMaster.writeSingleCoil(1, i, value);
-      if(i >= 10 && i < 20 && !strcmp(itemID, ItemC[i])) mbMaster.writeSingleCoil(2, i - 10, value);
+      if(i < 10 && !strcmp(itemID, ItemC[i])){ coilBool_Write[0].coil[i] = value; mb1_write_coil_length = 1; mb1_write_coil_startAddress = i; mb1_write_coil = true; return coilBool_Write[0].coil[i]; }
+      if(i >= 10 && i < 20 && !strcmp(itemID, ItemC[i])){ coilBool_Write[1].coil[i - 10] = value; mb2_write_coil_length = 1; mb2_write_coil_startAddress = i - 10; mb2_write_coil = true; return coilBool_Write[1].coil[i - 10]; }
       else if(i >= 20 && i < 26 && !strcmp(itemID, ItemC[i])) { digitalWrite(Y[i - 20], value); return digitalRead(Y[i - 20]); }
       else if(i >= 26 && i < 40 && !strcmp(itemID, ItemC[i])) { mb_flagCoil[i-26] = value; return mb_flagCoil[i-26]; }
     }
   }else{
+    Serial.println(itemID);
     for (uint8_t i = 0; i < size_item_C; i++){
       if(i < 10 && !strcmp(itemID, ItemC[i])) return coilBool[0].coil[i];
       if(i >= 10 && i < 20 && !strcmp(itemID, ItemC[i])) return coilBool[1].coil[i-10];
@@ -238,14 +287,14 @@ bool itemDisCoil(const char *itemID, const opcOperation opcOP, const bool value)
 }
 int itemInt(const char *itemID, const opcOperation opcOP, const int value){
   timePrevIsConnectTCP = millis(); if(!IsConnectTCP) IsConnectTCP = true;
-  if(opcOP){
-    Serial.println(itemID);
+  if(opcOP == (enum opcOperation)opc_write){
     for (uint8_t i = 0; i < size_item_I; i++){
-      if(i < 5 && !strcmp(itemID, ItemI[i])) mbMaster.writeSingleHoldingRegister(1, i+20, value);
-      else if(i >= 5 && i < 10 && !strcmp(itemID, ItemI[i])) mbMaster.writeSingleHoldingRegister(2, i - 5 + 20, value);
-      else if(i >= 10 && i < 15 && !strcmp(itemID, ItemI[i])) mb_holdRegister[i-10] = value;
+      if(i < 5 && !strcmp(itemID, ItemI[i])){ mbFloat_Write[0].words[i+20] = value; mb1_write_rhd_length = 1; mb1_write_rhd_startAddress = i+20; mb1_write_rhd = true; return mbFloat_Write[0].words[i+20]; }
+      else if(i >= 5 && i < 10 && !strcmp(itemID, ItemI[i])){ mbFloat_Write[1].words[i - 5 + 20] = value; mb2_write_rhd_length = 1; mb2_write_rhd_startAddress = i - 5 + 20; mb2_write_rhd = true; return mbFloat_Write[1].words[i+20]; }
+      else if(i >= 10 && i < 15 && !strcmp(itemID, ItemI[i])) mb_holdRegister[i-10] = value; return mb_holdRegister[i-10];
     }
   }else{
+    Serial.println(itemID);
     for (uint8_t i = 0; i < size_item_I; i++){
       if(i < 5 && !strcmp(itemID, ItemI[i])) return mbFloat[0].words[i + 20];
       else if(i >= 5 && i < 10 && !strcmp(itemID, ItemI[i])) return mbFloat[1].words[i - 5 + 20];
@@ -256,40 +305,38 @@ int itemInt(const char *itemID, const opcOperation opcOP, const int value){
 }
 float itemFloat(const char *itemID, const opcOperation opcOP, const float value){
   timePrevIsConnectTCP = millis(); if(!IsConnectTCP) IsConnectTCP = true;
-  if(opcOP){
-    Serial.println(itemID);
+  if(opcOP == (enum opcOperation)opc_write){
     for (uint8_t i = 0; i < size_item_F; i++){
       if(i < 10 && !strcmp(itemID, ItemF[i])){
         switch (i) {
-        case 0: mbFloat_Write_OPC[0].values.kFact = value; break;
-        case 1: mbFloat_Write_OPC[0].values.capacity = value; break;
-        case 2: mbFloat_Write_OPC[0].values.setPoint = value; break;
-        case 3: mbFloat_Write_OPC[0].values.factorKurang = value; break;
-        case 4: mbFloat_Write_OPC[0].values.liter = value; break;
-        case 5: mbFloat_Write_OPC[0].values.sec = value; break;
-        case 6: mbFloat_Write_OPC[0].values.freq = value; break;
-        case 7: mbFloat_Write_OPC[0].values.Correct = value; break;
-        case 8: mbFloat_Write_OPC[0].values.Flowrate = value; break;
-        case 9: mbFloat_Write_OPC[0].values.Volume = value; break;
+        case 0: mbFloat_Write[0].values.kFact = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.kFact;  break;
+        case 1: mbFloat_Write[0].values.capacity = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.capacity; break;
+        case 2: mbFloat_Write[0].values.setPoint = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.setPoint; break;
+        case 3: mbFloat_Write[0].values.factorKurang = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.factorKurang; break;
+        case 4: mbFloat_Write[0].values.liter = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.liter; break;
+        case 5: mbFloat_Write[0].values.sec = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.sec; break;
+        case 6: mbFloat_Write[0].values.freq = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.freq; break;
+        case 7: mbFloat_Write[0].values.Correct = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.Correct; break;
+        case 8: mbFloat_Write[0].values.Flowrate = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.Flowrate; break;
+        case 9: mbFloat_Write[0].values.Volume = value; mb1_write_rhd_length = 2; mb1_write_rhd_startAddress = i * 2; mb1_write_rhd = true; return mbFloat_Write[0].values.Volume; break;
         }
-        mbMaster.writeMultipleHoldingRegisters(1, i * 2, mbFloat_Write_OPC[0].words, 2);
       } else if(i >= 10 && i < 20 && !strcmp(itemID, ItemF[i])){
         switch (i - 10) {
-        case 0: mbFloat_Write_OPC[1].values.kFact = value; break;
-        case 1: mbFloat_Write_OPC[1].values.capacity = value; break;
-        case 2: mbFloat_Write_OPC[1].values.setPoint = value; break;
-        case 3: mbFloat_Write_OPC[1].values.factorKurang = value; break;
-        case 4: mbFloat_Write_OPC[1].values.liter = value; break;
-        case 5: mbFloat_Write_OPC[1].values.sec = value; break;
-        case 6: mbFloat_Write_OPC[1].values.freq = value; break;
-        case 7: mbFloat_Write_OPC[1].values.Correct = value; break;
-        case 8: mbFloat_Write_OPC[1].values.Flowrate = value; break;
-        case 9: mbFloat_Write_OPC[1].values.Volume = value; break;
+        case 0: mbFloat_Write[1].values.kFact = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.kFact;  break;
+        case 1: mbFloat_Write[1].values.capacity = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.capacity; break;
+        case 2: mbFloat_Write[1].values.setPoint = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.setPoint; break;
+        case 3: mbFloat_Write[1].values.factorKurang = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.factorKurang; break;
+        case 4: mbFloat_Write[1].values.liter = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.liter; break;
+        case 5: mbFloat_Write[1].values.sec = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.sec; break;
+        case 6: mbFloat_Write[1].values.freq = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.freq; break;
+        case 7: mbFloat_Write[1].values.Correct = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.Correct; break;
+        case 8: mbFloat_Write[1].values.Flowrate = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.Flowrate; break;
+        case 9: mbFloat_Write[1].values.Volume = value; mb2_write_rhd_length = 2; mb2_write_rhd_startAddress = (i - 10) * 2; mb2_write_rhd = true; return mbFloat_Write[1].values.Volume; break;
         }
-        mbMaster.writeMultipleHoldingRegisters(2, (i - 10) * 2, mbFloat_Write_OPC[1].words, 2);
       }
     }
   }else{
+    Serial.println(itemID);
     for (uint8_t i = 0; i < size_item_F; i++){
       if(i < 10 && !strcmp(itemID, ItemF[i])){
         switch (i) {

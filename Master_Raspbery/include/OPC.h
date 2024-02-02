@@ -56,18 +56,6 @@ public:
 	void addItem(const char *itemID, opcAccessRights opcAccessRight, opctypes opctype, int(*function)(const char *itemID, const opcOperation opcOP, const int value));
 	void addItem(const char *itemID, opcAccessRights opcAccessRight, opctypes opctype, float(*function)(const char *itemID, const opcOperation opcOP, const float value));
 };
-class OPCNet : public OPC {
-private:
-	YunServer server;
-	YunClient client;
-protected:
-	void sendOPCItemsMap();
-public:
-	OPCNet();
-	void setup();
-	void processOPCCommands();
-};
-
 class OPCEthernet : public OPC {
 private:
 	EthernetServer * internal_ethernet_server;

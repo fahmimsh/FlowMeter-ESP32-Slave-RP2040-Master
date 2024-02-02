@@ -14,8 +14,8 @@
 #include <OPC_Defines.h>
 
 
-//uint8_t idFlow1 = 1, idFlow2 = 2, idOPC_RP2040 = 0; IPAddress ip(192, 168, 1, 123);
-uint8_t idFlow1 = 3, idFlow2 = 4, idOPC_RP2040 = 1; IPAddress ip(192, 168, 1, 124);
+uint8_t idFlow1 = 1, idFlow2 = 2, idOPC_RP2040 = 0; IPAddress ip(192, 168, 1, 123);
+//uint8_t idFlow1 = 3, idFlow2 = 4, idOPC_RP2040 = 1; IPAddress ip(192, 168, 1, 124);
 IPAddress gateway(192, 168, 1, 1), dns_server(192, 168, 110, 201), subnet(255,255,255,0);
 #define STACK_SIZE 200
 pin_size_t X[6] = {12, 13, 14, 15, 21, 22};
@@ -53,12 +53,13 @@ Bounce2::Button btn[6];
 ModbusRTUMaster mbMaster(Serial1);
 ModbusSlave mb[2] = {ModbusSlave(idFlow1), ModbusSlave(idFlow2)};
 Modbus mbs(Serial2, mb, 2);
-StaticTask_t xTaskBuffer_slaveid1, xTaskBuffer_slaveid2;
-StackType_t xStack_slaveid1[400], xStack_slaveid2[400];
+StaticTask_t xTaskBuffer_slaveid1, xTaskBuffer_slaveid2, xTaskBuffer_mbPoll;
+StackType_t xStack_slaveid1[400], xStack_slaveid2[400], xStack_mbPoll[400];
 SemaphoreHandle_t xSemaphore = NULL;
 StaticSemaphore_t xMutexBuffer;
 
 void TaskslaveId1(void *pvParameters), TaskslaveId2(void *pvParameters);
+void TaskMBPOLL(void *pvParameters);
 void read_slave(uint8_t id);
 uint8_t mb1_ReadDiscreteInput(uint8_t fc, uint16_t address, uint16_t length);
 uint8_t mb1_Coil(uint8_t fc, uint16_t address, uint16_t length);
@@ -95,15 +96,16 @@ void setup() {
   xSemaphore = xSemaphoreCreateMutexStatic(&xMutexBuffer);
   xTaskCreateStatic(TaskslaveId1, "TaskslaveId1", 400, NULL, configMAX_PRIORITIES - 1, xStack_slaveid1, &xTaskBuffer_slaveid1);
   xTaskCreateStatic(TaskslaveId2, "TaskslaveId2", 400, NULL, configMAX_PRIORITIES - 1, xStack_slaveid2, &xTaskBuffer_slaveid2);
+  xTaskCreateStatic(TaskMBPOLL, "TaskMBPOLL", 400, NULL, configMAX_PRIORITIES - 1, xStack_mbPoll, &xTaskBuffer_mbPoll);
 }
 void loop() {
   if(IsConnectTCP && millis() - timePrevIsConnectTCP >= 5000) IsConnectTCP = false;
   opc.processOPCCommands();
-  mbs.poll();
   vTaskDelay(pdMS_TO_TICKS(1)); // Ganti delay dengan vTaskDelay
 }
 void TaskslaveId1(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(1); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(200)); } }
 void TaskslaveId2(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(2); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(200)); } }
+void TaskMBPOLL(void *pvParameters){ (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); mbs.poll();   xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(1)); }}
 void read_slave(uint8_t id){
   if(countStepMbmaster[id-1] ++ > 3) countStepMbmaster[id-1] = 0;
   switch (countStepMbmaster[id-1]){
