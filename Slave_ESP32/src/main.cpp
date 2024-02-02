@@ -21,16 +21,16 @@ union mbFloatInt {
     float setPoint; //4, 5
     float factorKurang; // 6, 7
     float liter; //8, 9
-    float sec; //10, 11
-    float freq; // 12, 13
-    float Correct; //14, 15
-    float Flowrate; //16, 17
-    float Volume; //18, 19
-    uint16_t slave_id; //20
-    uint16_t baudrate; //21
-    uint16_t timeInterval_OnValve; //22
-    uint16_t timeInterval_OffValve; //23
-    uint16_t over_fl_err; //24
+    float Flowrate; //10, 11
+    uint16_t timeInterval_OnValve; //12
+    uint16_t timeInterval_OffValve; //13
+    uint16_t over_fl_err; //14
+    float sec; //15, 16
+    float freq; // 17, 18
+    float Correct; //19, 20
+    float Volume; //21, 22
+    uint16_t slave_id; //23
+    uint16_t baudrate; //24
   } values;
   uint16_t words[25];
 };
@@ -97,81 +97,10 @@ void InterruptPinChangeMode(bool FlagInit){
   }
   detachInterrupt(digitalPinToInterrupt(X[0])); detachInterrupt(digitalPinToInterrupt(X[1]));
 }
-void prefereces_partition(bool ReadOrWrite){
-  prefs.begin("file-app", false);
-  if(ReadOrWrite){
-    mbFloat.values.kFact = prefs.getFloat("kFact", 500.0f);
-    mbFloat.values.capacity = prefs.getFloat("capacity", 500.0f);
-    mbFloat.values.setPoint = prefs.getFloat("setPoint", 100.0f);
-    mbFloat.values.factorKurang = prefs.getFloat("factorKurang", 0.8f);
-    mbFloat.values.slave_id = prefs.getUInt("slave_id", 1);
-    mbFloat.values.baudrate = prefs.getUInt("baudrate", 9600);
-    mbFloat.values.timeInterval_OnValve = prefs.getUInt("time-OnValve", 200);
-    mbFloat.values.timeInterval_OffValve = prefs.getUInt("time-OffValve", 200);
-    mbFloat.values.over_fl_err = prefs.getUInt("over_fl_err", 10);
-  }else{
-    prefs.putFloat("kFact", mbFloat.values.kFact);
-    prefs.putFloat("capacity", mbFloat.values.capacity);
-    prefs.putFloat("setPoint", mbFloat.values.setPoint);
-    prefs.putFloat("factorKurang", mbFloat.values.factorKurang);
-    prefs.putUInt("slave_id", mbFloat.values.slave_id);
-    prefs.putUInt("baudrate", mbFloat.values.baudrate);
-    prefs.putUInt("time-OnValve", mbFloat.values.timeInterval_OnValve);
-    prefs.putUInt("time-OffValve", mbFloat.values.timeInterval_OffValve);
-    prefs.putUInt("over_fl_err", mbFloat.values.over_fl_err);
-  }
-  prefs.end();
-}
-void printSerialMbResponse(bool &IsOn, uint8_t &fc, uint16_t &address, uint16_t &length){
-  if(!IsOn) return;
-  Serial.print(fc); Serial.print(" "); Serial.print(address); Serial.print(" "); Serial.print(length); Serial.println(" OK");
-}
-uint8_t mb_ReadDiscreteInput(uint8_t fc, uint16_t address, uint16_t length){
-  if (address > 2 || (address + length) > 2) return STATUS_ILLEGAL_DATA_ADDRESS;
-  for (int i = 0; i < length; i++){
-    mb->writeDiscreteInputToBuffer(i, digitalRead(X[address + i + 2]));
-  }
-  printSerialMbResponse(flagCoil[6], fc, address, length);
-  return STATUS_OK;
-}
-uint8_t mb_Coil(uint8_t fc, uint16_t address, uint16_t length){
-  if (address > flagCoilSize || (address + length) > flagCoilSize) return STATUS_ILLEGAL_DATA_ADDRESS;
-  for (int i = 0; i < length; i++){
-    uint8_t index = address + i;
-    if(fc == FC_READ_COILS){
-      if(index < 3) mb->writeCoilToBuffer(i, digitalRead(Y[index]));
-      else mb->writeCoilToBuffer(i, flagCoil[index - 3]);
-    }else{
-      if(index < 3) digitalWrite(Y[index], mb->readCoilFromBuffer(i));
-      else{
-        flagCoil[index - 3] = mb->readCoilFromBuffer(i);
-        if(index == 3){
-          if(digitalRead(X[3]) && digitalRead(Y[0])){
-            if(!flagCoil[0]) flagCoil[0] = !flagCoil[0];
-          }else{
-            flagCoil[4] = true;
-          }
-        }
-      }
-    }
-  }
-  printSerialMbResponse(flagCoil[6], fc, address, length);
-  return STATUS_OK;
-}
-uint8_t mb_HoldRegister(uint8_t fc, uint16_t address, uint16_t length){
-  if (address > mbFloatIntSize || (address + length) > mbFloatIntSize) return STATUS_ILLEGAL_DATA_ADDRESS;
-  for (int i = 0; i < length; i++){
-    uint8_t index = address + i;
-    if(fc == FC_READ_HOLDING_REGISTERS){
-      mb->writeRegisterToBuffer(i, mbFloat.words[index]);
-    }else{
-      mbFloat.words[index] = mb->readRegisterFromBuffer(i);
-    }
-  }
-  if((address >= 0 && address < 8 && fc != FC_READ_HOLDING_REGISTERS) || (address >= 20 && address < 25 && fc != FC_READ_HOLDING_REGISTERS)) prefereces_partition(false);
-  printSerialMbResponse(flagCoil[6], fc, address, length);
-  return STATUS_OK;
-}
+void prefereces_partition(bool ReadOrWrite);
+uint8_t mb_ReadDiscreteInput(uint8_t fc, uint16_t address, uint16_t length);
+uint8_t mb_Coil(uint8_t fc, uint16_t address, uint16_t length);
+uint8_t mb_HoldRegister(uint8_t fc, uint16_t address, uint16_t length);
 void setup() {
   //nvs_flash_erase(); nvs_flash_init(); while(true); //erase the NVS partition
   //mbFloat.values.kFact = 500.0f; mbFloat.values.capacity = 500.0f; mbFloat.values.setPoint = 100.0f; mbFloat.values.slave_id = 1; mbFloat.values.baudrate = 9600; mbFloat.values.timeInterval_OnValve = 200; mbFloat.values.timeInterval_OffValve = 200;
@@ -221,4 +150,64 @@ void loop() {
     InterruptPinChangeMode(false);
     flagCoil[1] = true;
   }
+}
+void prefereces_partition(bool ReadOrWrite){
+  prefs.begin("file-app", false);
+  if(ReadOrWrite){
+    mbFloat.values.kFact = prefs.getFloat("kFact", 500.0f);
+    mbFloat.values.capacity = prefs.getFloat("capacity", 500.0f);
+    mbFloat.values.setPoint = prefs.getFloat("setPoint", 100.0f);
+    mbFloat.values.factorKurang = prefs.getFloat("factorKurang", 0.8f);
+    mbFloat.values.slave_id = prefs.getUInt("slave_id", 1);
+    mbFloat.values.baudrate = prefs.getUInt("baudrate", 9600);
+    mbFloat.values.timeInterval_OnValve = prefs.getUInt("time-OnValve", 200);
+    mbFloat.values.timeInterval_OffValve = prefs.getUInt("time-OffValve", 200);
+    mbFloat.values.over_fl_err = prefs.getUInt("over_fl_err", 10);
+  }else{
+    prefs.putFloat("kFact", mbFloat.values.kFact);
+    prefs.putFloat("capacity", mbFloat.values.capacity);
+    prefs.putFloat("setPoint", mbFloat.values.setPoint);
+    prefs.putFloat("factorKurang", mbFloat.values.factorKurang);
+    prefs.putUInt("slave_id", mbFloat.values.slave_id);
+    prefs.putUInt("baudrate", mbFloat.values.baudrate);
+    prefs.putUInt("time-OnValve", mbFloat.values.timeInterval_OnValve);
+    prefs.putUInt("time-OffValve", mbFloat.values.timeInterval_OffValve);
+    prefs.putUInt("over_fl_err", mbFloat.values.over_fl_err);
+  }
+  prefs.end();
+}
+uint8_t mb_ReadDiscreteInput(uint8_t fc, uint16_t address, uint16_t length){
+  if (address > 2 || (address + length) > 2) return STATUS_ILLEGAL_DATA_ADDRESS;
+  for (int i = 0; i < length; i++) mb->writeDiscreteInputToBuffer(i, digitalRead(X[address + i + 2]));
+  return STATUS_OK;
+}
+uint8_t mb_Coil(uint8_t fc, uint16_t address, uint16_t length){
+  if (address > flagCoilSize || (address + length) > flagCoilSize) return STATUS_ILLEGAL_DATA_ADDRESS;
+  for (int i = 0; i < length; i++){
+    uint8_t index = address + i;
+    if(fc == FC_READ_COILS) mb->writeCoilToBuffer(i, index < 3 ? digitalRead(Y[index]) : flagCoil[index - 3]);
+    else{
+      if(index < 3) digitalWrite(Y[index], mb->readCoilFromBuffer(i));
+      else{
+        flagCoil[index - 3] = mb->readCoilFromBuffer(i);
+        if(index == 3){
+          if(digitalRead(X[3]) && digitalRead(Y[0]))
+            if(!flagCoil[0]) flagCoil[0] = !flagCoil[0];
+          else flagCoil[4] = true;
+        }
+      }
+    }
+  }
+  return STATUS_OK;
+}
+uint8_t mb_HoldRegister(uint8_t fc, uint16_t address, uint16_t length){
+  if (address > mbFloatIntSize || (address + length) > mbFloatIntSize) return STATUS_ILLEGAL_DATA_ADDRESS;
+  for (int i = 0; i < length; i++){
+    uint8_t index = address + i;
+    if(fc == FC_READ_HOLDING_REGISTERS) mb->writeRegisterToBuffer(i, mbFloat.words[index]);
+    else mbFloat.words[index] = mb->readRegisterFromBuffer(i);
+  }
+  if((address >= 0 && address < 8 && fc != FC_READ_HOLDING_REGISTERS) || (address >= 23 && address < 25 && fc != FC_READ_HOLDING_REGISTERS) || (address >= 12 && address < 15 && fc != FC_READ_HOLDING_REGISTERS))
+    prefereces_partition(false);
+  return STATUS_OK;
 }
