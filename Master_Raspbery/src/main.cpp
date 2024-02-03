@@ -14,8 +14,8 @@
 #include <OPC_Defines.h>
 
 
-//uint8_t idFlow = 1, idOPC_RP2040 = 0; IPAddress ip(192, 168, 1, 123);
-uint8_t idFlow = 2, idOPC_RP2040 = 1; IPAddress ip(192, 168, 1, 124);
+uint8_t idFlow = 1, idOPC_RP2040 = 0; IPAddress ip(192, 168, 1, 123);
+//uint8_t idFlow = 2, idOPC_RP2040 = 1; IPAddress ip(192, 168, 1, 124);
 IPAddress gateway(192, 168, 1, 1), dns_server(192, 168, 110, 201), subnet(255,255,255,0);
 #define STACK_SIZE 200
 pin_size_t X[6] = {12, 13, 14, 15, 21, 22};
@@ -28,10 +28,11 @@ union mbFloatInt{
   } values;
   uint16_t words[15];
 };
-mbFloatInt mbFloat[MaxId], mbFloat_Write[MaxId], mbFloat_Write_OPC[MaxId];
+mbFloatInt mbFloat[MaxId], mbFloat_Write_OPC[MaxId];
 struct CoilBool { bool coil[5]; bool inputDiscrete[2]; };
 CoilBool coilBool[MaxId], coilBool_Write_OPC[MaxId];
-uint8_t countStepMbmaster[MaxId];
+uint8_t countStepMbmaster[MaxId], flagWriteMbMasterRH[MaxId], flagWriteMbMasterCoil[MaxId];
+uint8_t startAddresWriteCoil[MaxId], startAddresWriteRH[MaxId], startAddresWriteRH_length[MaxId];
 
 unsigned long timePrevIsConnectTCP;
 bool stateLed, IsConnectTCP, mb_flagCoil[12];
@@ -43,12 +44,12 @@ OPCEthernet opc;
 Bounce2::Button btn[6];
 ModbusRTUMaster mbMaster(Serial1);
 Modbus *mb;
-StaticTask_t xTaskBuffer_slaveid1, xTaskBuffer_slaveid2;
-StackType_t xStack_slaveid1[400], xStack_slaveid2[400];
+StaticTask_t xTaskBuffer_slaveid1, xTaskBuffer_slaveid2, xTaskBuffer_slaveidWrite;
+StackType_t xStack_slaveid1[400], xStack_slaveid2[400], xStack_slaveidWrite[400];
 SemaphoreHandle_t xSemaphore = NULL;
 StaticSemaphore_t xMutexBuffer;
 
-void TaskslaveId1(void *pvParameters), TaskslaveId2(void *pvParameters);
+void TaskslaveId1(void *pvParameters), TaskslaveId2(void *pvParameters), TaskslaveIdWrite(void *pvParameters);
 void read_slave(uint8_t id);
 uint8_t mb_ReadDiscreteInput(uint8_t fc, uint16_t address, uint16_t length);
 uint8_t mb_Coil(uint8_t fc, uint16_t address, uint16_t length);
@@ -61,7 +62,7 @@ void setup() {
   Serial.begin(115200);
   Serial1.setRX(1); Serial1.setTX(0); Serial1.setFIFOSize(512); Serial1.setTimeout(100); Serial1.begin(9600); while(!Serial1) {}
   mbMaster.begin(9600); mbMaster.setTimeout(100);
-  mb = new Modbus(Serial2, idFlow, 25);
+  mb = new Modbus(Serial2, idFlow);
   mb->cbVector[CB_READ_DISCRETE_INPUTS] = mb_ReadDiscreteInput;
   mb->cbVector[CB_READ_COILS] = mb_Coil;
   mb->cbVector[CB_WRITE_COILS] = mb_Coil;
@@ -78,15 +79,30 @@ void setup() {
   xSemaphore = xSemaphoreCreateMutexStatic(&xMutexBuffer);
   xTaskCreateStatic(TaskslaveId1, "TaskslaveId1", 400, NULL, configMAX_PRIORITIES - 1, xStack_slaveid1, &xTaskBuffer_slaveid1);
   xTaskCreateStatic(TaskslaveId2, "TaskslaveId2", 400, NULL, configMAX_PRIORITIES - 1, xStack_slaveid2, &xTaskBuffer_slaveid2);
+  xTaskCreateStatic(TaskslaveIdWrite, "TaskslaveIdWrite", 400, NULL, configMAX_PRIORITIES - 1, xStack_slaveidWrite, &xTaskBuffer_slaveidWrite);
 }
 void loop() {
   if(IsConnectTCP && millis() - timePrevIsConnectTCP >= 5000) IsConnectTCP = false;
   opc.processOPCCommands();
   mb->poll();
+   if (Ethernet.hardwareStatus() == EthernetW5500) {
+      // Start - LinkOFF has no meaning on WS5100
+      Serial.println(F("Started W5100 ethernet."));
+    }else{
+      Ethernet.maintain();
+    }
   vTaskDelay(pdMS_TO_TICKS(1)); // Ganti delay dengan vTaskDelay
 }
-void TaskslaveId1(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(1); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(200)); } }
-void TaskslaveId2(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(2); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(200)); } }
+void TaskslaveId1(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(1); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(100)); } }
+void TaskslaveId2(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(2); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(100)); } }
+void TaskslaveIdWrite(void *pvParameters) { 
+  (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); 
+  if(flagWriteMbMasterCoil[0]){ mbMaster.writeSingleCoil(1, startAddresWriteCoil[0], coilBool_Write_OPC[0].coil[startAddresWriteCoil[0]]); flagWriteMbMasterCoil[0] = false; }
+  if(flagWriteMbMasterCoil[1]){ mbMaster.writeSingleCoil(2, startAddresWriteCoil[1], coilBool_Write_OPC[1].coil[startAddresWriteCoil[1]]); flagWriteMbMasterCoil[1] = false; }
+  if(flagWriteMbMasterRH[0]){ mbMaster.writeMultipleHoldingRegisters(1, startAddresWriteRH[0], mbFloat_Write_OPC[0].words, startAddresWriteRH_length[0]); flagWriteMbMasterRH[0] = false; }
+  if(flagWriteMbMasterRH[1]){ mbMaster.writeMultipleHoldingRegisters(2, startAddresWriteRH[1], mbFloat_Write_OPC[1].words, startAddresWriteRH_length[1]); flagWriteMbMasterRH[1] = false; }
+  xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(1)); } 
+}
 void read_slave(uint8_t id){
   if(countStepMbmaster[id-1] ++ > 3) countStepMbmaster[id-1] = 0;
   switch (countStepMbmaster[id-1]){
@@ -100,7 +116,7 @@ uint8_t mb_ReadDiscreteInput(uint8_t fc, uint16_t address, uint16_t length){
   for (int i = 0; i < length; i++){
     uint8_t index = address + i;
     if(index < 2) mb->writeDiscreteInputToBuffer(i, coilBool[0].inputDiscrete[index]);
-    if(index >= 2 && index < 4) mb->writeDiscreteInputToBuffer(i, coilBool[1].inputDiscrete[index - 2]);
+    else if(index >= 2 && index < 4) mb->writeDiscreteInputToBuffer(i, coilBool[1].inputDiscrete[index - 2]);
     else if(index >= 4 && index < 10) mb->writeDiscreteInputToBuffer(i, !digitalRead(X[index - 4]));
     else mb->writeDiscreteInputToBuffer(i, IsConnectTCP);
   }
@@ -108,6 +124,7 @@ uint8_t mb_ReadDiscreteInput(uint8_t fc, uint16_t address, uint16_t length){
 }
 uint8_t mb_Coil(uint8_t fc, uint16_t address, uint16_t length){
   if (address > mb_sizeCoil || (address + length) > mb_sizeCoil) return STATUS_ILLEGAL_DATA_ADDRESS;
+  bool flagWrite1 = false, flagWrite2 = false;
   for (int i = 0; i < length; i++){
     uint8_t index = address + i;
     if(fc == FC_READ_COILS){
@@ -116,29 +133,43 @@ uint8_t mb_Coil(uint8_t fc, uint16_t address, uint16_t length){
       else if(index < 16 && index >= 10) mb->writeCoilToBuffer(i, digitalRead(Y[index - 10]));
       else mb->writeCoilToBuffer(i, mb_flagCoil[index - 16]);
     }else{
-      if(index < 5) mbMaster.writeSingleCoil(1, index, mb->readCoilFromBuffer(i));
-      else if(index >= 5 && index < 10) mbMaster.writeSingleCoil(2, index - 5, mb->readCoilFromBuffer(i));
+      if(index < 5) { 
+        coilBool_Write_OPC[0].coil[index] = mb->readCoilFromBuffer(i); startAddresWriteCoil[0] = index;
+        flagWrite1 = true; 
+      }
+      else if(index >= 5 && index < 10) { 
+        coilBool_Write_OPC[1].coil[index - 5] = mb->readCoilFromBuffer(i); startAddresWriteCoil[1] = index - 5;
+        flagWrite2 = true; 
+      }
       else if(index < 16 && index >= 10) digitalWrite(Y[index - 10], mb->readCoilFromBuffer(i));
       else mb_flagCoil[index - 16] = mb->readCoilFromBuffer(i);
     }
   }
+  if(flagWrite1) { flagWriteMbMasterCoil[0] = true; }
+  if(flagWrite2) { flagWriteMbMasterCoil[1] = true; }
   return STATUS_OK;
 }
 uint8_t mb_HoldRegister(uint8_t fc, uint16_t address, uint16_t length){
   if (address > mb_sizeHoldingRegister || (address + length) > mb_sizeHoldingRegister) return STATUS_ILLEGAL_DATA_ADDRESS;
-  bool IsWrite1, IsWrite2;
+  bool flagWrite1 = false, flagWrite2 = false;
   for (int i = 0; i < length; i++){
     uint8_t index = address + i;
     if(fc == FC_READ_HOLDING_REGISTERS){
       if(index < 15) mb->writeRegisterToBuffer(i, mbFloat[0].words[index]);
       else if(index >= 15 && index < 30) mb->writeRegisterToBuffer(i, mbFloat[1].words[index - 15]);
     }else{
-      if(index < 15){ mbFloat_Write[0].words[index] = mb->readRegisterFromBuffer(i); IsWrite1 = true; }
-      else if(index >= 15 && index < 30){ mbFloat_Write[1].words[index - 15] = mb->readRegisterFromBuffer(i); IsWrite2 = true; }
+      if(index < 15) { 
+        mbFloat_Write_OPC[0].words[i] = mb->readRegisterFromBuffer(i); startAddresWriteRH[0] = index >= 12 ? index : index - 1; startAddresWriteRH_length[0] = length;
+        flagWrite1 = true; 
+      }
+      else if(index >= 15 && index < 30){ 
+        mbFloat_Write_OPC[1].words[i] = mb->readRegisterFromBuffer(i); startAddresWriteRH[1] = (index - 15) >= 12 ? (index - 15) : (index - 16); startAddresWriteRH_length[1] = length;
+        flagWrite2 = true; 
+      }
     }
   }
-  if(IsWrite1) mbMaster.writeMultipleHoldingRegisters(1, address, mbFloat_Write[0].words, length);
-  if(IsWrite2) mbMaster.writeMultipleHoldingRegisters(2, address, mbFloat_Write[1].words, length);
+  if(flagWrite1) {flagWriteMbMasterRH[0] = true;}
+  if(flagWrite2) {flagWriteMbMasterRH[1] = true;}
   return STATUS_OK;
 }
 bool itemDisCreated(const char *itemID, const opcOperation opcOP, const bool value){
@@ -155,8 +186,8 @@ bool itemDisCoil(const char *itemID, const opcOperation opcOP, const bool value)
   if(opcOP){
     Serial.print(value); Serial.println(itemID);
     for (uint8_t i = 0; i < size_item_C; i++){
-      if(i < 5 && !strcmp(itemID, ItemC[i])) { mbMaster.writeSingleCoil(1, i, value); return value; }
-      if(i >= 5 && i < 10 && !strcmp(itemID, ItemC[i])) { mbMaster.writeSingleCoil(2, i - 5, value); return value; }
+      if(i < 5 && !strcmp(itemID, ItemC[i])) { coilBool_Write_OPC[0].coil[i] = value; startAddresWriteCoil[0] = i; flagWriteMbMasterCoil[0] = true;  return value; }
+      if(i >= 5 && i < 10 && !strcmp(itemID, ItemC[i])) { coilBool_Write_OPC[1].coil[i - 5] = value; startAddresWriteCoil[1] = i - 5; flagWriteMbMasterCoil[1] = true; return value; }
       else if(i >= 10 && i < 16 && !strcmp(itemID, ItemC[i])) { digitalWrite(Y[i - 10], value); return digitalRead(Y[i - 10]); }
       else if(i >= 16 && i < 28 && !strcmp(itemID, ItemC[i])) { mb_flagCoil[i-16] = value; return mb_flagCoil[i-16]; }
     }
@@ -174,8 +205,20 @@ int itemInt(const char *itemID, const opcOperation opcOP, const int value){
   if(opcOP){
     Serial.println(itemID);
     for (uint8_t i = 0; i < size_item_I; i++){
-      if(i < 3 && !strcmp(itemID, ItemI[i])) { mbMaster.writeSingleHoldingRegister(1, i + 13, value); return value; }
-      else if(i >= 3 && i < 6 && !strcmp(itemID, ItemI[i])) { mbMaster.writeSingleHoldingRegister(2, i - 3 + 13, value); return value; }
+      if(i < 3 && !strcmp(itemID, ItemI[i])) { 
+        mbFloat_Write_OPC[0].words[0] = value; 
+        startAddresWriteRH[0] = i+12;
+        startAddresWriteRH_length[0] = 1;
+        flagWriteMbMasterRH[0] = true; 
+        return value; 
+      }
+      else if(i >= 3 && i < 6 && !strcmp(itemID, ItemI[i])) { 
+        mbFloat_Write_OPC[1].words[i] = value; 
+        startAddresWriteRH[1] = i + 9;
+        startAddresWriteRH_length[1] = 1;
+        flagWriteMbMasterRH[1] = true; 
+        return value; 
+      }
     }
   }else{
     for (uint8_t i = 0; i < size_item_I; i++){
@@ -188,24 +231,15 @@ int itemInt(const char *itemID, const opcOperation opcOP, const int value){
 float itemFloat(const char *itemID, const opcOperation opcOP, const float value){
   timePrevIsConnectTCP = millis(); if(!IsConnectTCP) IsConnectTCP = true;
   if(opcOP){
-    Serial.println(itemID); bool id1_;
+    Serial.println(itemID); memcpy(mbFloat_Write_OPC[0].words, mbFloat[0].words, sizeof(mbFloat[0].words)); memcpy(mbFloat_Write_OPC[1].words, mbFloat[1].words, sizeof(mbFloat[1].words));
     for (uint8_t i = 0; i < size_item_F; i++){
       if(!strcmp(itemID, ItemF[i])){
-        switch (i) {
-        case 0: mbFloat_Write_OPC[0].values.kFact = value; id1_ = true; break;
-        case 1: mbFloat_Write_OPC[0].values.capacity = value; id1_ = true; break;
-        case 2: mbFloat_Write_OPC[0].values.setPoint = value; id1_ = true; break;
-        case 3: mbFloat_Write_OPC[0].values.factorKurang = value; id1_ = true; break;
-        case 4: mbFloat_Write_OPC[0].values.liter = value; id1_ = true; break;
-        case 5: mbFloat_Write_OPC[0].values.Flowrate = value; id1_ = true; break;
-        case 6: mbFloat_Write_OPC[1].values.kFact = value; break;
-        case 7: mbFloat_Write_OPC[1].values.capacity = value; break;
-        case 8: mbFloat_Write_OPC[1].values.setPoint = value; break;
-        case 9: mbFloat_Write_OPC[1].values.factorKurang = value; break;
-        case 10: mbFloat_Write_OPC[1].values.liter = value; break;
-        case 11: mbFloat_Write_OPC[1].values.Flowrate = value; break;
+        if(i < 6){
+          mbFloat_Write_OPC[0].values.kFact = value; startAddresWriteRH[0] = i * 2; startAddresWriteRH_length[0] = 2; flagWriteMbMasterRH[0] = true;
+        }else{
+          mbFloat_Write_OPC[1].values.kFact = value; startAddresWriteRH[1] = (i - 6) * 2; startAddresWriteRH_length[1] = 2; flagWriteMbMasterRH[1] = true; 
         }
-        mbMaster.writeMultipleHoldingRegisters(id1_ ? 1 : 2, (i - (id1_ ? 0 : 6)) * 2, mbFloat_Write_OPC[id1_ ? 0 : 1].words, 2); return value;
+        return value;
       }
     }
   }else{

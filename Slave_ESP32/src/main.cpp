@@ -25,14 +25,9 @@ union mbFloatInt {
     uint16_t timeInterval_OnValve; //12
     uint16_t timeInterval_OffValve; //13
     uint16_t over_fl_err; //14
-    float sec; //15, 16
-    float freq; // 17, 18
-    float Correct; //19, 20
-    float Volume; //21, 22
-    uint16_t slave_id; //23
-    uint16_t baudrate; //24
+    uint16_t slave_id; //15
   } values;
-  uint16_t words[25];
+  uint16_t words[16];
 };
 mbFloatInt mbFloat;
 /* OnOffFlow, FlagLog, flagOn, flagOff, flagEventOnOff, flagOffPrev, flagPrintserial */
@@ -79,11 +74,7 @@ void calculate(void *pvParameters) {
       double _Correct = mbFloat.values.kFact / mFactor[min(_decile, ceiling)];
       double _Flowrate = _freq / _Correct;
       double _Volume = _Flowrate / (60.0f/_sec);
-      mbFloat.values.sec = _sec;
-      mbFloat.values.freq = _freq;
-      mbFloat.values.Correct = _Correct;
       mbFloat.values.Flowrate = _Flowrate;
-      mbFloat.values.Volume = _Volume;
       mbFloat.values.liter = formulaLiter(_Volume);
     }
     vTaskDelay(1/portTICK_PERIOD_MS); // Delay 1ms, adjust as needed
@@ -114,12 +105,12 @@ void setup() {
   mb->cbVector[CB_WRITE_COILS] = mb_Coil;
   mb->cbVector[CB_READ_HOLDING_REGISTERS] = mb_HoldRegister;
   mb->cbVector[CB_WRITE_HOLDING_REGISTERS] = mb_HoldRegister;
-  Serial2.begin(mbFloat.values.baudrate); mb->begin(mbFloat.values.baudrate);
+  Serial2.begin(9600); mb->begin(9600);
   timer = timerBegin(0, 80, true); timerAttachInterrupt(timer, &onTimer, true); timerAlarmWrite(timer, 10000, true); timerAlarmEnable(timer);
   xTaskCreatePinnedToCore(calculate, "calculate", 4000, NULL, 1, NULL, 1); // Core 2
   pinMode(X[0], INPUT); pinMode(X[1], INPUT);
   btn.attach(X[2], INPUT); btn.interval(50); btn.setPressedState(HIGH);
-  if(flagCoil[6]) Serial.println("Mulai");
+  Serial.println("Mulai");
 }
 void loop() {
   mb->poll();
@@ -159,7 +150,6 @@ void prefereces_partition(bool ReadOrWrite){
     mbFloat.values.setPoint = prefs.getFloat("setPoint", 100.0f);
     mbFloat.values.factorKurang = prefs.getFloat("factorKurang", 0.8f);
     mbFloat.values.slave_id = prefs.getUInt("slave_id", 1);
-    mbFloat.values.baudrate = prefs.getUInt("baudrate", 9600);
     mbFloat.values.timeInterval_OnValve = prefs.getUInt("time-OnValve", 200);
     mbFloat.values.timeInterval_OffValve = prefs.getUInt("time-OffValve", 200);
     mbFloat.values.over_fl_err = prefs.getUInt("over_fl_err", 10);
@@ -169,7 +159,6 @@ void prefereces_partition(bool ReadOrWrite){
     prefs.putFloat("setPoint", mbFloat.values.setPoint);
     prefs.putFloat("factorKurang", mbFloat.values.factorKurang);
     prefs.putUInt("slave_id", mbFloat.values.slave_id);
-    prefs.putUInt("baudrate", mbFloat.values.baudrate);
     prefs.putUInt("time-OnValve", mbFloat.values.timeInterval_OnValve);
     prefs.putUInt("time-OffValve", mbFloat.values.timeInterval_OffValve);
     prefs.putUInt("over_fl_err", mbFloat.values.over_fl_err);
@@ -187,13 +176,15 @@ uint8_t mb_Coil(uint8_t fc, uint16_t address, uint16_t length){
     uint8_t index = address + i;
     if(fc == FC_READ_COILS) mb->writeCoilToBuffer(i, index < 3 ? digitalRead(Y[index]) : flagCoil[index - 3]);
     else{
-      if(index < 3) digitalWrite(Y[index], mb->readCoilFromBuffer(i));
+      if(index < 3){ digitalWrite(Y[index], mb->readCoilFromBuffer(i)); }
       else{
         flagCoil[index - 3] = mb->readCoilFromBuffer(i);
         if(index == 3){
-          if(digitalRead(X[3]) && digitalRead(Y[0]))
+          if(digitalRead(X[3]) && digitalRead(Y[0])){
             if(!flagCoil[0]) flagCoil[0] = !flagCoil[0];
-          else flagCoil[4] = true;
+          }else{
+            flagCoil[4] = true;
+          }
         }
       }
     }
@@ -205,9 +196,7 @@ uint8_t mb_HoldRegister(uint8_t fc, uint16_t address, uint16_t length){
   for (int i = 0; i < length; i++){
     uint8_t index = address + i;
     if(fc == FC_READ_HOLDING_REGISTERS) mb->writeRegisterToBuffer(i, mbFloat.words[index]);
-    else mbFloat.words[index] = mb->readRegisterFromBuffer(i);
+    else { mbFloat.words[index] = mb->readRegisterFromBuffer(i); prefereces_partition(false); }
   }
-  if((address >= 0 && address < 8 && fc != FC_READ_HOLDING_REGISTERS) || (address >= 23 && address < 25 && fc != FC_READ_HOLDING_REGISTERS) || (address >= 12 && address < 15 && fc != FC_READ_HOLDING_REGISTERS))
-    prefereces_partition(false);
   return STATUS_OK;
 }
