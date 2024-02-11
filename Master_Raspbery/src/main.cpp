@@ -274,6 +274,7 @@ void mbTCPpoll(){
     errTCP = nmbs_server_poll(&nmbsTCP);
     timePrevIsConnectTCP = millis(); if(!IsConnectTCP) IsConnectTCP = true;
     if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus TCP - %s\n", nmbs_strerror(errTCP));
+    else client.flush();
   }
 }
 int32_t read_serial2(uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg) {
@@ -286,6 +287,7 @@ void mbRTUpoll(){
   if(Serial2.available() > 0) {
     errRTU = nmbs_server_poll(&nmbsRTU);
     if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus RTU - %s\n", nmbs_strerror(errTCP));
+    else Serial2.flush();
   }
 }
 int32_t read_serial1(uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg) {
