@@ -10,8 +10,8 @@
 #include <nanomodbus.h>
 #define UNUSED_PARAM(x) ((void)(x))
 
-uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 123);
-//uint8_t idFlow = 2; IPAddress ip(192, 168, 1, 124);
+//uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 123);
+uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 124);
 IPAddress gateway(192, 168, 1, 1), dns_server(192, 168, 110, 201), subnet(255,255,255,0);
 #define STACK_SIZE 200
 pin_size_t X[6] = {12, 13, 14, 15, 21, 22};
@@ -31,7 +31,7 @@ uint8_t countStepMbmaster[MaxId], flagWriteMbMasterRH[MaxId], flagWriteMbMasterC
 uint8_t startAddresWriteCoil[MaxId], startAddresWriteCoil_length[MaxId], startAddresWriteRH[MaxId], startAddresWriteRH_length[MaxId];
 
 unsigned long timePrevIsConnectTCP;
-bool stateLed, IsConnectTCP, mb_flagCoil[12];
+bool stateLed, IsConnectTCP, mb_flagCoil[20];
 uint8_t mb_sizeDiscreateInput = ((sizeof(coilBool[0].inputDiscrete) / sizeof(coilBool[0].inputDiscrete[0])) * MaxId) + (sizeof(X) / sizeof(X[0]) + 1);
 uint8_t mb_sizeCoil = ((sizeof(coilBool[0].coil) / sizeof(coilBool[0].coil[0])) * MaxId) + (sizeof(Y) / sizeof(Y[0])) + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
 uint8_t mb_sizeHoldingRegister = ((sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0])) * MaxId);
@@ -140,6 +140,7 @@ void write_slave(uint8_t id){
     if(startAddresWriteRH_length[id] > 1){
       uint16_t w_regs[100];
       for (int i = 0; i < startAddresWriteRH_length[id]; i++) w_regs[i] = mbFloat_Write[id].words[startAddresWriteRH[id] + i];
+      
       errClient[id] = nmbs_write_multiple_registers(&nmbsClient[id], startAddresWriteRH[id], startAddresWriteRH_length[id], w_regs);
     }else{
       errClient[id] = nmbs_write_single_register(&nmbsClient[id], startAddresWriteRH[id], mbFloat_Write[id].words[startAddresWriteRH[id]]);
@@ -158,13 +159,14 @@ void read_slave(uint8_t id){
   case 1:{
       nmbs_bitfield coils_Buffer = {0};
       errClient[id] = nmbs_read_coils(&nmbsClient[id], 0, 5, coils_Buffer);
-      if(errClient[id] == NMBS_ERROR_NONE) { for (int i = 0; i < 5; i++) { nmbs_bitfield_write(coilBool[id].coil, i, nmbs_bitfield_read(coils_Buffer, i)); }}
+      if(errClient[id] == NMBS_ERROR_NONE)
+      { for (int i = 0; i < 5; i++) {  coilBool[id].coil[i] = nmbs_bitfield_read(coils_Buffer, i); }} 
     }
     break;
-  case 3:{
+  case 2:{
       nmbs_bitfield disBuffer = {0};
       errClient[id] = nmbs_read_discrete_inputs(&nmbsClient[id], 0, 2, disBuffer);
-      if(errClient[id] == NMBS_ERROR_NONE) { for (int i = 0; i < 2; i++) { nmbs_bitfield_write(coilBool[id].inputDiscrete, i, nmbs_bitfield_read(disBuffer, i)); }}
+      if(errClient[id] == NMBS_ERROR_NONE) { for (int i = 0; i < 2; i++) { coilBool[id].inputDiscrete[i] = nmbs_bitfield_read(disBuffer, i); }}
     }
     break;
   }
@@ -172,7 +174,6 @@ void read_slave(uint8_t id){
   if(countStepMbmaster[id] ++ >= 2) countStepMbmaster[id] = 0;
 }
 nmbs_error handle_read_discrete_inputs(uint16_t address, uint16_t quantity, uint8_t *inputs_out, uint8_t unit_id, void *arg){
-  Serial.println("ok");
     UNUSED_PARAM(arg); UNUSED_PARAM(unit_id);
     if (address + quantity > mb_sizeDiscreateInput + 1) return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     for (int i = 0; i < quantity; i++) {
@@ -189,7 +190,7 @@ nmbs_error handle_read_coils(uint16_t address, uint16_t quantity, nmbs_bitfield 
     if (address + quantity > mb_sizeCoil + 1) return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     for (int i = 0; i < quantity; i++) {
       uint8_t index = address + i;
-      if(index < 5)nmbs_bitfield_write(coils_out, i, coilBool[0].coil[index]);
+      if(index < 5) nmbs_bitfield_write(coils_out, i, coilBool[0].coil[index]);
       else if(index >= 5 && index < 10) nmbs_bitfield_write(coils_out, i, coilBool[1].coil[index - 5]);
       else if(index < 16 && index >= 10) nmbs_bitfield_write(coils_out, i, digitalRead(Y[index - 10]));
       else nmbs_bitfield_write(coils_out, i, mb_flagCoil[index - 16]);
@@ -201,9 +202,9 @@ nmbs_error hadle_write_single_coils(uint16_t address, bool value, uint8_t unit_i
     if (address > mb_sizeCoil) return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     if(address < 5){
       coilBool_Write[0].coil[address] = value; startAddresWriteCoil[0] = address; startAddresWriteCoil_length[0] = 1; flagWriteMbMasterCoil[0] = true;
-    }else if(address >= 5){
+    }else if(address >= 5 && address < 10){
       coilBool_Write[1].coil[address - 5] = value; startAddresWriteCoil[1] = address - 5; startAddresWriteCoil_length[1] = 1; flagWriteMbMasterCoil[1] = true;
-    }else if(address < 16 && address >= 10) digitalWrite(Y[address - 10], value);
+    }else if(address < 16 && address >= 10) { digitalWrite(Y[address - 10], value);}
     else if( address >= 16) mb_flagCoil[address - 16] = value;
     return NMBS_ERROR_NONE;
 }
@@ -213,13 +214,13 @@ nmbs_error handle_write_multiple_coils(uint16_t address, uint16_t quantity, cons
     bool flagWrite1 = false, flagWrite2 = false; uint16_t _quantity[2];
     for (int i = 0; i < quantity; i++){
       uint8_t index = address + i;
-      if(index < 5) { nmbs_bitfield_write(coilBool_Write[0].coil, index, coils[i]); _quantity[0]++; flagWrite1 = true; }
-      else if(index >= 5 && index < 10) {  nmbs_bitfield_write(coilBool_Write[1].coil, index - 5, coils[i]); _quantity[1]++; flagWrite2 = true; }
-      else if(index < 16 && index >= 10) digitalWrite(Y[index - 10], coils[i]);
-      else nmbs_bitfield_write(mb_flagCoil, index - 16, nmbs_bitfield_read(coils, i));
+      if(index < 5) { coilBool_Write[0].coil[index] = nmbs_bitfield_read(coils, i); _quantity[0]++; flagWrite1 = true; }
+      else if(index >= 5 && index < 10) { coilBool_Write[1].coil[index - 5] = nmbs_bitfield_read(coils, i); _quantity[1]++; flagWrite2 = true; }
+      else if(index < 16 && index >= 10) digitalWrite(Y[index - 10], nmbs_bitfield_read(coils, i));
+      else mb_flagCoil[index - 16] = nmbs_bitfield_read(coils, i);
     }
     if(flagWrite1) { startAddresWriteCoil[0] = address; startAddresWriteCoil_length[0] = _quantity[0]; flagWriteMbMasterCoil[0] = true; }
-    if(flagWrite2) { startAddresWriteCoil[1] = address < 5 ? ((address + quantity) - 5) - _quantity[1]: address; startAddresWriteCoil_length[1] = _quantity[1]; flagWriteMbMasterCoil[1] = true; }
+    if(flagWrite2) { startAddresWriteCoil[1] = address < 5 ? ((address + quantity) - 5) - _quantity[1]: address - 5; startAddresWriteCoil_length[1] = _quantity[1]; flagWriteMbMasterCoil[1] = true; }
     return NMBS_ERROR_NONE;
 }
 nmbs_error handler_read_holding_registers(uint16_t address, uint16_t quantity, uint16_t *registers_out, uint8_t unit_id, void *arg){
@@ -238,7 +239,7 @@ nmbs_error handler_write_single_register(uint16_t address, uint16_t value, uint8
     if(address < 15){
       mbFloat_Write[0].words[address] = value; startAddresWriteRH[0] = address; startAddresWriteRH_length[0] = 1; flagWriteMbMasterRH[0] = true;
     }else if(address >= 15){
-      mbFloat_Write[1].words[address] = value; startAddresWriteRH[1] = address - 15; startAddresWriteRH_length[1] = 1; flagWriteMbMasterRH[1] = true;
+      mbFloat_Write[1].words[address - 15] = value; startAddresWriteRH[1] = address - 15; startAddresWriteRH_length[1] = 1; flagWriteMbMasterRH[1] = true;
     }
     return NMBS_ERROR_NONE;
 }
@@ -249,48 +250,30 @@ nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, 
     for (int i = 0; i < quantity; i++){
       int8_t index = address + i;
       if(index < 15) { 
-        mbFloat_Write[0].words[i] = registers[i]; _quantity[0]++;
+        mbFloat_Write[0].words[index] = registers[i]; _quantity[0]++;
         flagWrite1 = true; 
       }
       else if(index >= 15 && index < 30){ 
-        mbFloat_Write[1].words[i] = registers[i]; _quantity[1]++;
-        flagWrite2 = true; 
+        mbFloat_Write[1].words[index - 15] = registers[i]; _quantity[1]++;
+        flagWrite2 = true;
       }
     }
     if(flagWrite1) { startAddresWriteRH[0] = address; startAddresWriteRH_length[0] = _quantity[0];  flagWriteMbMasterRH[0] = true;}
-    if(flagWrite2) { startAddresWriteRH[1] = address < 15 ? ((address + quantity) - 15) - _quantity[1] : address; startAddresWriteRH_length[1] = _quantity[1]; flagWriteMbMasterRH[1] = true;}
+    if(flagWrite2) { startAddresWriteRH[1] = address < 15 ? ((address + quantity) - 15) - _quantity[1] : address - 15; startAddresWriteRH_length[1] = _quantity[1]; flagWriteMbMasterRH[1] = true;}
     return NMBS_ERROR_NONE;
 }
 int32_t read_ethernet(uint8_t* buf, uint16_t count, int32_t timeout_ms, void* arg) {
-  uint16_t total = 0;
-  unsigned long startMillis = millis();
-  while (total != count) {
-    buf[total++] = client.read();
-    if (millis() - startMillis > timeout_ms) {
-      return total;
-    }
-  }
-  return total;
+  client.setTimeout(timeout_ms); return client.readBytes(buf, count);
 }
 int32_t write_ethernet(const uint8_t* buf, uint16_t count, int32_t timeout_ms, void* arg) {
-  uint16_t total = 0;
-  unsigned long startMillis = millis();
-  while (total != count) {
-    client.write(buf[total++]);
-    if (millis() - startMillis > timeout_ms) {
-      return total;
-    }
-  }
-  return total;
+  client.setTimeout(timeout_ms); return client.write(buf, count);
 }
 void mbTCPpoll(){
   client = server.available();
-  if (client){
-    if (client.connected() && client.available()){
-      errTCP = nmbs_server_poll(&nmbsTCP);
-      timePrevIsConnectTCP = millis(); if(!IsConnectTCP) IsConnectTCP = true;
-      if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus TCP - %s\n", nmbs_strerror(errTCP));
-    }
+  if (client.connected() && client.available()){
+    errTCP = nmbs_server_poll(&nmbsTCP);
+    timePrevIsConnectTCP = millis(); if(!IsConnectTCP) IsConnectTCP = true;
+    if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus TCP - %s\n", nmbs_strerror(errTCP));
   }
 }
 int32_t read_serial2(uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg) {
@@ -300,8 +283,10 @@ int32_t write_serial2(const uint8_t* buf, uint16_t count, int32_t byte_timeout_m
   Serial2.setTimeout(byte_timeout_ms); return Serial2.write(buf, count);
 }
 void mbRTUpoll(){
-  errRTU = nmbs_server_poll(&nmbsRTU);
-  if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus RTU - %s\n", nmbs_strerror(errTCP));
+  if(Serial2.available() > 0) {
+    errRTU = nmbs_server_poll(&nmbsRTU);
+    if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus RTU - %s\n", nmbs_strerror(errTCP));
+  }
 }
 int32_t read_serial1(uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg) {
   Serial1.setTimeout(byte_timeout_ms);
