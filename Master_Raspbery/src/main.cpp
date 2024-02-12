@@ -32,7 +32,7 @@ uint8_t startAddresWriteCoil[MaxId], startAddresWriteCoil_length[MaxId], startAd
 
 unsigned long timePrevIsConnectTCP;
 bool stateLed, IsConnectTCP, mb_flagCoil[20];
-uint8_t mb_sizeDiscreateInput = ((sizeof(coilBool[0].inputDiscrete) / sizeof(coilBool[0].inputDiscrete[0])) * MaxId) + (sizeof(X) / sizeof(X[0]) + 1);
+uint8_t mb_sizeDiscreateInput = ((sizeof(coilBool[0].inputDiscrete) / sizeof(coilBool[0].inputDiscrete[0])) * MaxId) + (sizeof(X) / sizeof(X[0]) + 6);
 uint8_t mb_sizeCoil = ((sizeof(coilBool[0].coil) / sizeof(coilBool[0].coil[0])) * MaxId) + (sizeof(Y) / sizeof(Y[0])) + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
 uint8_t mb_sizeHoldingRegister = ((sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0])) * MaxId);
 
@@ -78,8 +78,7 @@ void setup() {
   platform_confTCP.transport = NMBS_TRANSPORT_TCP;
   platform_confTCP.read = read_ethernet;
   platform_confTCP.write = write_ethernet;
-  platform_confTCP.arg = &client;    // We will set the arg (socket fd) later
-  //platform_confTCP.arg = NULL;    // We will set the arg (socket fd) later
+  platform_confTCP.arg = NULL;    // We will set the arg (socket fd) later
   Serial2.setRX(9); Serial2.setTX(8); Serial2.setFIFOSize(512); Serial2.setTimeout(100); Serial2.begin(9600); while(!Serial2) {}
   nmbs_platform_conf platform_confRTU;
   platform_confRTU.transport = NMBS_TRANSPORT_RTU;
@@ -273,15 +272,13 @@ int32_t write_ethernet(const uint8_t* buf, uint16_t count, int32_t timeout_ms, v
 void mbTCPpoll(){
   client = server.available();
   if (client && client.connected()){
-    nmbs_set_platform_arg(&nmbsTCP, &client);
     if(client.available()){
       errTCP = nmbs_server_poll(&nmbsTCP);
       timePrevIsConnectTCP = millis(); if(!IsConnectTCP) IsConnectTCP = true;
       if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus TCP - %s\n", nmbs_strerror(errTCP));
       else client.flush();
     }
-    client.stop();
-  }
+  }else client.stop();
 }
 int32_t read_serial2(uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg) {
   Serial2.setTimeout(byte_timeout_ms); return Serial2.readBytes(buf, count);
