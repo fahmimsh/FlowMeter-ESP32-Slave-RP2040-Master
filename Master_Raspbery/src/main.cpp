@@ -106,6 +106,7 @@ void setup() {
   errTCP = nmbs_server_create(&nmbsTCP, 1, &platform_confTCP, &callbacks);
   if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus connection TCP - %s\n", nmbs_strerror(errTCP));
   nmbs_set_read_timeout(&nmbsTCP, 1000);
+  nmbs_set_byte_timeout(&nmbsTCP, 1000);
   errRTU = nmbs_server_create(&nmbsRTU, idFlow, &platform_confRTU, &callbacks);
   if (errRTU != NMBS_ERROR_NONE) Serial.printf("Error on modbus connection RTU Server - %s\n", nmbs_strerror(errRTU));
   nmbs_set_read_timeout(&nmbsRTU, 1000);
