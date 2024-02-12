@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SqlKata.Execution</name>
+    </assembly>
+    <members>
+        <member name="M:SqlKata.Execution.QueryFactory.FromQuery(SqlKata.Query)">
+            <summary>
+            Create an XQuery instance from a regular Query
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Execution.QueryFactory.CompileAndLog(SqlKata.Query)">
+            <summary>
+            Compile and log query
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

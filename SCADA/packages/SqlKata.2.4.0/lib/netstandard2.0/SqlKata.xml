@@ -1,0 +1,632 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SqlKata</name>
+    </assembly>
+    <members>
+        <member name="M:SqlKata.BaseQuery`1.Where(System.Object)">
+            <summary>
+            Perform a where constraint
+            </summary>
+            <param name="constraints"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.Where(System.Func{`0,`0})">
+            <summary>
+            Apply a nested where clause
+            </summary>
+            <param name="callback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.Where(System.String,System.String,System.Func{`0,`0})">
+            <summary>
+            Perform a sub query where clause
+            </summary>
+            <param name="column"></param>
+            <param name="op"></param>
+            <param name="callback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.Clone">
+            <summary>
+            Return a cloned copy of the current query.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.AddComponent(System.String,SqlKata.AbstractClause,System.String)">
+            <summary>
+            Add a component clause to the query.
+            </summary>
+            <param name="component"></param>
+            <param name="clause"></param>
+            <param name="engineCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.AddOrReplaceComponent(System.String,SqlKata.AbstractClause,System.String)">
+            <summary>
+            If the query already contains a clause for the given component
+            and engine, replace it with the specified clause. Otherwise, just
+            add the clause.
+            </summary>
+            <param name="component"></param>
+            <param name="clause"></param>
+            <param name="engineCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.GetComponents``1(System.String,System.String)">
+            <summary>
+            Get the list of clauses for a component.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.GetComponents(System.String,System.String)">
+            <summary>
+            Get the list of clauses for a component.
+            </summary>
+            <param name="component"></param>
+            <param name="engineCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.GetOneComponent``1(System.String,System.String)">
+            <summary>
+            Get a single component clause from the query.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.GetOneComponent(System.String,System.String)">
+            <summary>
+            Get a single component clause from the query.
+            </summary>
+            <param name="component"></param>
+            <param name="engineCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.HasComponent(System.String,System.String)">
+            <summary>
+            Return whether the query has clauses for a component.
+            </summary>
+            <param name="component"></param>
+            <param name="engineCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.ClearComponent(System.String,System.String)">
+            <summary>
+            Remove all clauses for a component.
+            </summary>
+            <param name="component"></param>
+            <param name="engineCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.And">
+            <summary>
+            Set the next boolean operator to "and" for the "where" clause.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.Or">
+            <summary>
+            Set the next boolean operator to "or" for the "where" clause.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.Not(System.Boolean)">
+            <summary>
+            Set the next "not" operator for the "where" clause.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.GetOr">
+            <summary>
+            Get the boolean operator and reset it to "and"
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.GetNot">
+            <summary>
+            Get the "not" operator and clear it
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.BaseQuery`1.From(System.String)">
+            <summary>
+            Add a from Clause
+            </summary>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="P:SqlKata.AbstractClause.Engine">
+            <summary>
+            Gets or sets the SQL engine.
+            </summary>
+            <value>
+            The SQL engine.
+            </value>
+        </member>
+        <member name="P:SqlKata.AbstractClause.Component">
+            <summary>
+            Gets or sets the component name.
+            </summary>
+            <value>
+            The component name.
+            </value>
+        </member>
+        <member name="T:SqlKata.AggregateClause">
+            <summary>
+            Represents aggregate clause like "COUNT", "MAX" or etc.
+            </summary>
+            <seealso cref="T:SqlKata.AbstractClause" />
+        </member>
+        <member name="P:SqlKata.AggregateClause.Columns">
+            <summary>
+            Gets or sets columns that used in aggregate clause.
+            </summary>
+            <value>
+            The columns to be aggregated.
+            </value>
+        </member>
+        <member name="P:SqlKata.AggregateClause.Type">
+            <summary>
+            Gets or sets the type of aggregate function.
+            </summary>
+            <value>
+            The type of aggregate function, e.g. "MAX", "MIN", etc.
+            </value>
+        </member>
+        <member name="M:SqlKata.AggregateClause.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.Column">
+            <summary>
+            Represents "column" or "column as alias" clause.
+            </summary>
+            <seealso cref="T:SqlKata.AbstractColumn" />
+        </member>
+        <member name="P:SqlKata.Column.Name">
+            <summary>
+            Gets or sets the column name. Can be "columnName" or "columnName as columnAlias".
+            </summary>
+            <value>
+            The column name.
+            </value>
+        </member>
+        <member name="M:SqlKata.Column.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.QueryColumn">
+            <summary>
+            Represents column clause calculated using query.
+            </summary>
+            <seealso cref="T:SqlKata.AbstractColumn" />
+        </member>
+        <member name="P:SqlKata.QueryColumn.Query">
+            <summary>
+            Gets or sets the query that will be used for column value calculation.
+            </summary>
+            <value>
+            The query for column value calculation.
+            </value>
+        </member>
+        <member name="P:SqlKata.RawColumn.Expression">
+            <summary>
+            Gets or sets the RAW expression.
+            </summary>
+            <value>
+            The RAW expression.
+            </value>
+        </member>
+        <member name="M:SqlKata.RawColumn.Clone">
+            <inheritdoc />
+        </member>
+        <member name="P:SqlKata.Combine.Query">
+            <summary>
+            Gets or sets the query to be combined with.
+            </summary>
+            <value>
+            The query that will be combined.
+            </value>
+        </member>
+        <member name="P:SqlKata.Combine.Operation">
+            <summary>
+            Gets or sets the combine operation, e.g. "UNION", etc.
+            </summary>
+            <value>
+            The combine operation.
+            </value>
+        </member>
+        <member name="P:SqlKata.Combine.All">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:SqlKata.Combine"/> clause will combine all.
+            </summary>
+            <value>
+              <c>true</c> if all; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:SqlKata.BasicCondition">
+            <summary>
+            Represents a comparison between a column and a value.
+            </summary>
+        </member>
+        <member name="M:SqlKata.BasicCondition.Clone">
+            <inheritdoc />
+        </member>
+        <member name="M:SqlKata.BasicStringCondition.Clone">
+            <inheritdoc />
+        </member>
+        <member name="M:SqlKata.BasicDateCondition.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.TwoColumnsCondition">
+            <summary>
+            Represents a comparison between two columns.
+            </summary>
+        </member>
+        <member name="M:SqlKata.TwoColumnsCondition.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.QueryCondition`1">
+            <summary>
+            Represents a comparison between a column and a full "subquery".
+            </summary>
+        </member>
+        <member name="M:SqlKata.QueryCondition`1.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.SubQueryCondition`1">
+            <summary>
+            Represents a comparison between a full "subquery" and a value.
+            </summary>
+        </member>
+        <member name="M:SqlKata.SubQueryCondition`1.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.InCondition`1">
+            <summary>
+            Represents a "is in" condition.
+            </summary>
+        </member>
+        <member name="T:SqlKata.InQueryCondition">
+            <summary>
+            Represents a "is in subquery" condition.
+            </summary>
+        </member>
+        <member name="T:SqlKata.BetweenCondition`1">
+            <summary>
+            Represents a "is between" condition.
+            </summary>
+        </member>
+        <member name="T:SqlKata.NullCondition">
+            <summary>
+            Represents an "is null" condition.
+            </summary>
+        </member>
+        <member name="M:SqlKata.NullCondition.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.BooleanCondition">
+            <summary>
+            Represents a boolean (true/false) condition.
+            </summary>
+        </member>
+        <member name="M:SqlKata.BooleanCondition.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.NestedCondition`1">
+            <summary>
+            Represents a "nested" clause condition.
+            i.e OR (myColumn = "A")
+            </summary>
+        </member>
+        <member name="T:SqlKata.ExistsCondition">
+            <summary>
+            Represents an "exists sub query" clause condition.
+            </summary>
+        </member>
+        <member name="M:SqlKata.ExistsCondition.Clone">
+            <inheritdoc />
+        </member>
+        <member name="M:SqlKata.RawCondition.Clone">
+            <inheritdoc />
+        </member>
+        <member name="P:SqlKata.AbstractFrom.Alias">
+            <summary>
+            Try to extract the Alias for the current clause.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SqlKata.FromClause">
+            <summary>
+            Represents a "from" clause.
+            </summary>
+        </member>
+        <member name="M:SqlKata.FromClause.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.QueryFromClause">
+            <summary>
+            Represents a "from subquery" clause.
+            </summary>
+        </member>
+        <member name="M:SqlKata.QueryFromClause.Clone">
+            <inheritdoc />
+        </member>
+        <member name="M:SqlKata.RawFromClause.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.AdHocTableFromClause">
+            <summary>
+            Represents a FROM clause that is an ad-hoc table built with predefined values.
+            </summary>
+        </member>
+        <member name="M:SqlKata.DeepJoin.Clone">
+            <inheritdoc />
+        </member>
+        <member name="M:SqlKata.LimitClause.Clone">
+            <inheritdoc />
+        </member>
+        <member name="M:SqlKata.OffsetClause.Clone">
+            <inheritdoc />
+        </member>
+        <member name="M:SqlKata.OrderBy.Clone">
+            <inheritdoc />
+        </member>
+        <member name="M:SqlKata.RawOrderBy.Clone">
+            <inheritdoc />
+        </member>
+        <member name="M:SqlKata.OrderByRandom.Clone">
+            <inheritdoc />
+        </member>
+        <member name="T:SqlKata.ColumnAttribute">
+            <summary>
+            This class is used as metadata on a property to generate different name in the output query.
+            </summary>
+        </member>
+        <member name="T:SqlKata.KeyAttribute">
+            <summary>
+            This class is used as metadata on a property to determine if it is a primary key
+            </summary>
+        </member>
+        <member name="F:SqlKata.Compilers.Compiler.operators">
+            <summary>
+            A list of white-listed operators
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:SqlKata.Compilers.Compiler.Whitelist(System.String[])">
+            <summary>
+            Add the passed operator(s) to the white list so they can be used with
+            the Where/Having methods, this prevent passing arbitrary operators
+            that opens the door for SQL injections.
+            </summary>
+            <param name="operators"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Compilers.Compiler.CompileColumn(SqlKata.SqlResult,SqlKata.AbstractColumn)">
+            <summary>
+            Compile a single column clause
+            </summary>
+            <param name="ctx"></param>
+            <param name="column"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Compilers.Compiler.CompileRandom(System.String)">
+            <summary>
+            Compile the random statement into SQL.
+            </summary>
+            <param name="seed"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Compilers.Compiler.Wrap(System.String)">
+            <summary>
+            Wrap a single string in a column identifier.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Compilers.Compiler.WrapValue(System.String)">
+            <summary>
+            Wrap a single string in keyword identifiers.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Compilers.Compiler.Resolve(SqlKata.SqlResult,System.Object)">
+            <summary>
+            Resolve a parameter
+            </summary>
+            <param name="ctx"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Compilers.Compiler.Parameter(SqlKata.SqlResult,System.Object)">
+            <summary>
+            Resolve a parameter and add it to the binding list
+            </summary>
+            <param name="ctx"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Compilers.Compiler.Parameterize``1(SqlKata.SqlResult,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Create query parameter place-holders for an array.
+            </summary>
+            <param name="ctx"></param>
+            <param name="values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Compilers.Compiler.WrapArray(System.Collections.Generic.List{System.String})">
+            <summary>
+            Wrap an array of values.
+            </summary>
+            <param name="values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Expressions.Variable(System.String)">
+            <summary>
+            Instruct the compiler to resolve the value from the predefined variables
+            In the current query or parents queries.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Expressions.UnsafeLiteral(System.String,System.Boolean)">
+            <summary>
+            Instruct the compiler to treat this as a literal.
+            WARNING: don't pass user data directly to this method.
+            </summary>
+            <param name="value"></param>
+            <param name="replaceQuotes">if true it will esacpe single quotes</param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Helper.Flatten(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            Flat IEnumerable one level down
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SqlKata.IgnoreAttribute">
+             <summary>
+             This class is used as metadata to ignore a property on insert and update queries
+             </summary>
+             <example>
+             <code>
+             public class  Person
+             {
+                public string Name {get ;set;}
+            
+                [Ignore]
+                public string PhoneNumber {get ;set;}
+            
+             }
+            
+             new Query("Table").Insert(new Person { Name = "User", PhoneNumber = "70123456" })
+            
+             output: INSERT INTO [Table] ([Name]) VALUES('User')
+             </code>
+             </example>
+        </member>
+        <member name="M:SqlKata.Join.JoinWith(System.String)">
+            <summary>
+            Alias for "from" operator.
+            Since "from" does not sound well with join clauses
+            </summary>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.Comment(System.String)">
+            <summary>
+            Sets a comment for the query.
+            </summary>
+            <param name="comment">The comment.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.With(System.String,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{System.Object}})">
+            <summary>
+            Constructs an ad-hoc table of the given data as a CTE.
+            </summary>
+        </member>
+        <member name="M:SqlKata.Query.Take(System.Int32)">
+            <summary>
+            Alias for Limit
+            </summary>
+            <param name="limit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.Skip(System.Int32)">
+            <summary>
+            Alias for Offset
+            </summary>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.ForPage(System.Int32,System.Int32)">
+            <summary>
+            Set the limit and offset for a given page.
+            </summary>
+            <param name="page"></param>
+            <param name="perPage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.When(System.Boolean,System.Func{SqlKata.Query,SqlKata.Query},System.Func{SqlKata.Query,SqlKata.Query})">
+            <summary>
+            Apply the callback's query changes if the given "condition" is true.
+            </summary>
+            <param name="condition"></param>
+            <param name="whenTrue">Invoked when the condition is true</param>
+            <param name="whenFalse">Optional, invoked when the condition is false</param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.WhenNot(System.Boolean,System.Func{SqlKata.Query,SqlKata.Query})">
+            <summary>
+            Apply the callback's query changes if the given "condition" is false.
+            </summary>
+            <param name="condition"></param>
+            <param name="callback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.Define(System.String,System.Object)">
+            <summary>
+            Define a variable to be used within the query
+            </summary>
+            <param name="variable"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.BuildKeyValuePairsFromObject(System.Object,System.Boolean)">
+            <summary>
+            Gather a list of key-values representing the properties of the object and their values.
+            </summary>
+            <param name="data">The plain C# object</param>
+            <param name="considerKeys">
+            When true it will search for properties with the [Key] attribute
+            and will add it automatically to the Where clause
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.Having(System.Object)">
+            <summary>
+            Perform a Having constraint
+            </summary>
+            <param name="constraints"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.Having(System.Func{SqlKata.Query,SqlKata.Query})">
+            <summary>
+            Apply a nested Having clause
+            </summary>
+            <param name="callback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.Having(System.String,System.String,System.Func{SqlKata.Query,SqlKata.Query})">
+            <summary>
+            Perform a sub query Having clause
+            </summary>
+            <param name="column"></param>
+            <param name="op"></param>
+            <param name="callback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.AsInsert(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{System.Object}})">
+            <summary>
+            Produces insert multi records
+            </summary>
+            <param name="columns"></param>
+            <param name="rowsValues"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.AsInsert(System.Collections.Generic.IEnumerable{System.String},SqlKata.Query)">
+            <summary>
+            Produces insert from subquery
+            </summary>
+            <param name="columns"></param>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqlKata.Query.SelectRaw(System.String,System.Object[])">
+            <summary>
+            Add a new "raw" select expression to the query.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

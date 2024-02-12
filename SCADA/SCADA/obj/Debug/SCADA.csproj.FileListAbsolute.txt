@@ -1,0 +1,10 @@
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\bin\Debug\SCADA.exe.config
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\bin\Debug\SCADA.exe
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\bin\Debug\SCADA.pdb
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.csproj.AssemblyReference.cache
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.form_main.resources
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.Properties.Resources.resources
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.csproj.GenerateResource.cache
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.csproj.CoreCompileInputs.cache
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.exe
+C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.pdb

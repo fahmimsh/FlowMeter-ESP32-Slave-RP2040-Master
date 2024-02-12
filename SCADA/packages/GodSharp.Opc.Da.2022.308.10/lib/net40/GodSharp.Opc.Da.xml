@@ -1,0 +1,467 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GodSharp.Opc.Da</name>
+    </assembly>
+    <members>
+        <member name="P:GodSharp.Opc.Da.IOpcDaClient.Server">
+            <summary>
+            Get <see cref="P:GodSharp.Opc.Da.IOpcDaClient.Server"/> infomation.
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.IOpcDaClient.Groups">
+            <summary>
+            Get <see cref="T:GodSharp.Opc.Da.IGroupSubscription"/> collections.
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.IOpcDaClient.CurrentGroupName">
+            <summary>
+            current group name
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.IOpcDaClient.Current">
+            <summary>
+            current group
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.IOpcDaClient.Initialized">
+            <summary>
+            Is the initialization successful.
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.IOpcDaClient.Connected">
+            <summary>
+            Is the connection successful.
+            </summary>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IOpcDaClient.Connect">
+            <summary>
+            Connect to opc server.
+            </summary>
+            <returns>Return a <see cref="T:System.Boolean"/> value,is the connection successful.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IOpcDaClient.Disconnect">
+            <summary>
+            Disconnect from opc server.
+            </summary>
+            <returns>Return a <see cref="T:System.Boolean"/> value,is the disconnection successful.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IOpcDaClient.BrowseNodes(System.String,System.Boolean)">
+            <summary>
+            Browse node from opc server with specialized node.
+            </summary>
+            <returns>Return a list name of nodes.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IOpcDaClient.BrowseNodeTree(System.String)">
+            <summary>
+            Browse all node from opc server.
+            </summary>
+            <returns>Return a list name of nodes.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IOpcDaClient.Add(GodSharp.Opc.Da.Group)">
+            <summary>
+            Add <paramref name="group"/> to opc server.
+            </summary>
+            <param name="group">The <see cref="T:GodSharp.Opc.Da.Group"/> to add.</param>
+            <returns>Return a <see cref="T:System.Boolean"/> value,is the add action successful.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IOpcDaClient.Remove(System.String)">
+            <summary>
+            Remove group from opc server with specialized name.
+            </summary>
+            <param name="groupName">The name to be remove.</param>
+            <returns>Return a <see cref="T:System.Boolean"/> value,is the remove action successful.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IOpcDaClient.GetItemProperties(System.String)">
+            <summary>
+            Get item properties with specialized item id.
+            </summary>
+            <param name="itemId">The item id(tag name).</param>
+            <returns>Return a <see cref="T:GodSharp.Opc.Da.OpcDaItemValueProperties"/> object.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IOpcDaClient.Change(System.String)">
+            <summary>
+            set current group
+            </summary>
+            <param name="groupName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:GodSharp.Opc.Da.IOpcDaClient.Item(System.String)">
+            <summary>
+            Get <see cref="T:GodSharp.Opc.Da.IGroupSubscription"/> by <see cref="T:System.String"/> group name.
+            </summary>
+            <param name="group">The <see cref="T:System.String"/> group name.</param>
+            <returns>Return a <see cref="T:GodSharp.Opc.Da.IGroupSubscription"/> object.</returns>
+        </member>
+        <member name="P:GodSharp.Opc.Da.OpcDaClient.Server">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.OpcDaClient.Initialized">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.OpcDaClient.Connected">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.OpcDaClient.Groups">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.OpcDaClient.CurrentGroupName">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.OpcDaClient.Current">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Connect">
+            <inheritdoc cref="M:GodSharp.Opc.Da.OpcDaClient.Connect" />
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Disconnect">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.BrowseNodes(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.BrowseNodeTree(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.GetItemProperties(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Change(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.CreateSubscription(GodSharp.Opc.Da.Group)">
+            <inheritdoc cref="M:GodSharp.Opc.Da.OpcDaClient.CreateSubscription(GodSharp.Opc.Da.Group)" />
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Add(GodSharp.Opc.Da.Group)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Remove(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.OpcDaClient.Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Finalize">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Add(System.String,GodSharp.Opc.Da.Tag[])">
+            <summary>
+            Add tag to group.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="tags">The <see cref="T:GodSharp.Opc.Da.Tag"/> item id of tags.</param>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Remove(System.String,System.String[])">
+            <summary>
+            Remove tags from group by special item ids.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="items">The <see cref="T:System.String"/> item id of tags.</param>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.RemoveAll(System.String)">
+            <summary>
+            Remove all tags from group.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Read(System.String,System.String)">
+            <summary>
+            Read tag value by special item id.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="itemId">The <see cref="T:System.String"/> item id of tag.</param>
+            <returns>Return single of <see cref="T:GodSharp.Opc.Da.ActionResult`1"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Reads(System.String,System.String[])">
+            <summary>
+            Read tags value by special item ids.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="items">The <see cref="T:System.String"/> item id of tags.</param>
+            <returns>Return array of <see cref="T:GodSharp.Opc.Da.ActionResult`1"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Write(System.String,System.String,System.Object)">
+            <summary>
+            Write value to tag by special item id and value.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="itemId">The <see cref="T:System.String"/> item id of tag.</param>
+            <param name="value">The <see cref="T:System.Object"/> value to be write.</param>
+            <returns>Return single of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.Writes(System.String,System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <summary>
+            Write value to tags by special item ids and values.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="itemValuePairs">The <see cref="T:System.String"/> item id and <see cref="T:System.Object"/> value pair to be write.</param>
+            <returns>Return array of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.ReadAsync(System.String,System.String)">
+            <summary>
+            Async read tag value by special item id.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="itemId">The <see cref="T:System.String"/> item id of tags.</param>
+            <returns>Return a of <see cref="T:GodSharp.Opc.Da.ActionResult`1"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.ReadsAsync(System.String,System.String[])">
+            <summary>
+            Async read tags value by special item ids.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="items">The <see cref="T:System.String"/> item id of tags.</param>
+            <returns>Return array of <see cref="T:GodSharp.Opc.Da.ActionResult`1"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.WriteAsync(System.String,System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <summary>
+            Async write value to tag by special item id and value.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="itemValuePair">The <see cref="T:System.String"/> item id and <see cref="T:System.Object"/> value pair to be write.</param>
+            <returns>Return a of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.WriteAsync(System.String,System.String,System.Object)">
+            <summary>
+            Async write value to tag by special item id and value.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="itemId">The <see cref="T:System.String"/> item id of tag.</param>
+            <param name="value">The <see cref="T:System.Object"/> value to be write.</param>
+            <returns>Return single of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.WritesAsync(System.String,System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <summary>
+            Async write value to tags by special item ids and values.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <param name="itemValuePairs">The <see cref="T:System.String"/> item id and <see cref="T:System.Object"/> value pair to be write.</param>
+            <returns>Return array of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcDaClient.RefreshAsync(System.String)">
+            <summary>
+            Async refresh group.
+            </summary>
+            <param name="group">the group name,if null,will use current group.</param>
+            <returns></returns>
+        </member>
+        <member name="T:GodSharp.Opc.Da.Empty">
+            <summary>
+            No value
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.GroupSubscription.Group">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.GroupSubscription.Tags">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.GroupSubscription.Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.GroupSubscription.DataChangedHandler">
+            <summary>
+            Data changed handler
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.GroupSubscription.AsyncReadCompletedHandler">
+            <summary>
+            Async read completed handler
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.GroupSubscription.AsyncWriteCompletedHandler">
+            <summary>
+            Async write completed handler
+            </summary>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.Add(GodSharp.Opc.Da.Tag[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.Remove(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.RemoveAll">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.Read(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.Reads(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.Write(System.String,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.Writes(System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.ReadsAsync(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.ReadAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.WritesAsync(System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.WriteAsync(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.WriteAsync(System.String,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.RefreshAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.GroupSubscription.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="P:GodSharp.Opc.Da.IGroupSubscription.Group">
+            <summary>
+            General data of this group.
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.IGroupSubscription.Tags">
+            <summary>
+            The all tags of this group.
+            </summary>
+        </member>
+        <member name="P:GodSharp.Opc.Da.IGroupSubscription.Values">
+            <summary>
+            The all tags and values of this group.
+            </summary>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.Add(GodSharp.Opc.Da.Tag[])">
+            <summary>
+            Add tag to group.
+            </summary>
+            <param name="tags">The <see cref="T:GodSharp.Opc.Da.Tag"/> item id of tags.</param>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.Remove(System.String[])">
+            <summary>
+            Remove tags from group by special item ids.
+            </summary>
+            <param name="itemIds">The <see cref="T:System.String"/> item id of tags.</param>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.RemoveAll">
+            <summary>
+            Remove all tags from group.
+            </summary>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.Read(System.String)">
+            <summary>
+            Read tag value by special item id.
+            </summary>
+            <param name="itemId">The <see cref="T:System.String"/> item id of tag.</param>
+            <returns>Return single of <see cref="T:GodSharp.Opc.Da.ActionResult`1"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.Reads(System.String[])">
+            <summary>
+            Read tags value by special item ids.
+            </summary>
+            <param name="itemIds">The <see cref="T:System.String"/> item id of tags.</param>
+            <returns>Return array of <see cref="T:GodSharp.Opc.Da.ActionResult`1"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.Write(System.String,System.Object)">
+            <summary>
+            Write value to tag by special item id and value.
+            </summary>
+            <param name="itemId">The <see cref="T:System.String"/> item id of tag.</param>
+            <param name="value">The <see cref="T:System.Object"/> value to be write.</param>
+            <returns>Return single of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.Writes(System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <summary>
+            Write value to tags by special item ids and values.
+            </summary>
+            <param name="itemValuePairs">The <see cref="T:System.String"/> item id and <see cref="T:System.Object"/> value pair to be write.</param>
+            <returns>Return array of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.ReadAsync(System.String)">
+            <summary>
+            Async read tag value by special item id.
+            </summary>
+            <param name="itemId">The <see cref="T:System.String"/> item id of tags.</param>
+            <returns>Return a of <see cref="T:GodSharp.Opc.Da.ActionResult`1"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.ReadsAsync(System.String[])">
+            <summary>
+            Async read tags value by special item ids.
+            </summary>
+            <param name="itemIds">The <see cref="T:System.String"/> item id of tags.</param>
+            <returns>Return array of <see cref="T:GodSharp.Opc.Da.ActionResult`1"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.WriteAsync(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <summary>
+            Async write value to tag by special item id and value.
+            </summary>
+            <param name="itemValuePair">The <see cref="T:System.String"/> item id and <see cref="T:System.Object"/> value pair to be write.</param>
+            <returns>Return a of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.WriteAsync(System.String,System.Object)">
+            <summary>
+            Async write value to tag by special item id and value.
+            </summary>
+            <param name="itemId">The <see cref="T:System.String"/> item id of tag.</param>
+            <param name="value">The <see cref="T:System.Object"/> value to be write.</param>
+            <returns>Return single of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.WritesAsync(System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <summary>
+            Async write value to tags by special item ids and values.
+            </summary>
+            <param name="itemValuePairs">The <see cref="T:System.String"/> item id and <see cref="T:System.Object"/> value pair to be write.</param>
+            <returns>Return array of <see cref="T:GodSharp.Opc.Da.ActionResult"/> value.</returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IGroupSubscription.RefreshAsync">
+            <summary>
+            Async refresh group.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.IServerDiscovery.GetServers(GodSharp.Opc.Da.ServerSpecification,System.String)">
+            <summary>
+            Get opc server list.
+            </summary>
+            <param name="specification"></param>
+            <param name="host"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcServerList.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcServerList.Finalize">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcServerList.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.ServerDiscovery.GetServers(GodSharp.Opc.Da.ServerSpecification,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:GodSharp.Opc.Da.ServerSpecification.DA10">
+            <summary>
+            Data Access 1.0a
+            63D5F430-CFE4-11d1-B2C8-0060083BA1FB
+            </summary>
+        </member>
+        <member name="F:GodSharp.Opc.Da.ServerSpecification.DA20">
+            <summary>
+            Data Access 2.XX
+            63D5F432-CFE4-11d1-B2C8-0060083BA1FB
+            </summary>
+        </member>
+        <member name="F:GodSharp.Opc.Da.ServerSpecification.DA30">
+            <summary>
+            Data Access 3.00
+            CC603642-66D7-48f1-B69A-B625E73652D7
+            </summary>
+        </member>
+    </members>
+</doc>
