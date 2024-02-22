@@ -7,14 +7,251 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using SqlKata;
+using SqlKata.Execution;
+using GenLogic;
+using MQTTnet;
+using MQTTnet.Client;
+using Newtonsoft.Json;
+using GodSharp.Opc.Da;
+using GodSharp.Opc.Da.Options;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using SCADA.UserControls;
 
 namespace SCADA
 {
     public partial class form_main : Form
     {
+        internal IServerDiscovery OPCdiscovery;
+        internal IOpcDaClient OPCclient1;
+        internal IMqttClient MqttClient;
+        internal BindingList<OPCData1> OPCData_1 = new BindingList<OPCData1>();
+        internal ObservableCollection<TagData1> tagData1 = new ObservableCollection<TagData1>();
+        private uc_hmi uc_x_hmi;
+        private uc_log uc_x_log;
+        private uc_chart uc_x_chart;
         public form_main()
         {
             InitializeComponent();
+            this.MaximumSize = new System.Drawing.Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+            uc_x_hmi = new uc_hmi(this);
+            uc_x_log = new uc_log(this);
+            uc_x_chart = new uc_chart(this);
+            OPCdiscovery = DaClientFactory.Instance.CreateOpcNetApiServerDiscovery();
+        }
+        private void form_main_Load(object sender, EventArgs e)
+        {
+            add_to_main_panel(uc_x_log);
+            add_to_main_panel(uc_x_chart);
+            OPC1Connect_or_Disconnect(false);
+            add_to_main_panel(uc_x_hmi);
+        }
+        private void form_main_Shown(object sender, EventArgs e)
+        {
+            timer_handle_opc_tag.Enabled = true;
+        }
+        internal bool OPC1Connect_or_Disconnect(bool flag_is_set)
+        {
+            if (flag_is_set)
+            {
+                if (OPCclient1?.Connected == true) OPCclient1.Disconnect();
+                OPCclient1?.Dispose();
+                GC.Collect();
+                OPCStatus1.Connected = false;
+                menu_connect_opc.Image = Properties.Resources.icons8_disconnect;
+                menu_connect_opc.Text = "Disconnect";
+                return true;
+            }
+            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.OPCServer1)) return false;
+            if (OPCclient1?.Connected == true) { OPCclient1.Disconnect(); OPCclient1.Dispose(); GC.Collect(); }
+            Func<Action<DaClientOptions>, IOpcDaClient> factory;
+            factory = (Action<DaClientOptions> action) => DaClientFactory.Instance.CreateOpcNetApiClient(action);
+            OPCclient1 = factory(x =>
+            {
+                x.Data = new ServerData { Host = Properties.Settings.Default.OPCHost, ProgId = Properties.Settings.Default.OPCServer1, Name = Properties.Settings.Default.OPCServer1 };
+                x.OnDataChangedHandler += OPC1_OnDataChangedHandler;
+                x.OnServerShutdownHandler += OPC1_OnServerShutdownHandler;
+                x.OnAsyncReadCompletedHandler += OPC1_OnAsyncReadCompletedHandler;
+                x.OnAsyncWriteCompletedHandler += OPC1_OnAsyncWriteCompletedHandler;
+            });
+            if (!File.Exists("opcTag.js")) { ShowErrorMessage($"FIle Tidak Tersedia"); return false; }
+            string json = File.ReadAllText("opcTag.js");
+            tagData1 = new ObservableCollection<TagData1>(JsonConvert.DeserializeObject<List<TagData1>>(json) ?? new List<TagData1>());
+            OPCclient1.Connect();
+            OPCclient1.Add(new Group { Name = "default", UpdateRate = 1000, IsSubscribed = true });
+            OPCData_1.Clear();
+            foreach (var data in tagData1.OrderBy(data => data.Id))
+            {
+                if (OPCclient1.Current.Tags?.ContainsKey(data.Tag) != true)
+                {
+                    var tag = new Tag(data.Tag, data.Id);
+                    try
+                    {
+                        OPCclient1.Current.Add(tag);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"OPC Gagal Add Tag:{data.Tag} Client id: {data.Id} Message: {ex.Message}", @"OPC Gagal Add Tag", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    }
+                    OPCData_1.Add(new OPCData1(data.Tag, data.Id));
+                }
+            }
+            OPCReadAsync1(1);
+            OPCStatus1.Connected = true;
+            menu_connect_opc.Image = Properties.Resources.icons8_connect;
+            menu_connect_opc.Text = "Connected";
+            return OPCclient1.Connected;
+        }
+        private void OPC1_OnAsyncWriteCompletedHandler(AsyncWriteCompletedOutput output)
+        {
+            if (!output.Data.Ok) return;
+            var tag = OPCData_1.FirstOrDefault(a => a.ClientHandle == output.Data.Result.ClientHandle);
+            if (tag == null) return;
+            tag.ItemName = output.Data.Result.ItemName;
+            OPCclient1.Current.ReadsAsync(tag.ItemName);
+        }
+        private void OPC1_OnAsyncReadCompletedHandler(AsyncReadCompletedOutput output)
+        {
+            if (!output.Data.Ok) return;
+            var tag = OPCData_1.FirstOrDefault(a => a.ClientHandle == output.Data.Result.ClientHandle);
+            if (tag == null) return;
+            tag.ItemName = output.Data.Result.ItemName;
+            tag.Value = output.Data.Result.Value;
+            tag.Quality = output.Data.Result.Quality?.ToString();
+            tag.Counter += 1;
+            tag.Flag = true;
+            tag.Timestamp = output.Data.Result.Timestamp?.ToString();
+            tag.TipeReq = output.Data.Result.RequestType;
+        }
+        private void OPC1_OnServerShutdownHandler(Server server, string arg2)
+        {
+            OPCclient1?.Disconnect();
+            OPCStatus1.Connected = false;
+            menu_connect_opc.Image = Properties.Resources.icons8_disconnect;
+            menu_connect_opc.Text = "Disconnect";
+            ShowErrorMessage($"Server {server} Shutdown karena {arg2}");
+        }
+        private void OPC1_OnDataChangedHandler(DataChangedOutput output)
+        {
+            var tag = OPCData_1.FirstOrDefault(a => a.ClientHandle == output.Data.ClientHandle);
+            if (tag == null) return;
+            tag.ItemName = output.Data.ItemName;
+            tag.Value = output.Data.Value;
+            tag.Quality = output.Data.Quality?.ToString();
+            tag.Counter += 1;
+            tag.Flag = true;
+            tag.Timestamp = output.Data.Timestamp?.ToString();
+            tag.TipeReq = output.Data.RequestType;
+        }
+        public void OPCWriteAsync1(int itm_no, object val)
+        {
+            try
+            {
+                var tag = OPCData_1.FirstOrDefault(a => a.ClientHandle == itm_no);
+                if (tag == null) return;
+                var result = OPCclient1.Current.WriteAsync(tag.ItemName, val);
+                if (result.Ok) return;
+                MessageBox.Show($"Write value failed.", @"Opc Da Browser", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Write value failed:{ex.Message}", @"Opc Da Browser", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            }
+        }
+        public void OPCReadAsync1(int itm_no)
+        {
+            try
+            {
+                var tag = OPCData_1.FirstOrDefault(a => a.ClientHandle == itm_no);
+                if (tag == null) return;
+                var result = OPCclient1.Current.ReadAsync(tag.ItemName);
+                if (result.Ok) return;
+                MessageBox.Show($"ReadsAsync value failed.", @"Opc Da Browser", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Read value failed:{ex.Message}", @"Opc Da Browser", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            }
+        }
+        public TipeOfData GetOPCDataValue<TipeOfData>(int clientHandle, TipeOfData defaultValue = default)
+        {
+            var matchingData = OPCData_1.FirstOrDefault(dataItem => dataItem.ClientHandle == clientHandle);
+            if (matchingData == null) return defaultValue;
+            try
+            {
+                return (TipeOfData)Convert.ChangeType(matchingData.Value, typeof(TipeOfData));
+            }
+            catch (InvalidCastException)
+            {
+                return defaultValue;
+            }
+        }
+        private void timer_handle_opc_tag_Tick(object sender, EventArgs e)
+        {
+            Dictionary<int, Action> tagMapping = new Dictionary<int, Action> // Dictionary untuk menyimpan informasi terkait indeks dan fungsi delegate yang sesuai
+            {
+                { 1, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["valve_flow"], GetOPCDataValue<bool>(1)); }) },
+                { 2, () => BeginInvoke((MethodInvoker)delegate { 
+                    uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["pump_flow"], GetOPCDataValue<bool>(2));
+                    uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["sensor_flow"], GetOPCDataValue<bool>(2));
+                }) },
+                { 3, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.BtnGlgSet(uc_x_hmi.glgControl_hmi1, "set_on_off", GetOPCDataValue<bool>(3), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
+                //{ 4, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(4, !GetOPCDataValue<bool>(5)); }) },
+                { 5, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_mode", GetOPCDataValue<bool>(5) ? "Auto" : "Manual"); }) },
+                { 6, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "val_k-factor/Value", GetOPCDataValue<double>(6)); }) },
+                { 7, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["val_setliter"], GetOPCDataValue<double>(7)); }) },
+                { 8, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "val_f-kurang/Value", GetOPCDataValue<double>(8)); }) },
+                { 9, () => BeginInvoke((MethodInvoker)delegate {
+                    uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "val_liter/Value", GetOPCDataValue<double>(9));
+                    uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "level_liter/Value", GetOPCDataValue<double>(9), GetOPCDataValue<double>(7));
+                    uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "level_liter/LowLevel/LevelLow", GetOPCDataValue<double>(9), GetOPCDataValue<double>(7));
+                }) },
+                { 10, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "val_lpm/Value", GetOPCDataValue<double>(10)); }) },
+            };
+            foreach (var kvp in tagMapping.OrderBy(x => GetOPCDataValue<bool>(x.Key)))
+            {
+                Action action = kvp.Value; int clientHandle = kvp.Key;
+                if (OPCData_1.Any(data => data.ClientHandle == clientHandle && data.Flag))
+                {
+                    action.Invoke();
+                    OPCData_1.First(data => data.ClientHandle == clientHandle).Flag = false;
+                }
+            }
+        }
+        private void menu_tag_Click(object sender, EventArgs e)
+        {
+            string password =  Prompt.PasswordSetting(false, "", out bool cancle_); if (cancle_) return;
+            if (password != Properties.Settings.Default.password) { ShowWarningMessage("Password salah"); return; }
+            form_tag _form_tag = form_tag.GetInstance(this);
+            _form_tag.Show();
+            _form_tag.BringToFront();
+        }
+
+        private void menu_label_Click(object sender, EventArgs e)
+        {
+            form_label _form_label = form_label.GetInstance(this);
+            _form_label.Show();
+            _form_label.BringToFront();
+        }
+        private void menu_view_chart_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_chart);
+        private void menu_hmi_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_hmi);
+        private void menu_log_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_log);
+        private void add_to_main_panel(UserControl uc_x) { uc_x.Dock = DockStyle.Fill; panel_main.Controls.Add(uc_x); uc_x.BringToFront(); }
+        private void show_to_main_panel(UserControl uc_x) => uc_x.BringToFront();
+        private void menu_connect_opc_Click(object sender, EventArgs e) => OPC1Connect_or_Disconnect(OPCStatus1.Connected);
+        public void ShowWarningMessage(string message) => ShowMessage(message, "Warning", MessageBoxIcon.Warning);
+        public void ShowErrorMessage(string message) => ShowMessage(message, "Error", MessageBoxIcon.Error);
+        private void ShowMessage(string message, string caption, MessageBoxIcon icon) { if (!IsHandleCreated) return; BeginInvoke((MethodInvoker)delegate { MessageBox.Show(this, message, caption, MessageBoxButtons.OK, icon); }); }
+        private void menu_minimize_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
+        private void menu_exit_Click(object sender, EventArgs e) => OnClosed(EventArgs.Empty);
+        private void menu_file_exit_Click(object sender, EventArgs e) => OnClosed(EventArgs.Empty);
+        protected override void OnClosed(EventArgs args)
+        {
+            OPC1Connect_or_Disconnect(false);
+            Application.Exit();
         }
     }
 }

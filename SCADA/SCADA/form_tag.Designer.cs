@@ -29,38 +29,34 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form_tag));
             this.toolStripTextBoxServer = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripTextBoxHost = new System.Windows.Forms.ToolStripTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.FlagOpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnTimeStamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnQuality = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.typeData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnValueTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnNameTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTagIo = new System.Windows.Forms.DataGridView();
-            this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.toolStripStatusTagIo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.PropertiesOpc1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemsetOPCServer = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemConnectOPC = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemAboutOpc = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridViewTagIo = new System.Windows.Forms.DataGridView();
+            this.ColumnNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnNameTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnValueTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnQuality = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnTimeStamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FlagOpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTagIo)).BeginInit();
@@ -69,7 +65,6 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripTextBoxServer
@@ -103,6 +98,42 @@
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // PropertiesOpc1
+            // 
+            this.PropertiesOpc1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemsetOPCServer,
+            this.ToolStripMenuItemConnectOPC,
+            this.ToolStripMenuItemAboutOpc});
+            this.PropertiesOpc1.Image = global::SCADA.Properties.Resources.server;
+            this.PropertiesOpc1.Name = "PropertiesOpc1";
+            this.PropertiesOpc1.Size = new System.Drawing.Size(92, 24);
+            this.PropertiesOpc1.Text = "Properties";
+            // 
+            // ToolStripMenuItemsetOPCServer
+            // 
+            this.ToolStripMenuItemsetOPCServer.Image = global::SCADA.Properties.Resources.server;
+            this.ToolStripMenuItemsetOPCServer.Name = "ToolStripMenuItemsetOPCServer";
+            this.ToolStripMenuItemsetOPCServer.Size = new System.Drawing.Size(184, 26);
+            this.ToolStripMenuItemsetOPCServer.Text = "Set OPC Server";
+            this.ToolStripMenuItemsetOPCServer.Click += new System.EventHandler(this.ToolStripMenuItemsetOPCServer_Click);
+            // 
+            // ToolStripMenuItemConnectOPC
+            // 
+            this.ToolStripMenuItemConnectOPC.Enabled = false;
+            this.ToolStripMenuItemConnectOPC.Image = global::SCADA.Properties.Resources.icons8_connect;
+            this.ToolStripMenuItemConnectOPC.Name = "ToolStripMenuItemConnectOPC";
+            this.ToolStripMenuItemConnectOPC.Size = new System.Drawing.Size(184, 26);
+            this.ToolStripMenuItemConnectOPC.Text = "Connect OPC";
+            this.ToolStripMenuItemConnectOPC.Click += new System.EventHandler(this.ToolStripMenuItemConnectOPC_Click);
+            // 
+            // ToolStripMenuItemAboutOpc
+            // 
+            this.ToolStripMenuItemAboutOpc.Image = global::SCADA.Properties.Resources.about;
+            this.ToolStripMenuItemAboutOpc.Name = "ToolStripMenuItemAboutOpc";
+            this.ToolStripMenuItemAboutOpc.Size = new System.Drawing.Size(184, 26);
+            this.ToolStripMenuItemAboutOpc.Text = "About Opc";
+            this.ToolStripMenuItemAboutOpc.Click += new System.EventHandler(this.ToolStripMenuItemAboutOpc_Click);
+            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
@@ -113,55 +144,53 @@
             this.panel1.Size = new System.Drawing.Size(831, 32);
             this.panel1.TabIndex = 4;
             // 
-            // FlagOpc
+            // dataGridViewTagIo
             // 
-            this.FlagOpc.DataPropertyName = "Flag";
-            this.FlagOpc.FillWeight = 30F;
-            this.FlagOpc.HeaderText = "Flag";
-            this.FlagOpc.Name = "FlagOpc";
-            this.FlagOpc.ReadOnly = true;
+            this.dataGridViewTagIo.AllowUserToAddRows = false;
+            this.dataGridViewTagIo.AllowUserToDeleteRows = false;
+            this.dataGridViewTagIo.AllowUserToOrderColumns = true;
+            this.dataGridViewTagIo.AllowUserToResizeRows = false;
+            this.dataGridViewTagIo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Bisque;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Bisque;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTagIo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewTagIo.ColumnHeadersHeight = 25;
+            this.dataGridViewTagIo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dataGridViewTagIo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnNo,
+            this.ColumnNameTag,
+            this.ColumnValueTag,
+            this.ColumnQuality,
+            this.ColumnTimeStamp,
+            this.count,
+            this.FlagOpc,
+            this.type});
+            this.dataGridViewTagIo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewTagIo.EnableHeadersVisualStyles = false;
+            this.dataGridViewTagIo.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewTagIo.Name = "dataGridViewTagIo";
+            this.dataGridViewTagIo.ReadOnly = true;
+            this.dataGridViewTagIo.RowHeadersVisible = false;
+            this.dataGridViewTagIo.RowHeadersWidth = 51;
+            this.dataGridViewTagIo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewTagIo.Size = new System.Drawing.Size(587, 477);
+            this.dataGridViewTagIo.TabIndex = 0;
             // 
-            // ColumnTimeStamp
+            // ColumnNo
             // 
-            this.ColumnTimeStamp.DataPropertyName = "Timestamp";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnTimeStamp.DefaultCellStyle = dataGridViewCellStyle7;
-            this.ColumnTimeStamp.FillWeight = 108.6509F;
-            this.ColumnTimeStamp.HeaderText = "Time Stamp";
-            this.ColumnTimeStamp.MinimumWidth = 6;
-            this.ColumnTimeStamp.Name = "ColumnTimeStamp";
-            this.ColumnTimeStamp.ReadOnly = true;
-            // 
-            // ColumnQuality
-            // 
-            this.ColumnQuality.DataPropertyName = "Quality";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnQuality.DefaultCellStyle = dataGridViewCellStyle8;
-            this.ColumnQuality.FillWeight = 54.32545F;
-            this.ColumnQuality.HeaderText = "Quality";
-            this.ColumnQuality.MinimumWidth = 6;
-            this.ColumnQuality.Name = "ColumnQuality";
-            this.ColumnQuality.ReadOnly = true;
-            // 
-            // typeData
-            // 
-            this.typeData.DataPropertyName = "TipeReq";
-            this.typeData.FillWeight = 80F;
-            this.typeData.HeaderText = "type";
-            this.typeData.Name = "typeData";
-            this.typeData.ReadOnly = true;
-            // 
-            // ColumnValueTag
-            // 
-            this.ColumnValueTag.DataPropertyName = "Value";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.NullValue = null;
-            this.ColumnValueTag.DefaultCellStyle = dataGridViewCellStyle9;
-            this.ColumnValueTag.FillWeight = 54.32545F;
-            this.ColumnValueTag.HeaderText = "Value";
-            this.ColumnValueTag.MinimumWidth = 6;
-            this.ColumnValueTag.Name = "ColumnValueTag";
-            this.ColumnValueTag.ReadOnly = true;
+            this.ColumnNo.DataPropertyName = "ClientHandle";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ColumnNo.FillWeight = 25F;
+            this.ColumnNo.HeaderText = "No";
+            this.ColumnNo.MinimumWidth = 6;
+            this.ColumnNo.Name = "ColumnNo";
+            this.ColumnNo.ReadOnly = true;
             // 
             // ColumnNameTag
             // 
@@ -172,63 +201,65 @@
             this.ColumnNameTag.Name = "ColumnNameTag";
             this.ColumnNameTag.ReadOnly = true;
             // 
-            // ColumnNo
+            // ColumnValueTag
             // 
-            this.ColumnNo.DataPropertyName = "ClientHandle";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle10;
-            this.ColumnNo.FillWeight = 25F;
-            this.ColumnNo.HeaderText = "No";
-            this.ColumnNo.MinimumWidth = 6;
-            this.ColumnNo.Name = "ColumnNo";
-            this.ColumnNo.ReadOnly = true;
+            this.ColumnValueTag.DataPropertyName = "Value";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.NullValue = null;
+            this.ColumnValueTag.DefaultCellStyle = dataGridViewCellStyle3;
+            this.ColumnValueTag.FillWeight = 54.32545F;
+            this.ColumnValueTag.HeaderText = "Value";
+            this.ColumnValueTag.MinimumWidth = 6;
+            this.ColumnValueTag.Name = "ColumnValueTag";
+            this.ColumnValueTag.ReadOnly = true;
             // 
-            // dataGridViewTagIo
+            // ColumnQuality
             // 
-            this.dataGridViewTagIo.AllowUserToAddRows = false;
-            this.dataGridViewTagIo.AllowUserToDeleteRows = false;
-            this.dataGridViewTagIo.AllowUserToOrderColumns = true;
-            this.dataGridViewTagIo.AllowUserToResizeRows = false;
-            this.dataGridViewTagIo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.Bisque;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.Bisque;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTagIo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
-            this.dataGridViewTagIo.ColumnHeadersHeight = 25;
-            this.dataGridViewTagIo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dataGridViewTagIo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColumnNo,
-            this.ColumnNameTag,
-            this.ColumnValueTag,
-            this.typeData,
-            this.ColumnQuality,
-            this.ColumnTimeStamp,
-            this.count,
-            this.FlagOpc});
-            this.dataGridViewTagIo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewTagIo.EnableHeadersVisualStyles = false;
-            this.dataGridViewTagIo.Location = new System.Drawing.Point(0, 0);
-            this.dataGridViewTagIo.Name = "dataGridViewTagIo";
-            this.dataGridViewTagIo.ReadOnly = true;
-            this.dataGridViewTagIo.RowHeadersVisible = false;
-            this.dataGridViewTagIo.RowHeadersWidth = 51;
-            this.dataGridViewTagIo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewTagIo.Size = new System.Drawing.Size(587, 455);
-            this.dataGridViewTagIo.TabIndex = 0;
+            this.ColumnQuality.DataPropertyName = "Quality";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnQuality.DefaultCellStyle = dataGridViewCellStyle4;
+            this.ColumnQuality.FillWeight = 54.32545F;
+            this.ColumnQuality.HeaderText = "Quality";
+            this.ColumnQuality.MinimumWidth = 6;
+            this.ColumnQuality.Name = "ColumnQuality";
+            this.ColumnQuality.ReadOnly = true;
+            // 
+            // ColumnTimeStamp
+            // 
+            this.ColumnTimeStamp.DataPropertyName = "Timestamp";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnTimeStamp.DefaultCellStyle = dataGridViewCellStyle5;
+            this.ColumnTimeStamp.FillWeight = 108.6509F;
+            this.ColumnTimeStamp.HeaderText = "Time Stamp";
+            this.ColumnTimeStamp.MinimumWidth = 6;
+            this.ColumnTimeStamp.Name = "ColumnTimeStamp";
+            this.ColumnTimeStamp.ReadOnly = true;
             // 
             // count
             // 
             this.count.DataPropertyName = "Counter";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.count.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.count.DefaultCellStyle = dataGridViewCellStyle6;
             this.count.FillWeight = 30F;
             this.count.HeaderText = "count";
             this.count.Name = "count";
             this.count.ReadOnly = true;
+            // 
+            // FlagOpc
+            // 
+            this.FlagOpc.DataPropertyName = "Flag";
+            this.FlagOpc.FillWeight = 30F;
+            this.FlagOpc.HeaderText = "Flag";
+            this.FlagOpc.Name = "FlagOpc";
+            this.FlagOpc.ReadOnly = true;
+            // 
+            // type
+            // 
+            this.type.DataPropertyName = "TipeReq";
+            this.type.HeaderText = "Type";
+            this.type.Name = "type";
+            this.type.ReadOnly = true;
+            this.type.Visible = false;
             // 
             // imageList1
             // 
@@ -253,8 +284,10 @@
             this.treeView1.PathSeparator = ".";
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.Size = new System.Drawing.Size(232, 455);
+            this.treeView1.Size = new System.Drawing.Size(232, 477);
             this.treeView1.TabIndex = 2;
+            this.treeView1.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCollapse);
+            this.treeView1.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterExpand);
             // 
             // splitContainer1
             // 
@@ -270,7 +303,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridViewTagIo);
-            this.splitContainer1.Size = new System.Drawing.Size(831, 459);
+            this.splitContainer1.Size = new System.Drawing.Size(831, 481);
             this.splitContainer1.SplitterDistance = 236;
             this.splitContainer1.TabIndex = 7;
             // 
@@ -280,66 +313,8 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 32);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(831, 459);
+            this.panel2.Size = new System.Drawing.Size(831, 481);
             this.panel2.TabIndex = 5;
-            // 
-            // toolStripStatusTagIo
-            // 
-            this.toolStripStatusTagIo.Name = "toolStripStatusTagIo";
-            this.toolStripStatusTagIo.Size = new System.Drawing.Size(17, 17);
-            this.toolStripStatusTagIo.Text = "\"\"";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(42, 17);
-            this.toolStripStatusLabel1.Text = "Status:";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.toolStripStatusTagIo});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 491);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(831, 22);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 200;
-            // 
-            // PropertiesOpc1
-            // 
-            this.PropertiesOpc1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemsetOPCServer,
-            this.ToolStripMenuItemConnectOPC,
-            this.ToolStripMenuItemAboutOpc});
-            this.PropertiesOpc1.Image = global::SCADA.Properties.Resources.server;
-            this.PropertiesOpc1.Name = "PropertiesOpc1";
-            this.PropertiesOpc1.Size = new System.Drawing.Size(92, 24);
-            this.PropertiesOpc1.Text = "Properties";
-            // 
-            // ToolStripMenuItemsetOPCServer
-            // 
-            this.ToolStripMenuItemsetOPCServer.Name = "ToolStripMenuItemsetOPCServer";
-            this.ToolStripMenuItemsetOPCServer.Size = new System.Drawing.Size(180, 22);
-            this.ToolStripMenuItemsetOPCServer.Text = "Set OPC Server";
-            // 
-            // ToolStripMenuItemConnectOPC
-            // 
-            this.ToolStripMenuItemConnectOPC.Enabled = false;
-            this.ToolStripMenuItemConnectOPC.Name = "ToolStripMenuItemConnectOPC";
-            this.ToolStripMenuItemConnectOPC.Size = new System.Drawing.Size(180, 22);
-            this.ToolStripMenuItemConnectOPC.Text = "Connect OPC";
-            // 
-            // ToolStripMenuItemAboutOpc
-            // 
-            this.ToolStripMenuItemAboutOpc.Name = "ToolStripMenuItemAboutOpc";
-            this.ToolStripMenuItemAboutOpc.Size = new System.Drawing.Size(180, 22);
-            this.ToolStripMenuItemAboutOpc.Text = "About Opc";
             // 
             // form_tag
             // 
@@ -348,9 +323,10 @@
             this.ClientSize = new System.Drawing.Size(831, 513);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "form_tag";
             this.Text = "TAG";
+            this.Load += new System.EventHandler(this.form_tag_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -361,10 +337,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -377,22 +350,18 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxHost;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FlagOpc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnTimeStamp;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnQuality;
-        private System.Windows.Forms.DataGridViewTextBoxColumn typeData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValueTag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNameTag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNo;
         private System.Windows.Forms.DataGridView dataGridViewTagIo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn count;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusTagIo;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNameTag;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValueTag;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnQuality;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnTimeStamp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn count;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FlagOpc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn type;
     }
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GodSharp.Opc.Da.OpcAutomation</name>
+    </assembly>
+    <members>
+        <member name="M:GodSharp.Opc.Da.AutomationServerDiscovery.GetServers(GodSharp.Opc.Da.ServerSpecification,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationClient.OnConnect">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationClient.Disconnect">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationClient.CreateSubscription(GodSharp.Opc.Da.Group)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationClient.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationClient.BrowseNodes(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationClient.BrowseNodeTree(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationClient.GetItemProperties(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.Add(GodSharp.Opc.Da.Tag[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.Add2(GodSharp.Opc.Da.Tag[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.Remove(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.RemoveAll">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.Read(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.Reads(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.Write(System.String,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.Writes(System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.ReadsAsync(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.ReadAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.WritesAsync(System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.WriteAsync(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.WriteAsync(System.String,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.RefreshAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcAutomationGroupSubscription.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

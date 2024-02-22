@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GodSharp.Opc.Da.OpcNetApi</name>
+    </assembly>
+    <members>
+        <member name="M:GodSharp.Opc.Da.NetApiServerDiscovery.GetServers(GodSharp.Opc.Da.ServerSpecification,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiClient.OnConnect">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiClient.Disconnect">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiClient.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiClient.CreateSubscription(GodSharp.Opc.Da.Group)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiClient.BrowseNodes(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiClient.BrowseNodeTree(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiClient.GetItemProperties(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.Add(GodSharp.Opc.Da.Tag[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.Remove(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.RemoveAll">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.Read(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.Reads(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.Write(System.String,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.Writes(System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.ReadsAsync(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.ReadAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.WritesAsync(System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.WriteAsync(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.WriteAsync(System.String,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.RefreshAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:GodSharp.Opc.Da.OpcNetApiGroupSubscription.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>
