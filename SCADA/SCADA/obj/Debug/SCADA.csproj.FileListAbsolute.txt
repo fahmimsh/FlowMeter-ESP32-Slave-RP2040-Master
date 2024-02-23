@@ -143,3 +143,4 @@ C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slav
 C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.exe
 C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.pdb
 C:\Users\AAP-AUTOMATION-Fahmi\Documents\PlatformIO\Projects\FlowMeter-ESP32-Slave-RP2040-Master\SCADA\SCADA\obj\Debug\SCADA.form_label.resources
+C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.form_label.resources

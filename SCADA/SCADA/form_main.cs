@@ -51,7 +51,8 @@ namespace SCADA
         }
         private void form_main_Shown(object sender, EventArgs e)
         {
-            timer_handle_opc_tag.Enabled = true;
+            timer_handle_opc_tag1.Enabled = true;
+            timer_handle_opc_tag2.Enabled = true;
         }
         internal bool OPC1Connect_or_Disconnect(bool flag_is_set)
         {
@@ -189,17 +190,17 @@ namespace SCADA
                 return defaultValue;
             }
         }
-        private void timer_handle_opc_tag_Tick(object sender, EventArgs e)
+        private void timer_handle_opc_tag1_Tick(object sender, EventArgs e)
         {
             Dictionary<int, Action> tagMapping = new Dictionary<int, Action> // Dictionary untuk menyimpan informasi terkait indeks dan fungsi delegate yang sesuai
             {
                 { 1, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["valve_flow"], GetOPCDataValue<bool>(1)); }) },
-                { 2, () => BeginInvoke((MethodInvoker)delegate { 
+                { 2, () => BeginInvoke((MethodInvoker)delegate {
                     uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["pump_flow"], GetOPCDataValue<bool>(2));
                     uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["sensor_flow"], GetOPCDataValue<bool>(2));
                 }) },
                 { 3, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.BtnGlgSet(uc_x_hmi.glgControl_hmi1, "set_on_off", GetOPCDataValue<bool>(3), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
-                //{ 4, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(4, !GetOPCDataValue<bool>(5)); }) },
+                //{ 4, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(4, !GetOPCDataValue<bool>(4)); }) },
                 { 5, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_mode", GetOPCDataValue<bool>(5) ? "Auto" : "Manual"); }) },
                 { 6, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "val_k-factor/Value", GetOPCDataValue<double>(6)); }) },
                 { 7, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["val_setliter"], GetOPCDataValue<double>(7)); }) },
@@ -214,6 +215,91 @@ namespace SCADA
                 { 22, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(22)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_transfer", Properties.Settings.Default.fl1_label_tf2); flow_meter1.label_transfer = Properties.Settings.Default.fl1_label_tf2; } }) },
                 { 23, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(23)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_transfer", Properties.Settings.Default.fl1_label_tf3); flow_meter1.label_transfer = Properties.Settings.Default.fl1_label_tf3; } }) },
                 { 24, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(24)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_transfer", Properties.Settings.Default.fl1_label_tf4); flow_meter1.label_transfer = Properties.Settings.Default.fl1_label_tf4; } }) },
+
+                { 11, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, uc_x_hmi.glgSetTag2.TagMaps["valve_flow"], GetOPCDataValue<bool>(11)); }) },
+                { 12, () => BeginInvoke((MethodInvoker)delegate {
+                    uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, uc_x_hmi.glgSetTag2.TagMaps["pump_flow"], GetOPCDataValue<bool>(12));
+                    uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, uc_x_hmi.glgSetTag2.TagMaps["sensor_flow"], GetOPCDataValue<bool>(12));
+                }) },
+                { 13, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.BtnGlgSet(uc_x_hmi.glgControl_hmi2, "set_on_off", GetOPCDataValue<bool>(13), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
+                //{ 14, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(14, !GetOPCDataValue<bool>(14)); }) },
+                { 15, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_mode", GetOPCDataValue<bool>(15) ? "Auto" : "Manual"); }) },
+                { 16, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, "val_k-factor/Value", GetOPCDataValue<double>(16)); }) },
+                { 17, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, uc_x_hmi.glgSetTag2.TagMaps["val_setliter"], GetOPCDataValue<double>(17)); }) },
+                { 18, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, "val_f-kurang/Value", GetOPCDataValue<double>(18)); }) },
+                { 19, () => BeginInvoke((MethodInvoker)delegate {
+                    uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, "val_liter/Value", GetOPCDataValue<double>(19));
+                    uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, "level_liter/Value", GetOPCDataValue<double>(19), GetOPCDataValue<double>(17));
+                    uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, "level_liter/LowLevel/LevelLow", GetOPCDataValue<double>(19), GetOPCDataValue<double>(17));
+                }) },
+                { 20, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, "val_lpm/Value", GetOPCDataValue<double>(20)); }) },
+                { 25, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(25)){ uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_transfer", Properties.Settings.Default.fl2_label_tf1); flow_meter2.label_transfer = Properties.Settings.Default.fl2_label_tf1; } }) },
+                { 26, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(26)){ uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_transfer", Properties.Settings.Default.fl2_label_tf2); flow_meter2.label_transfer = Properties.Settings.Default.fl2_label_tf2; } }) },
+                { 27, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(27)){ uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_transfer", Properties.Settings.Default.fl2_label_tf3); flow_meter2.label_transfer = Properties.Settings.Default.fl2_label_tf3; } }) },
+                { 28, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(28)){ uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_transfer", Properties.Settings.Default.fl2_label_tf4); flow_meter2.label_transfer = Properties.Settings.Default.fl2_label_tf4; } }) },
+            };
+            foreach (var kvp in tagMapping.OrderBy(x => GetOPCDataValue<bool>(x.Key)))
+            {
+                Action action = kvp.Value; int clientHandle = kvp.Key;
+                if (OPCData_1.Any(data => data.ClientHandle == clientHandle && data.Flag))
+                {
+                    action.Invoke();
+                    OPCData_1.First(data => data.ClientHandle == clientHandle).Flag = false;
+                }
+            }
+        }
+        private void timer_handle_opc_tag2_Tick(object sender, EventArgs e)
+        {
+            Dictionary<int, Action> tagMapping = new Dictionary<int, Action> // Dictionary untuk menyimpan informasi terkait indeks dan fungsi delegate yang sesuai
+            {
+                { 29, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, uc_x_hmi.glgSetTag3.TagMaps["valve_flow"], GetOPCDataValue<bool>(29)); }) },
+                { 30, () => BeginInvoke((MethodInvoker)delegate {
+                    uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, uc_x_hmi.glgSetTag3.TagMaps["pump_flow"], GetOPCDataValue<bool>(30));
+                    uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, uc_x_hmi.glgSetTag3.TagMaps["sensor_flow"], GetOPCDataValue<bool>(30));
+                }) },
+                { 31, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.BtnGlgSet(uc_x_hmi.glgControl_hmi3, "set_on_off", GetOPCDataValue<bool>(31), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
+                //{ 32, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(32, !GetOPCDataValue<bool>(32)); }) },
+                { 33, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "text_mode", GetOPCDataValue<bool>(33) ? "Auto" : "Manual"); }) },
+                { 34, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_k-factor/Value", GetOPCDataValue<double>(34)); }) },
+                { 35, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, uc_x_hmi.glgSetTag3.TagMaps["val_setliter"], GetOPCDataValue<double>(35)); }) },
+                { 36, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_f-kurang/Value", GetOPCDataValue<double>(36)); }) },
+                { 37, () => BeginInvoke((MethodInvoker)delegate {
+                    uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_liter/Value", GetOPCDataValue<double>(37));
+                    uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "level_liter/Value", GetOPCDataValue<double>(37), GetOPCDataValue<double>(35));
+                    uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "level_liter/LowLevel/LevelLow", GetOPCDataValue<double>(37), GetOPCDataValue<double>(35));
+                }) },
+                { 38, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_lpm/Value", GetOPCDataValue<double>(38)); }) },
+                { 49, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(49)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "text_transfer", Properties.Settings.Default.fl3_label_tf1); flow_meter3.label_transfer = Properties.Settings.Default.fl3_label_tf1; } }) },
+                { 50, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(50)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "text_transfer", Properties.Settings.Default.fl3_label_tf2); flow_meter3.label_transfer = Properties.Settings.Default.fl3_label_tf2; } }) },
+                { 51, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(51)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "text_transfer", Properties.Settings.Default.fl3_label_tf3); flow_meter3.label_transfer = Properties.Settings.Default.fl3_label_tf3; } }) },
+                { 52, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(52)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "text_transfer", Properties.Settings.Default.fl3_label_tf4); flow_meter3.label_transfer = Properties.Settings.Default.fl3_label_tf4; } }) },
+                { 53, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(53)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "text_sumber", Properties.Settings.Default.fl3_label_sumber1); flow_meter3.label_sumber = Properties.Settings.Default.fl3_label_sumber1; } }) },
+                { 54, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(54)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "text_sumber", Properties.Settings.Default.fl3_label_sumber2); flow_meter3.label_sumber = Properties.Settings.Default.fl3_label_sumber2; } }) },
+
+
+                { 39, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, uc_x_hmi.glgSetTag4.TagMaps["valve_flow"], GetOPCDataValue<bool>(39)); }) },
+                { 40, () => BeginInvoke((MethodInvoker)delegate {
+                    uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, uc_x_hmi.glgSetTag4.TagMaps["pump_flow"], GetOPCDataValue<bool>(40));
+                    uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, uc_x_hmi.glgSetTag4.TagMaps["sensor_flow"], GetOPCDataValue<bool>(40));
+                }) },
+                { 41, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.BtnGlgSet(uc_x_hmi.glgControl_hmi4, "set_on_off", GetOPCDataValue<bool>(41), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
+                //{ 42, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(42, !GetOPCDataValue<bool>(42)); }) },
+                { 43, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "text_mode", GetOPCDataValue<bool>(43) ? "Auto" : "Manual"); }) },
+                { 44, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "val_k-factor/Value", GetOPCDataValue<double>(44)); }) },
+                { 45, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, uc_x_hmi.glgSetTag4.TagMaps["val_setliter"], GetOPCDataValue<double>(45)); }) },
+                { 46, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "val_f-kurang/Value", GetOPCDataValue<double>(46)); }) },
+                { 47, () => BeginInvoke((MethodInvoker)delegate {
+                    uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "val_liter/Value", GetOPCDataValue<double>(47));
+                    uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "level_liter/Value", GetOPCDataValue<double>(47), GetOPCDataValue<double>(45));
+                    uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "level_liter/LowLevel/LevelLow", GetOPCDataValue<double>(47), GetOPCDataValue<double>(45));
+                }) },
+                { 48, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "val_lpm/Value", GetOPCDataValue<double>(48)); }) },
+                { 55, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(55)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "text_transfer", Properties.Settings.Default.fl4_label_tf1); flow_meter4.label_transfer = Properties.Settings.Default.fl4_label_tf1; } }) },
+                { 56, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(56)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "text_transfer", Properties.Settings.Default.fl4_label_tf2); flow_meter4.label_transfer = Properties.Settings.Default.fl4_label_tf2; } }) },
+                { 57, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(57)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "text_transfer", Properties.Settings.Default.fl4_label_tf3); flow_meter4.label_transfer = Properties.Settings.Default.fl4_label_tf3; } }) },
+                { 58, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(58)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "text_transfer", Properties.Settings.Default.fl4_label_tf4); flow_meter4.label_transfer = Properties.Settings.Default.fl4_label_tf4; } }) },
+                { 59, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(59)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "text_sumber", Properties.Settings.Default.fl4_label_sumber1); flow_meter4.label_sumber = Properties.Settings.Default.fl4_label_sumber1; } }) },
+                { 60, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(60)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "text_sumber", Properties.Settings.Default.fl4_label_sumber2); flow_meter4.label_sumber = Properties.Settings.Default.fl4_label_sumber2; } }) },
             };
             foreach (var kvp in tagMapping.OrderBy(x => GetOPCDataValue<bool>(x.Key)))
             {
@@ -233,7 +319,6 @@ namespace SCADA
             _form_tag.Show();
             _form_tag.BringToFront();
         }
-
         private void menu_label_Click(object sender, EventArgs e)
         {
             form_label _form_label = form_label.GetInstance(this);

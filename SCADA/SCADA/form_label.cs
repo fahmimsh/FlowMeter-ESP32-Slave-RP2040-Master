@@ -34,6 +34,21 @@ namespace SCADA
             tb_fl2_transfer_2.Text = Properties.Settings.Default.fl2_label_tf2;
             tb_fl2_transfer_3.Text = Properties.Settings.Default.fl2_label_tf3;
             tb_fl2_transfer_4.Text = Properties.Settings.Default.fl2_label_tf4;
+
+            tb_fl3_header.Text = Properties.Settings.Default.fl3_header;
+            tb_fl3_sumber_1.Text = Properties.Settings.Default.fl3_label_sumber1;
+            tb_fl3_sumber_2.Text = Properties.Settings.Default.fl3_label_sumber2;
+            tb_fl3_transfer_1.Text = Properties.Settings.Default.fl3_label_tf1;
+            tb_fl3_transfer_2.Text = Properties.Settings.Default.fl3_label_tf2;
+            tb_fl3_transfer_3.Text = Properties.Settings.Default.fl3_label_tf3;
+            tb_fl3_transfer_4.Text = Properties.Settings.Default.fl3_label_tf4;
+            tb_fl4_header.Text = Properties.Settings.Default.fl4_header;
+            tb_fl4_sumber_1.Text = Properties.Settings.Default.fl4_label_sumber1;
+            tb_fl4_sumber_2.Text = Properties.Settings.Default.fl4_label_sumber2;
+            tb_fl4_transfer_1.Text = Properties.Settings.Default.fl4_label_tf1;
+            tb_fl4_transfer_2.Text = Properties.Settings.Default.fl4_label_tf2;
+            tb_fl4_transfer_3.Text = Properties.Settings.Default.fl4_label_tf3;
+            tb_fl4_transfer_4.Text = Properties.Settings.Default.fl4_label_tf4;
         }
         private void btn_cancle_Click(object sender, EventArgs e)
         {
@@ -53,6 +68,23 @@ namespace SCADA
             Properties.Settings.Default.fl2_label_tf2 = tb_fl2_transfer_2.Text;
             Properties.Settings.Default.fl2_label_tf3 = tb_fl2_transfer_3.Text;
             Properties.Settings.Default.fl2_label_tf4 = tb_fl2_transfer_4.Text;
+
+            Properties.Settings.Default.fl3_header = tb_fl3_header.Text;
+            Properties.Settings.Default.fl3_label_sumber1 = tb_fl3_sumber_1.Text;
+            Properties.Settings.Default.fl3_label_sumber2 = tb_fl3_sumber_2.Text;
+            Properties.Settings.Default.fl3_label_tf1 = tb_fl3_transfer_1.Text;
+            Properties.Settings.Default.fl3_label_tf2 = tb_fl3_transfer_2.Text;
+            Properties.Settings.Default.fl3_label_tf3 = tb_fl3_transfer_3.Text;
+            Properties.Settings.Default.fl3_label_tf4 = tb_fl3_transfer_4.Text;
+            Properties.Settings.Default.fl4_header = tb_fl4_header.Text;
+            Properties.Settings.Default.fl4_label_sumber1 = tb_fl4_sumber_1.Text;
+            Properties.Settings.Default.fl4_label_sumber2 = tb_fl4_sumber_2.Text;
+            Properties.Settings.Default.fl4_label_tf1 = tb_fl4_transfer_1.Text;
+            Properties.Settings.Default.fl4_label_tf2 = tb_fl4_transfer_2.Text;
+            Properties.Settings.Default.fl4_label_tf3 = tb_fl4_transfer_3.Text;
+            Properties.Settings.Default.fl4_label_tf4 = tb_fl4_transfer_4.Text;
+            Properties.Settings.Default.Save();
+            this.Close();
         }
     }
 }

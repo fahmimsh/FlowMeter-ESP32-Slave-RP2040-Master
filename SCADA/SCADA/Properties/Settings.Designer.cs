@@ -37,7 +37,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MX.OPC")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mitsubishi.MXOPC")]
         public string OPCServer1 {
             get {
                 return ((string)(this["OPCServer1"]));
@@ -212,6 +212,174 @@ namespace SCADA.Properties {
             }
             set {
                 this["fl2_label_sumber1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank 1")]
+        public string fl3_label_tf1 {
+            get {
+                return ((string)(this["fl3_label_tf1"]));
+            }
+            set {
+                this["fl3_label_tf1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank 2")]
+        public string fl3_label_tf2 {
+            get {
+                return ((string)(this["fl3_label_tf2"]));
+            }
+            set {
+                this["fl3_label_tf2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank 3")]
+        public string fl3_label_tf3 {
+            get {
+                return ((string)(this["fl3_label_tf3"]));
+            }
+            set {
+                this["fl3_label_tf3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank 4")]
+        public string fl3_label_tf4 {
+            get {
+                return ((string)(this["fl3_label_tf4"]));
+            }
+            set {
+                this["fl3_label_tf4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Flow Meter Tank Double Jaket 1")]
+        public string fl3_header {
+            get {
+                return ((string)(this["fl3_header"]));
+            }
+            set {
+                this["fl3_header"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sumber RO")]
+        public string fl3_label_sumber1 {
+            get {
+                return ((string)(this["fl3_label_sumber1"]));
+            }
+            set {
+                this["fl3_label_sumber1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
+        public string fl3_label_sumber2 {
+            get {
+                return ((string)(this["fl3_label_sumber2"]));
+            }
+            set {
+                this["fl3_label_sumber2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank 1")]
+        public string fl4_label_tf1 {
+            get {
+                return ((string)(this["fl4_label_tf1"]));
+            }
+            set {
+                this["fl4_label_tf1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank 2")]
+        public string fl4_label_tf2 {
+            get {
+                return ((string)(this["fl4_label_tf2"]));
+            }
+            set {
+                this["fl4_label_tf2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank 3")]
+        public string fl4_label_tf3 {
+            get {
+                return ((string)(this["fl4_label_tf3"]));
+            }
+            set {
+                this["fl4_label_tf3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank 4")]
+        public string fl4_label_tf4 {
+            get {
+                return ((string)(this["fl4_label_tf4"]));
+            }
+            set {
+                this["fl4_label_tf4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Flow Meter Tank Double Jaket 2")]
+        public string fl4_header {
+            get {
+                return ((string)(this["fl4_header"]));
+            }
+            set {
+                this["fl4_header"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sumber RO")]
+        public string fl4_label_sumber1 {
+            get {
+                return ((string)(this["fl4_label_sumber1"]));
+            }
+            set {
+                this["fl4_label_sumber1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
+        public string fl4_label_sumber2 {
+            get {
+                return ((string)(this["fl4_label_sumber2"]));
+            }
+            set {
+                this["fl4_label_sumber2"] = value;
             }
         }
     }

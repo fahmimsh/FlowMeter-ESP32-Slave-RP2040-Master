@@ -6,7 +6,7 @@
       <Value Profile="(Default)">tantirta</Value>
     </Setting>
     <Setting Name="OPCServer1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MX.OPC</Value>
+      <Value Profile="(Default)">Mitsubishi.MXOPC</Value>
     </Setting>
     <Setting Name="OPCHost" Type="System.String" Scope="User">
       <Value Profile="(Default)">localhost</Value>
@@ -49,6 +49,48 @@
     </Setting>
     <Setting Name="fl2_label_sumber1" Type="System.String" Scope="User">
       <Value Profile="(Default)">UHT 2</Value>
+    </Setting>
+    <Setting Name="fl3_label_tf1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tank 1</Value>
+    </Setting>
+    <Setting Name="fl3_label_tf2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tank 2</Value>
+    </Setting>
+    <Setting Name="fl3_label_tf3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tank 3</Value>
+    </Setting>
+    <Setting Name="fl3_label_tf4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tank 4</Value>
+    </Setting>
+    <Setting Name="fl3_header" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Flow Meter Tank Double Jaket 1</Value>
+    </Setting>
+    <Setting Name="fl3_label_sumber1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sumber RO</Value>
+    </Setting>
+    <Setting Name="fl3_label_sumber2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Air</Value>
+    </Setting>
+    <Setting Name="fl4_label_tf1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tank 1</Value>
+    </Setting>
+    <Setting Name="fl4_label_tf2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tank 2</Value>
+    </Setting>
+    <Setting Name="fl4_label_tf3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tank 3</Value>
+    </Setting>
+    <Setting Name="fl4_label_tf4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tank 4</Value>
+    </Setting>
+    <Setting Name="fl4_header" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Flow Meter Tank Double Jaket 2</Value>
+    </Setting>
+    <Setting Name="fl4_label_sumber1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sumber RO</Value>
+    </Setting>
+    <Setting Name="fl4_label_sumber2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Air</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -57,4 +57,19 @@ namespace SCADA
         public static string label_transfer { get; set; }
         public static string label_sumber{ get; set; }
     }
+    internal static class flow_meter2
+    {
+        public static string label_transfer { get; set; }
+        public static string label_sumber { get; set; }
+    }
+    internal static class flow_meter3
+    {
+        public static string label_transfer { get; set; }
+        public static string label_sumber { get; set; }
+    }
+    internal static class flow_meter4
+    {
+        public static string label_transfer { get; set; }
+        public static string label_sumber { get; set; }
+    }
 }
