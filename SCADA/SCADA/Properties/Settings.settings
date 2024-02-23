@@ -11,5 +11,44 @@
     <Setting Name="OPCHost" Type="System.String" Scope="User">
       <Value Profile="(Default)">localhost</Value>
     </Setting>
+    <Setting Name="auto_connect_opc" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="fl1_label_tf1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin 1</Value>
+    </Setting>
+    <Setting Name="fl1_label_tf2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin 2</Value>
+    </Setting>
+    <Setting Name="fl1_label_tf3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin 3</Value>
+    </Setting>
+    <Setting Name="fl1_label_tf4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin 4</Value>
+    </Setting>
+    <Setting Name="fl1_header" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Flow Meter UHT 1</Value>
+    </Setting>
+    <Setting Name="fl1_label_sumber1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UHT 1</Value>
+    </Setting>
+    <Setting Name="fl2_label_tf1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin 1</Value>
+    </Setting>
+    <Setting Name="fl2_label_tf2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin 2</Value>
+    </Setting>
+    <Setting Name="fl2_label_tf3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin 3</Value>
+    </Setting>
+    <Setting Name="fl2_label_tf4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin 4</Value>
+    </Setting>
+    <Setting Name="fl2_header" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Flow Meter UHT 2</Value>
+    </Setting>
+    <Setting Name="fl2_label_sumber1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UHT 2</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -202,6 +202,9 @@
       <DependentUpon>uc_log.cs</DependentUpon>
     </Compile>
     <Compile Include="variable.cs" />
+    <EmbeddedResource Include="form_label.resx">
+      <DependentUpon>form_label.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="form_main.resx">
       <DependentUpon>form_main.cs</DependentUpon>
     </EmbeddedResource>

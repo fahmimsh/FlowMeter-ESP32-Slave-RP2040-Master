@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\SCADA"
+    "\\SCADA",
+    "\\SCADA\\UserControls"
   ],
-  "SelectedNode": "\\SCADA\\form_main.cs",
+  "SelectedNode": "\\SCADA\\UserControls\\uc_hmi.cs",
   "PreviewInSolutionExplorer": false
 }

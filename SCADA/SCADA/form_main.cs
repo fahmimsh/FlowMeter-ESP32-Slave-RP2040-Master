@@ -46,7 +46,7 @@ namespace SCADA
         {
             add_to_main_panel(uc_x_log);
             add_to_main_panel(uc_x_chart);
-            OPC1Connect_or_Disconnect(false);
+            if(Properties.Settings.Default.auto_connect_opc) OPC1Connect_or_Disconnect(false);
             add_to_main_panel(uc_x_hmi);
         }
         private void form_main_Shown(object sender, EventArgs e)
@@ -210,6 +210,10 @@ namespace SCADA
                     uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "level_liter/LowLevel/LevelLow", GetOPCDataValue<double>(9), GetOPCDataValue<double>(7));
                 }) },
                 { 10, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "val_lpm/Value", GetOPCDataValue<double>(10)); }) },
+                { 21, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(21)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_transfer", Properties.Settings.Default.fl1_label_tf1); flow_meter1.label_transfer = Properties.Settings.Default.fl1_label_tf1; } }) },
+                { 22, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(22)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_transfer", Properties.Settings.Default.fl1_label_tf2); flow_meter1.label_transfer = Properties.Settings.Default.fl1_label_tf2; } }) },
+                { 23, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(23)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_transfer", Properties.Settings.Default.fl1_label_tf3); flow_meter1.label_transfer = Properties.Settings.Default.fl1_label_tf3; } }) },
+                { 24, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(24)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_transfer", Properties.Settings.Default.fl1_label_tf4); flow_meter1.label_transfer = Properties.Settings.Default.fl1_label_tf4; } }) },
             };
             foreach (var kvp in tagMapping.OrderBy(x => GetOPCDataValue<bool>(x.Key)))
             {
@@ -250,7 +254,7 @@ namespace SCADA
         private void menu_file_exit_Click(object sender, EventArgs e) => OnClosed(EventArgs.Empty);
         protected override void OnClosed(EventArgs args)
         {
-            OPC1Connect_or_Disconnect(false);
+            OPC1Connect_or_Disconnect(true);
             Application.Exit();
         }
     }

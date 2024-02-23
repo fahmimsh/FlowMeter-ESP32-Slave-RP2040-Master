@@ -56,6 +56,7 @@
             this.panels_hmi1.Name = "panels_hmi1";
             this.panels_hmi1.RowCount = 1;
             this.panels_hmi1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.panels_hmi1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.panels_hmi1.Size = new System.Drawing.Size(1229, 507);
             this.panels_hmi1.TabIndex = 0;
             // 

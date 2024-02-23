@@ -52,4 +52,9 @@ namespace SCADA
         public static bool Connected { get; set; }
         public static bool IsLogData { get; set; }
     }
+    internal static class flow_meter1
+    {
+        public static string label_transfer { get; set; }
+        public static string label_sumber{ get; set; }
+    }
 }
