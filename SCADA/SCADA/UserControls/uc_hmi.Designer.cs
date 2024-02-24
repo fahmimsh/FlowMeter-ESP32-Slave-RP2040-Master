@@ -33,13 +33,13 @@
             this.glgControl_hmi1 = new GenLogic.GlgControl();
             this.panel_header_hmi1 = new System.Windows.Forms.Panel();
             this.label_header_hmi1 = new System.Windows.Forms.Label();
+            this.panel_hmi2 = new System.Windows.Forms.Panel();
+            this.glgControl_hmi2 = new GenLogic.GlgControl();
+            this.panel_header_hmi2 = new System.Windows.Forms.Panel();
+            this.label_header_hmi2 = new System.Windows.Forms.Label();
             this.tabControl_hmi = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.panel_hmi2 = new System.Windows.Forms.Panel();
-            this.panel_header_hmi2 = new System.Windows.Forms.Panel();
-            this.label_header_hmi2 = new System.Windows.Forms.Label();
-            this.glgControl_hmi2 = new GenLogic.GlgControl();
             this.panels_hmi2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel_hmi3 = new System.Windows.Forms.Panel();
             this.glgControl_hmi3 = new GenLogic.GlgControl();
@@ -52,11 +52,11 @@
             this.panels_hmi1.SuspendLayout();
             this.panel_hmi1.SuspendLayout();
             this.panel_header_hmi1.SuspendLayout();
+            this.panel_hmi2.SuspendLayout();
+            this.panel_header_hmi2.SuspendLayout();
             this.tabControl_hmi.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.panel_hmi2.SuspendLayout();
-            this.panel_header_hmi2.SuspendLayout();
             this.panels_hmi2.SuspendLayout();
             this.panel_hmi3.SuspendLayout();
             this.panel_header_hmi3.SuspendLayout();
@@ -133,6 +133,57 @@
             this.label_header_hmi1.TabIndex = 0;
             this.label_header_hmi1.Text = "Flow Meter 1";
             // 
+            // panel_hmi2
+            // 
+            this.panel_hmi2.Controls.Add(this.glgControl_hmi2);
+            this.panel_hmi2.Controls.Add(this.panel_header_hmi2);
+            this.panel_hmi2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_hmi2.Location = new System.Drawing.Point(617, 3);
+            this.panel_hmi2.Name = "panel_hmi2";
+            this.panel_hmi2.Size = new System.Drawing.Size(609, 501);
+            this.panel_hmi2.TabIndex = 1;
+            // 
+            // glgControl_hmi2
+            // 
+            this.glgControl_hmi2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glgControl_hmi2.DrawingFile = "";
+            this.glgControl_hmi2.DrawingObject = null;
+            this.glgControl_hmi2.DrawingURL = "";
+            this.glgControl_hmi2.HierarchyEnabled = true;
+            this.glgControl_hmi2.Location = new System.Drawing.Point(0, 25);
+            this.glgControl_hmi2.Margin = new System.Windows.Forms.Padding(20);
+            this.glgControl_hmi2.MinimumSize = new System.Drawing.Size(5, 5);
+            this.glgControl_hmi2.Name = "glgControl_hmi2";
+            this.glgControl_hmi2.Padding = new System.Windows.Forms.Padding(2);
+            this.glgControl_hmi2.SelectEnabled = true;
+            this.glgControl_hmi2.Size = new System.Drawing.Size(609, 476);
+            this.glgControl_hmi2.TabIndex = 2;
+            this.glgControl_hmi2.Text = "glgControl1";
+            this.glgControl_hmi2.Trace2Enabled = false;
+            this.glgControl_hmi2.TraceEnabled = false;
+            // 
+            // panel_header_hmi2
+            // 
+            this.panel_header_hmi2.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel_header_hmi2.Controls.Add(this.label_header_hmi2);
+            this.panel_header_hmi2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel_header_hmi2.Location = new System.Drawing.Point(0, 0);
+            this.panel_header_hmi2.Margin = new System.Windows.Forms.Padding(5);
+            this.panel_header_hmi2.Name = "panel_header_hmi2";
+            this.panel_header_hmi2.Padding = new System.Windows.Forms.Padding(10);
+            this.panel_header_hmi2.Size = new System.Drawing.Size(609, 25);
+            this.panel_header_hmi2.TabIndex = 1;
+            // 
+            // label_header_hmi2
+            // 
+            this.label_header_hmi2.AutoSize = true;
+            this.label_header_hmi2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_header_hmi2.Location = new System.Drawing.Point(3, 3);
+            this.label_header_hmi2.Name = "label_header_hmi2";
+            this.label_header_hmi2.Size = new System.Drawing.Size(94, 18);
+            this.label_header_hmi2.TabIndex = 0;
+            this.label_header_hmi2.Text = "Flow Meter 1";
+            // 
             // tabControl_hmi
             // 
             this.tabControl_hmi.Controls.Add(this.tabPage1);
@@ -165,57 +216,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // panel_hmi2
-            // 
-            this.panel_hmi2.Controls.Add(this.glgControl_hmi2);
-            this.panel_hmi2.Controls.Add(this.panel_header_hmi2);
-            this.panel_hmi2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_hmi2.Location = new System.Drawing.Point(617, 3);
-            this.panel_hmi2.Name = "panel_hmi2";
-            this.panel_hmi2.Size = new System.Drawing.Size(609, 501);
-            this.panel_hmi2.TabIndex = 1;
-            // 
-            // panel_header_hmi2
-            // 
-            this.panel_header_hmi2.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.panel_header_hmi2.Controls.Add(this.label_header_hmi2);
-            this.panel_header_hmi2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_header_hmi2.Location = new System.Drawing.Point(0, 0);
-            this.panel_header_hmi2.Margin = new System.Windows.Forms.Padding(5);
-            this.panel_header_hmi2.Name = "panel_header_hmi2";
-            this.panel_header_hmi2.Padding = new System.Windows.Forms.Padding(10);
-            this.panel_header_hmi2.Size = new System.Drawing.Size(609, 25);
-            this.panel_header_hmi2.TabIndex = 1;
-            // 
-            // label_header_hmi2
-            // 
-            this.label_header_hmi2.AutoSize = true;
-            this.label_header_hmi2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_header_hmi2.Location = new System.Drawing.Point(3, 3);
-            this.label_header_hmi2.Name = "label_header_hmi2";
-            this.label_header_hmi2.Size = new System.Drawing.Size(94, 18);
-            this.label_header_hmi2.TabIndex = 0;
-            this.label_header_hmi2.Text = "Flow Meter 1";
-            // 
-            // glgControl_hmi2
-            // 
-            this.glgControl_hmi2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glgControl_hmi2.DrawingFile = "";
-            this.glgControl_hmi2.DrawingObject = null;
-            this.glgControl_hmi2.DrawingURL = "";
-            this.glgControl_hmi2.HierarchyEnabled = true;
-            this.glgControl_hmi2.Location = new System.Drawing.Point(0, 25);
-            this.glgControl_hmi2.Margin = new System.Windows.Forms.Padding(20);
-            this.glgControl_hmi2.MinimumSize = new System.Drawing.Size(5, 5);
-            this.glgControl_hmi2.Name = "glgControl_hmi2";
-            this.glgControl_hmi2.Padding = new System.Windows.Forms.Padding(2);
-            this.glgControl_hmi2.SelectEnabled = true;
-            this.glgControl_hmi2.Size = new System.Drawing.Size(609, 476);
-            this.glgControl_hmi2.TabIndex = 2;
-            this.glgControl_hmi2.Text = "glgControl1";
-            this.glgControl_hmi2.Trace2Enabled = false;
-            this.glgControl_hmi2.TraceEnabled = false;
             // 
             // panels_hmi2
             // 
@@ -349,12 +349,12 @@
             this.panel_hmi1.ResumeLayout(false);
             this.panel_header_hmi1.ResumeLayout(false);
             this.panel_header_hmi1.PerformLayout();
-            this.tabControl_hmi.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.panel_hmi2.ResumeLayout(false);
             this.panel_header_hmi2.ResumeLayout(false);
             this.panel_header_hmi2.PerformLayout();
+            this.tabControl_hmi.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.panels_hmi2.ResumeLayout(false);
             this.panel_hmi3.ResumeLayout(false);
             this.panel_header_hmi3.ResumeLayout(false);

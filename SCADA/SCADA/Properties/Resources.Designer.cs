@@ -223,6 +223,16 @@ namespace SCADA.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_excel_16 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-excel-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_improvement_16 {
             get {
                 object obj = ResourceManager.GetObject("icons8-improvement-16", resourceCulture);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace SCADA
@@ -51,6 +52,53 @@ namespace SCADA
     {
         public static bool Connected { get; set; }
         public static bool IsLogData { get; set; }
+        public static bool IsLogChart { get; set; }
+    }
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    sealed class HeaderColumnAttribute : Attribute
+    {
+        public string HeaderText { get; }
+
+        public HeaderColumnAttribute(string headerText)
+        {
+            HeaderText = headerText;
+        }
+    }
+
+    internal class data_log_entry : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        private int ID { get; set; }
+        [HeaderColumn("ID")]
+        public int id { get => ID; set { ID = value; OnPropertyChanged(nameof(id)); } }
+        private string FlowMeter { get; set; }
+        [HeaderColumn("Nama Flow Meter")]
+        public string flow_meter { get => FlowMeter; set { FlowMeter = value; OnPropertyChanged(nameof(FlowMeter)); } }
+        private string Mode { get; set; }
+        [HeaderColumn("Mode")]
+        public string mode { get => Mode; set { Mode = value; OnPropertyChanged(nameof(Mode)); } }
+        private double Set_Liter { get; set; }
+        [HeaderColumn("Set Liter")]
+        public double setLiter { get => Set_Liter; set { Set_Liter = value; OnPropertyChanged(nameof(Set_Liter)); } }
+        private double Liter { get; set; }
+        [HeaderColumn("Hasil Liter")]
+        public double liter { get => Liter; set { Liter = value; OnPropertyChanged(nameof(Liter)); } }
+        private double KFactor { get; set; }
+        [HeaderColumn("K-Faktor")]
+        public double k_factor { get => KFactor; set { KFactor = value; OnPropertyChanged(nameof(KFactor)); } }
+        private string FromSource { get; set; }
+        [HeaderColumn("Sumber Flow Meter")]
+        public string from_source { get => FromSource; set { FromSource = value; OnPropertyChanged(nameof(FromSource)); } }
+        private string TransferTo { get; set; }
+        [HeaderColumn("Transfer Ke")]
+        public string transfer_to { get => TransferTo; set { TransferTo = value; OnPropertyChanged(nameof(TransferTo)); } }
+        private DateTime Date_Time { get; set; }
+        [HeaderColumn("Tanggal Dan Waktu")]
+        public DateTime date_time { get => Date_Time; set { Date_Time = value; OnPropertyChanged(nameof(Date_Time)); } }
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
     internal static class flow_meter1
     {

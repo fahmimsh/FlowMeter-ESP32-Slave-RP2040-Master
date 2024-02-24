@@ -245,6 +245,5 @@ namespace SCADA.UserControls
             if (!isCancle) return;
             form.OPCWriteAsync1(59 + set_index, true);
         }
-        public void ShowWarningMessage(string message) => form.ShowWarningMessage(message);
     }
 }

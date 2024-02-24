@@ -92,5 +92,17 @@
     <Setting Name="fl4_label_sumber2" Type="System.String" Scope="User">
       <Value Profile="(Default)">Air</Value>
     </Setting>
+    <Setting Name="DatabaseServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="DatabaseName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">flow_meter_db</Value>
+    </Setting>
+    <Setting Name="PathXampp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\xampp</Value>
+    </Setting>
+    <Setting Name="tabel_db_flowmeter" Type="System.String" Scope="User">
+      <Value Profile="(Default)">log_data</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

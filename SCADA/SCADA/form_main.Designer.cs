@@ -31,6 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form_main));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.status_txt = new System.Windows.Forms.ToolStripStatusLabel();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.panel_main = new System.Windows.Forms.Panel();
+            this.timer_handle_opc_tag1 = new System.Windows.Forms.Timer(this.components);
+            this.timer_handle_opc_tag2 = new System.Windows.Forms.Timer(this.components);
+            this.timer_delete_glg_popup = new System.Windows.Forms.Timer(this.components);
             this.iconsAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_file = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_file_exit = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,12 +51,6 @@
             this.menu_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_minimize = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_connect_opc = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.status_txt = new System.Windows.Forms.ToolStripStatusLabel();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.panel_main = new System.Windows.Forms.Panel();
-            this.timer_handle_opc_tag1 = new System.Windows.Forms.Timer(this.components);
-            this.timer_handle_opc_tag2 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -75,6 +76,53 @@
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip_connect";
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.status_txt});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 567);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1243, 22);
+            this.statusStrip1.TabIndex = 5;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // status_txt
+            // 
+            this.status_txt.Name = "status_txt";
+            this.status_txt.Size = new System.Drawing.Size(38, 17);
+            this.status_txt.Text = "status";
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "icons8-energy-meter-16.png");
+            this.imageList1.Images.SetKeyName(1, "iconTransferLog.ico");
+            // 
+            // panel_main
+            // 
+            this.panel_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_main.Location = new System.Drawing.Point(0, 28);
+            this.panel_main.Name = "panel_main";
+            this.panel_main.Size = new System.Drawing.Size(1243, 539);
+            this.panel_main.TabIndex = 6;
+            // 
+            // timer_handle_opc_tag1
+            // 
+            this.timer_handle_opc_tag1.Interval = 1;
+            this.timer_handle_opc_tag1.Tick += new System.EventHandler(this.timer_handle_opc_tag1_Tick);
+            // 
+            // timer_handle_opc_tag2
+            // 
+            this.timer_handle_opc_tag2.Interval = 1;
+            this.timer_handle_opc_tag2.Tick += new System.EventHandler(this.timer_handle_opc_tag2_Tick);
+            // 
+            // timer_delete_glg_popup
+            // 
+            this.timer_delete_glg_popup.Enabled = true;
+            this.timer_delete_glg_popup.Interval = 1;
+            this.timer_delete_glg_popup.Tick += new System.EventHandler(this.timer_delete_glg_popup_Tick);
+            // 
             // iconsAppToolStripMenuItem
             // 
             this.iconsAppToolStripMenuItem.Image = global::SCADA.Properties.Resources.icons8_scale_16;
@@ -96,7 +144,7 @@
             this.menu_file_exit.Name = "menu_file_exit";
             this.menu_file_exit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.menu_file_exit.ShowShortcutKeys = false;
-            this.menu_file_exit.Size = new System.Drawing.Size(86, 22);
+            this.menu_file_exit.Size = new System.Drawing.Size(90, 26);
             this.menu_file_exit.Text = "Exit";
             this.menu_file_exit.Click += new System.EventHandler(this.menu_file_exit_Click);
             // 
@@ -117,20 +165,20 @@
             this.menu_tag.Name = "menu_tag";
             this.menu_tag.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
             this.menu_tag.ShowShortcutKeys = false;
-            this.menu_tag.Size = new System.Drawing.Size(137, 22);
+            this.menu_tag.Size = new System.Drawing.Size(141, 26);
             this.menu_tag.Text = "TagIO";
             this.menu_tag.Click += new System.EventHandler(this.menu_tag_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(134, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(138, 6);
             // 
             // menu_label
             // 
             this.menu_label.Image = global::SCADA.Properties.Resources.iconsTagPrice;
             this.menu_label.Name = "menu_label";
-            this.menu_label.Size = new System.Drawing.Size(137, 22);
+            this.menu_label.Size = new System.Drawing.Size(141, 26);
             this.menu_label.Text = "Nama Label";
             this.menu_label.Click += new System.EventHandler(this.menu_label_Click);
             // 
@@ -186,47 +234,6 @@
             this.menu_connect_opc.Text = "Disconnect";
             this.menu_connect_opc.Click += new System.EventHandler(this.menu_connect_opc_Click);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.status_txt});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 567);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1243, 22);
-            this.statusStrip1.TabIndex = 5;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // status_txt
-            // 
-            this.status_txt.Name = "status_txt";
-            this.status_txt.Size = new System.Drawing.Size(38, 17);
-            this.status_txt.Text = "status";
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "icons8-energy-meter-16.png");
-            this.imageList1.Images.SetKeyName(1, "iconTransferLog.ico");
-            // 
-            // panel_main
-            // 
-            this.panel_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_main.Location = new System.Drawing.Point(0, 28);
-            this.panel_main.Name = "panel_main";
-            this.panel_main.Size = new System.Drawing.Size(1243, 539);
-            this.panel_main.TabIndex = 6;
-            // 
-            // timer_handle_opc_tag1
-            // 
-            this.timer_handle_opc_tag1.Interval = 1;
-            this.timer_handle_opc_tag1.Tick += new System.EventHandler(this.timer_handle_opc_tag1_Tick);
-            // 
-            // timer_handle_opc_tag2
-            // 
-            this.timer_handle_opc_tag2.Interval = 1;
-            this.timer_handle_opc_tag2.Tick += new System.EventHandler(this.timer_handle_opc_tag2_Tick);
-            // 
             // form_main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -266,13 +273,14 @@
         private System.Windows.Forms.ToolStripMenuItem menu_minimize;
         private System.Windows.Forms.ToolStripMenuItem menu_connect_opc;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel status_txt;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ToolStripMenuItem menu_view_chart;
         private System.Windows.Forms.Panel panel_main;
         private System.Windows.Forms.ToolStripMenuItem menu_hmi;
         private System.Windows.Forms.Timer timer_handle_opc_tag1;
         private System.Windows.Forms.Timer timer_handle_opc_tag2;
+        private System.Windows.Forms.Timer timer_delete_glg_popup;
+        public System.Windows.Forms.ToolStripStatusLabel status_txt;
     }
 }
 

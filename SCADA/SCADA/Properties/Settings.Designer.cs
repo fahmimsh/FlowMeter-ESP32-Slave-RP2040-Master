@@ -382,5 +382,53 @@ namespace SCADA.Properties {
                 this["fl4_label_sumber2"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
+        public string DatabaseServer {
+            get {
+                return ((string)(this["DatabaseServer"]));
+            }
+            set {
+                this["DatabaseServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("flow_meter_db")]
+        public string DatabaseName {
+            get {
+                return ((string)(this["DatabaseName"]));
+            }
+            set {
+                this["DatabaseName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\xampp")]
+        public string PathXampp {
+            get {
+                return ((string)(this["PathXampp"]));
+            }
+            set {
+                this["PathXampp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("log_data")]
+        public string tabel_db_flowmeter {
+            get {
+                return ((string)(this["tabel_db_flowmeter"]));
+            }
+            set {
+                this["tabel_db_flowmeter"] = value;
+            }
+        }
     }
 }

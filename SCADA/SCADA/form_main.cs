@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using SqlKata;
 using SqlKata.Execution;
 using GenLogic;
 using MQTTnet;
@@ -20,6 +19,11 @@ using GodSharp.Opc.Da;
 using GodSharp.Opc.Da.Options;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using SCADA.UserControls;
+using MySql.Data.MySqlClient;
+using SqlKata;
+using SqlKata.Compilers;
+using System.Diagnostics;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace SCADA
 {
@@ -48,6 +52,7 @@ namespace SCADA
             add_to_main_panel(uc_x_chart);
             if(Properties.Settings.Default.auto_connect_opc) OPC1Connect_or_Disconnect(false);
             add_to_main_panel(uc_x_hmi);
+            XamppOpen();
         }
         private void form_main_Shown(object sender, EventArgs e)
         {
@@ -200,7 +205,14 @@ namespace SCADA
                     uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["sensor_flow"], GetOPCDataValue<bool>(2));
                 }) },
                 { 3, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.BtnGlgSet(uc_x_hmi.glgControl_hmi1, "set_on_off", GetOPCDataValue<bool>(3), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
-                //{ 4, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(4, !GetOPCDataValue<bool>(4)); }) },
+                { 4, () => BeginInvoke((MethodInvoker)delegate {
+                    if(GetOPCDataValue<bool>(4) && !GetOPCDataValue<bool>(1)) {
+                        if(log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(5) ? "Auto" : "Manual", GetOPCDataValue<double>(7), GetOPCDataValue<double>(9), GetOPCDataValue<double>(6), flow_meter1.label_sumber, flow_meter1.label_transfer))
+                            OPCWriteAsync1(4, false);
+                        else
+                            log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(5) ? "Auto" : "Manual", GetOPCDataValue<double>(7), GetOPCDataValue<double>(9), GetOPCDataValue<double>(6), flow_meter1.label_sumber, flow_meter1.label_transfer);
+                    }
+                }) },
                 { 5, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_mode", GetOPCDataValue<bool>(5) ? "Auto" : "Manual"); }) },
                 { 6, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "val_k-factor/Value", GetOPCDataValue<double>(6)); }) },
                 { 7, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["val_setliter"], GetOPCDataValue<double>(7)); }) },
@@ -222,7 +234,14 @@ namespace SCADA
                     uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, uc_x_hmi.glgSetTag2.TagMaps["sensor_flow"], GetOPCDataValue<bool>(12));
                 }) },
                 { 13, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.BtnGlgSet(uc_x_hmi.glgControl_hmi2, "set_on_off", GetOPCDataValue<bool>(13), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
-                //{ 14, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(14, !GetOPCDataValue<bool>(14)); }) },
+                { 14, () => BeginInvoke((MethodInvoker)delegate {
+                    if(GetOPCDataValue<bool>(14) && !GetOPCDataValue<bool>(11)) {
+                        if(log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(15) ? "Auto" : "Manual", GetOPCDataValue<double>(17), GetOPCDataValue<double>(19), GetOPCDataValue<double>(16), flow_meter2.label_sumber, flow_meter2.label_transfer))
+                            OPCWriteAsync1(14, false);
+                        else
+                            log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(15) ? "Auto" : "Manual", GetOPCDataValue<double>(17), GetOPCDataValue<double>(19), GetOPCDataValue<double>(16), flow_meter2.label_sumber, flow_meter2.label_transfer);
+                    }
+                }) },
                 { 15, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_mode", GetOPCDataValue<bool>(15) ? "Auto" : "Manual"); }) },
                 { 16, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, "val_k-factor/Value", GetOPCDataValue<double>(16)); }) },
                 { 17, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetDRsc(uc_x_hmi.glgControl_hmi2, uc_x_hmi.glgSetTag2.TagMaps["val_setliter"], GetOPCDataValue<double>(17)); }) },
@@ -258,7 +277,14 @@ namespace SCADA
                     uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, uc_x_hmi.glgSetTag3.TagMaps["sensor_flow"], GetOPCDataValue<bool>(30));
                 }) },
                 { 31, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.BtnGlgSet(uc_x_hmi.glgControl_hmi3, "set_on_off", GetOPCDataValue<bool>(31), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
-                //{ 32, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(32, !GetOPCDataValue<bool>(32)); }) },
+                { 32, () => BeginInvoke((MethodInvoker)delegate {
+                    if(GetOPCDataValue<bool>(32) && !GetOPCDataValue<bool>(29)) {
+                        if(log_to_db(Properties.Settings.Default.fl3_header, GetOPCDataValue<bool>(33) ? "Auto" : "Manual", GetOPCDataValue<double>(35), GetOPCDataValue<double>(37), GetOPCDataValue<double>(34), flow_meter3.label_sumber, flow_meter3.label_transfer))
+                            OPCWriteAsync1(32, false);
+                        else
+                            log_to_db(Properties.Settings.Default.fl3_header, GetOPCDataValue<bool>(33) ? "Auto" : "Manual", GetOPCDataValue<double>(35), GetOPCDataValue<double>(37), GetOPCDataValue<double>(34), flow_meter3.label_sumber, flow_meter3.label_transfer);
+                    }
+                }) },
                 { 33, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "text_mode", GetOPCDataValue<bool>(33) ? "Auto" : "Manual"); }) },
                 { 34, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_k-factor/Value", GetOPCDataValue<double>(34)); }) },
                 { 35, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, uc_x_hmi.glgSetTag3.TagMaps["val_setliter"], GetOPCDataValue<double>(35)); }) },
@@ -283,7 +309,14 @@ namespace SCADA
                     uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, uc_x_hmi.glgSetTag4.TagMaps["sensor_flow"], GetOPCDataValue<bool>(40));
                 }) },
                 { 41, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.BtnGlgSet(uc_x_hmi.glgControl_hmi4, "set_on_off", GetOPCDataValue<bool>(41), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
-                //{ 42, () => BeginInvoke((MethodInvoker)delegate { OPCWriteAsync1(42, !GetOPCDataValue<bool>(42)); }) },
+                { 42, () => BeginInvoke((MethodInvoker)delegate {
+                    if(GetOPCDataValue<bool>(42) && !GetOPCDataValue<bool>(39)) {
+                        if(log_to_db(Properties.Settings.Default.fl4_header, GetOPCDataValue<bool>(43) ? "Auto" : "Manual", GetOPCDataValue<double>(45), GetOPCDataValue<double>(47), GetOPCDataValue<double>(44), flow_meter4.label_sumber, flow_meter4.label_transfer))
+                            OPCWriteAsync1(42, false);
+                        else
+                            log_to_db(Properties.Settings.Default.fl4_header, GetOPCDataValue<bool>(43) ? "Auto" : "Manual", GetOPCDataValue<double>(45), GetOPCDataValue<double>(47), GetOPCDataValue<double>(44), flow_meter4.label_sumber, flow_meter4.label_transfer);
+                    }
+                }) },
                 { 43, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "text_mode", GetOPCDataValue<bool>(43) ? "Auto" : "Manual"); }) },
                 { 44, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "val_k-factor/Value", GetOPCDataValue<double>(44)); }) },
                 { 45, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, uc_x_hmi.glgSetTag4.TagMaps["val_setliter"], GetOPCDataValue<double>(45)); }) },
@@ -311,6 +344,28 @@ namespace SCADA
                 }
             }
         }
+        private bool log_to_db(string _flow_meter, string _mode, double _set_liter, double _liter, double _k_factor, string _from_source, string _transfer_to)
+        {
+            var db = DbDataAccess.Db();
+            if (db == null) { ShowErrorMessage("Koneksi database gagal. Periksa pengaturan koneksi atau hubungi administrator"); return false; }
+            var log_fl_data = new { flow_meter = _flow_meter, mode = _mode, set_liter = _set_liter, liter = _liter, k_factor = _k_factor, from_source = _from_source, transfer_to = _transfer_to, date_time = DateTime.Now, };
+            Query query = db.Query(Properties.Settings.Default.tabel_db_flowmeter);
+            try
+            {
+                int affected = query.Insert(log_fl_data);
+                var lastInsertIdQuery = db.Query(Properties.Settings.Default.tabel_db_flowmeter).OrderByDesc("id").Limit(1);
+                var lastInsertIdResult = lastInsertIdQuery.First();
+                //add new tabel view
+            }
+            catch (Exception ex) { ShowErrorMessage(ex is NullReferenceException ? $"Terjadi kesalahan null reference: {ex.Message}" : $"Terjadi kesalahan: {ex.Message}"); return false; }
+
+            return true;
+        }
+        private void timer_delete_glg_popup_Tick(object sender, EventArgs e)
+        {
+            var foundForm = Application.OpenForms.Cast<Form>().FirstOrDefault(form => form.Text.Contains("GLG Toolkit"));
+            if (foundForm != null) foundForm.Close();
+        }
         private void menu_tag_Click(object sender, EventArgs e)
         {
             string password =  Prompt.PasswordSetting(false, "", out bool cancle_); if (cancle_) return;
@@ -324,6 +379,28 @@ namespace SCADA
             form_label _form_label = form_label.GetInstance(this);
             _form_label.Show();
             _form_label.BringToFront();
+        }
+        private void XamppOpen()
+        {
+            Process[] processes = Process.GetProcessesByName("xampp-control");
+            if (processes.Length > 0) return;
+            try
+            {
+                BeginInvoke((MethodInvoker)delegate
+                {
+                    string path = Properties.Settings.Default.PathXampp;
+                    ProcessStartInfo startInfo = new ProcessStartInfo { FileName = path + @"\xampp-control.exe", WindowStyle = ProcessWindowStyle.Minimized };
+                    Process.Start(startInfo);
+                });
+            }
+            catch (System.ComponentModel.Win32Exception ex)
+            {
+                ShowErrorMessage($"Terjadi kesalahan saat membuka XAMPP Control Panel: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage($"Terjadi kesalahan: {ex.Message}");
+            }
         }
         private void menu_view_chart_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_chart);
         private void menu_hmi_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_hmi);
@@ -343,4 +420,46 @@ namespace SCADA
             Application.Exit();
         }
     }
+    public static class DbDataAccess
+    {
+        private static MySqlConnection connection = null;
+
+        public static MySqlConnection GetConnection()
+        {
+            if (connection == null)
+            {
+                try
+                {
+                    connection = new MySqlConnection($"Server=localhost;Database=flowmeter_db;Uid=root;");
+                    connection.Open();
+                }
+                catch
+                {
+                    connection?.Close();
+                    connection = null;
+                }
+            }
+            return connection;
+        }
+
+        private static QueryFactory db = null;
+
+        public static QueryFactory Db()
+        {
+            if (db == null)
+            {
+                try
+                {
+                    var compiler = new MySqlCompiler();
+                    db = new QueryFactory(GetConnection(), compiler);
+                }
+                catch
+                {
+                    db = null;
+                }
+            }
+            return db;
+        }
+    }
+
 }
