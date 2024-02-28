@@ -44,7 +44,7 @@ StaticTask_t xTaskBuffer_slaveid1, xTaskBuffer_slaveid2, xTaskBuffer_slaveidWrit
 StackType_t xStack_slaveid1[400], xStack_slaveid2[400], xStack_slaveidWrite[400];
 SemaphoreHandle_t xSemaphore = NULL;
 StaticSemaphore_t xMutexBuffer;
-
+void eth_wiz_reset(uint8_t resetPin);
 void TaskslaveId1(void *pvParameters), TaskslaveId2(void *pvParameters), TaskslaveIdWrite(void *pvParameters);
 void write_slave(uint8_t id);
 void read_slave(uint8_t id);
@@ -65,6 +65,7 @@ nmbs_error handler_write_single_register(uint16_t address, uint16_t value, uint8
 nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, const uint16_t *registers, uint8_t unit_id, void *arg);
 void setup() {
   Serial.begin(115200);
+  eth_wiz_reset(20);
   Serial1.setRX(1); Serial1.setTX(0); Serial1.setFIFOSize(512); Serial1.setTimeout(100); Serial1.begin(9600); while(!Serial1) {}
   nmbs_platform_conf platform_confClient;
   platform_confClient.transport = NMBS_TRANSPORT_RTU;
@@ -123,6 +124,7 @@ void loop() {
   mbTCPpoll();
   vTaskDelay(pdMS_TO_TICKS(1)); // Ganti delay dengan vTaskDelay
 }
+void eth_wiz_reset(uint8_t resetPin) { pinMode(resetPin, OUTPUT); digitalWrite(resetPin, HIGH); delay(250); digitalWrite(resetPin, LOW); delay(50); digitalWrite(resetPin, HIGH); delay(350); pinMode(resetPin, INPUT); }
 void TaskslaveId1(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(0); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(100)); } }
 void TaskslaveId2(void *pvParameters) { (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY); read_slave(1); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(100)); } }
 void TaskslaveIdWrite(void *pvParameters) {  (void)pvParameters; while (1) { xSemaphoreTake(xSemaphore, portMAX_DELAY);  write_slave(0); write_slave(1); xSemaphoreGive(xSemaphore); vTaskDelay(pdMS_TO_TICKS(1)); }  }
@@ -239,7 +241,7 @@ nmbs_error handler_write_single_register(uint16_t address, uint16_t value, uint8
     if (address > mb_sizeHoldingRegister + 1)  return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     if(address < 15){
       mbFloat_Write[0].words[address] = value; startAddresWriteRH[0] = address; startAddresWriteRH_length[0] = 1; flagWriteMbMasterRH[0] = true;
-    }else if(address >= 15){
+    }else if(address >= 15 && address < 30){
       mbFloat_Write[1].words[address - 15] = value; startAddresWriteRH[1] = address - 15; startAddresWriteRH_length[1] = 1; flagWriteMbMasterRH[1] = true;
     }
     return NMBS_ERROR_NONE;
