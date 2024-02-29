@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-const int pwmFrequency = 2000;
+const int pwmFrequency = 10;
 const int pwmResolution = 8;
 
 void setup() {

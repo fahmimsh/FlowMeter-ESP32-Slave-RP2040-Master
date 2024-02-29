@@ -43,14 +43,13 @@ EthernetServer server(502);
 EthernetClient client;
 nmbs_t nmbsTCP; nmbs_error errTCP;
 #define UNUSED_PARAM(x) ((void)(x))
-hw_timer_t *timer[2] = {NULL, NULL};
-hw_timer_t *timerInterval[2] = {NULL, NULL};
-portMUX_TYPE synch[2] = {portMUX_INITIALIZER_UNLOCKED, portMUX_INITIALIZER_UNLOCKED};
-portMUX_TYPE timerMux[2] = {portMUX_INITIALIZER_UNLOCKED, portMUX_INITIALIZER_UNLOCKED};
-void IRAM_ATTR plsFL1() { portENTER_CRITICAL(&synch[0]); count[0]++; portEXIT_CRITICAL(&synch[0]); }
-void IRAM_ATTR plsFL2() { portENTER_CRITICAL(&synch[1]); count[1]++; portEXIT_CRITICAL(&synch[1]); }
-void IRAM_ATTR onTimer1() { portENTER_CRITICAL_ISR(&timerMux[0]); flagTime[0] = true; portEXIT_CRITICAL_ISR(&timerMux[0]); }
-void IRAM_ATTR onTimer2() { portENTER_CRITICAL_ISR(&timerMux[1]); flagTime[1] = true; portEXIT_CRITICAL_ISR(&timerMux[1]); }
+hw_timer_t *timer0 = NULL, *timer1 = NULL;
+portMUX_TYPE synch0 = portMUX_INITIALIZER_UNLOCKED, synch1 = portMUX_INITIALIZER_UNLOCKED;
+portMUX_TYPE timerMux0 = portMUX_INITIALIZER_UNLOCKED, timerMux1 = portMUX_INITIALIZER_UNLOCKED;
+void IRAM_ATTR plsFL1() { portENTER_CRITICAL(&synch0); count[0]++; portEXIT_CRITICAL(&synch0);}
+void IRAM_ATTR plsFL2() { portENTER_CRITICAL(&synch1); count[1]++; portEXIT_CRITICAL(&synch1);}
+void IRAM_ATTR onTimer1() { portENTER_CRITICAL_ISR(&timerMux0); flagTime[0] = true; portEXIT_CRITICAL_ISR(&timerMux0);}
+void IRAM_ATTR onTimer2() { portENTER_CRITICAL_ISR(&timerMux1); flagTime[1] = true; portEXIT_CRITICAL_ISR(&timerMux1);}
 void InterruptPinChangeMode1(bool FlagInit);
 void InterruptPinChangeMode2(bool FlagInit);
 float formulaLiter1(double &volume), formulaLiter2(double &volume);
@@ -76,13 +75,13 @@ void setup() {
   prefereces_partition1(true); prefereces_partition2(true);
   for (int i = 0; i < 8; i++){
     pinMode(X[i], INPUT);
-    if(i < 6) pinMode(Y[i], OUTPUT); 
-    if(i > 2){
-      btn[i].attach(X[i+4], INPUT); btn[i].interval(50); btn[i].setPressedState(HIGH);
+    if(i < 6) { pinMode(Y[i], OUTPUT); digitalWrite(Y[i], HIGH); }
+    if(i < 2){
+      btn[i].attach(X[i+2], INPUT); btn[i].interval(50); btn[i].setPressedState(HIGH);
     }
   }
   esp_task_wdt_init(75, true); esp_task_wdt_add(NULL);
-  byte* _mac; WiFi.macAddress(_mac);
+  byte* _mac = new byte[6]; WiFi.macAddress(_mac);
   eth_wiz_reset(27);
   Ethernet.init(5);
   Ethernet.begin(_mac, ip,dns_server,gateway,subnet);
@@ -104,8 +103,9 @@ void setup() {
   if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus connection TCP - %s\n", nmbs_strerror(errTCP));
   nmbs_set_read_timeout(&nmbsTCP, 1000);
   nmbs_set_byte_timeout(&nmbsTCP, 1000);
-  timer[0] = timerBegin(0, 80, true); timerAttachInterrupt(timer[0], &onTimer1, true); timerAlarmWrite(timer[0], 10000, true); timerAlarmEnable(timer[0]);
-  timer[1] = timerBegin(0, 80, true); timerAttachInterrupt(timer[1], &onTimer2, true); timerAlarmWrite(timer[1], 10000, true); timerAlarmEnable(timer[1]);
+  timer0 = timerBegin(0, 80, true); timerAttachInterrupt(timer0, &onTimer1, true); timerAlarmWrite(timer0, 10000, true);
+  timer1 = timerBegin(1, 80, true); timerAttachInterrupt(timer1, &onTimer2, true); timerAlarmWrite(timer1, 10000, true);
+  timerAlarmEnable(timer0); timerAlarmEnable(timer1);
   xTaskCreatePinnedToCore(calculate1, "calculate1", 4000, NULL, 1, NULL, 1); // Core 2
   xTaskCreatePinnedToCore(calculate2, "calculate2", 4000, NULL, 1, NULL, 1); // Core 2
   Serial.println("Mulai");
@@ -122,28 +122,28 @@ void loop() {
 void btnUpdate(uint8_t index){
  if(btn[index].update() && btn[index].pressed() || flagCoil[index][4]){
     if(flagCoil[index][4]) flagCoil[index][4] = false;
-    else if(digitalRead(X[index+4]) && flagCoil[index][0]) return; // jika mode manual
-    else flagCoil[index][0] = !flagCoil[0];
-    if(flagCoil[0] && !digitalRead(Y[index * 2])){
+    else if(!digitalRead(X[index+4]) && flagCoil[index][0]) return; // jika mode manual
+    else flagCoil[index][0] = !flagCoil[index][0];
+    if(flagCoil[0] && digitalRead(Y[index * 2])){
       flagCoil[index][2] = true;
       timePrevOn[index] = millis();
-      digitalWrite(Y[index * 2], HIGH);
+      digitalWrite(Y[index * 2], LOW);
       mbFloat[index].values.liter = 0.0f;
     }else{
       flagCoil[index][3] = true;
       timePrevOff[index] = millis();
-      digitalWrite(Y[(index * 2) + 1], LOW);
+      digitalWrite(Y[(index * 2) + 1], HIGH);
     }
   }
   if(flagCoil[index][2] && millis() - timePrevOn[index] >= mbFloat[index].values.timeInterval_OnValve){
     flagCoil[index][2] = false;
-    digitalWrite(Y[(index * 2) + 1], HIGH);
+    digitalWrite(Y[(index * 2) + 1], LOW);
     if(index) InterruptPinChangeMode2(true);
     else InterruptPinChangeMode1(true);
   }
   if(flagCoil[index][3] && millis() - timePrevOff[index] >= mbFloat[index].values.timeInterval_OffValve){
     flagCoil[index][3] = false;
-    digitalWrite(Y[index * 2], LOW);
+    digitalWrite(Y[index * 2], HIGH);
     if(index) InterruptPinChangeMode2(false);
     else InterruptPinChangeMode1(false);
     flagCoil[index][1] = true;
@@ -151,16 +151,16 @@ void btnUpdate(uint8_t index){
 }
 void eth_wiz_reset(uint8_t resetPin) { pinMode(resetPin, OUTPUT); digitalWrite(resetPin, HIGH); delay(250); digitalWrite(resetPin, LOW); delay(50); digitalWrite(resetPin, HIGH); delay(350); pinMode(resetPin, INPUT); }
 void InterruptPinChangeMode1(bool FlagInit){    
-  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[0]), plsFL1, FALLING); return; }
+  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[0]), plsFL1, RISING); return; }
   detachInterrupt(digitalPinToInterrupt(X[0]));
 }
 void InterruptPinChangeMode2(bool FlagInit){    
-  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[1]), plsFL2, FALLING); return; }
+  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[1]), plsFL2, RISING); return; }
   detachInterrupt(digitalPinToInterrupt(X[2]));
 }
 float formulaLiter1(double &volume){
   float setPoint_fl = mbFloat[0].values.setPoint - mbFloat[0].values.factorKurang;
-  if(digitalRead(Y[0]) && mbFloat[0].values.liter >= setPoint_fl && !digitalRead(X[4])){
+  if(!digitalRead(Y[0]) && mbFloat[0].values.liter >= setPoint_fl && !digitalRead(X[4])){
     static float target_err_over_fl = 0.0f;
     if(flagCoil[0][0]){
       flagCoil[0][0] = false;
@@ -173,7 +173,7 @@ float formulaLiter1(double &volume){
 }
 float formulaLiter2(double &volume){
   float setPoint_fl = mbFloat[1].values.setPoint - mbFloat[1].values.factorKurang;
-  if(digitalRead(Y[2]) && mbFloat[1].values.liter >= setPoint_fl && !digitalRead(X[5])){
+  if(!digitalRead(Y[2]) && mbFloat[1].values.liter >= setPoint_fl && !digitalRead(X[5])){
     static float target_err_over_fl = 0.0f;
     if(flagCoil[1][0]){
       flagCoil[1][0] = false;
@@ -188,8 +188,8 @@ void calculate1(void *pvParameters) {
   (void)pvParameters;
   for (;;) {
     if(flagTime[0]){
-      portENTER_CRITICAL_ISR(&timerMux[0]); flagTime[0] = false; portEXIT_CRITICAL_ISR(&timerMux[0]);
-      portENTER_CRITICAL(&synch[0]); pulse[0] = count[0]; count[0] = 0; portEXIT_CRITICAL(&synch[0]);
+      portENTER_CRITICAL_ISR(&timerMux0); flagTime[0] = false; portEXIT_CRITICAL_ISR(&timerMux0);
+      portENTER_CRITICAL(&synch0); pulse[0] = count[0]; count[0] = 0; portEXIT_CRITICAL(&synch0);
       unsigned long mils = millis(); 
       double _sec = (mils  - prevMillis[0]) / 1000.0f;
       double _freq = pulse[0] / _sec;
@@ -202,6 +202,7 @@ void calculate1(void *pvParameters) {
       double _Volume = _Flowrate / (60.0f/_sec);
       mbFloat[0].values.Flowrate = _Flowrate;
       mbFloat[0].values.liter = formulaLiter1(_Volume);
+      
     }
     vTaskDelay(1/portTICK_PERIOD_MS); // Delay 1ms, adjust as needed
   }
@@ -210,8 +211,8 @@ void calculate2(void *pvParameters) {
   (void)pvParameters;
   for (;;) {
     if(flagTime[1]){
-      portENTER_CRITICAL_ISR(&timerMux[1]); flagTime[1] = false; portEXIT_CRITICAL_ISR(&timerMux[1]);
-      portENTER_CRITICAL(&synch[1]); pulse[1] = count[1]; count[1] = 0; portEXIT_CRITICAL(&synch[1]);
+      portENTER_CRITICAL_ISR(&timerMux1); flagTime[1] = false; portEXIT_CRITICAL_ISR(&timerMux1);
+      portENTER_CRITICAL(&synch1); pulse[1] = count[1]; count[1] = 0; portEXIT_CRITICAL(&synch1);
       unsigned long mils = millis(); 
       double _sec = (mils  - prevMillis[1]) / 1000.0f;
       double _freq = pulse[1] / _sec;
@@ -224,6 +225,7 @@ void calculate2(void *pvParameters) {
       double _Volume = _Flowrate / (60.0f/_sec);
       mbFloat[1].values.Flowrate = _Flowrate;
       mbFloat[1].values.liter = formulaLiter2(_Volume);
+      
     }
     vTaskDelay(1/portTICK_PERIOD_MS); // Delay 1ms, adjust as needed
   }
@@ -302,7 +304,7 @@ nmbs_error handle_read_coils(uint16_t address, uint16_t quantity, nmbs_bitfield 
     if (address + quantity > mb_sizeCoil + 1) return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     for (int i = 0; i < quantity; i++) {
       uint8_t index = address + i;
-      if(index < 6) nmbs_bitfield_write(coils_out, i, digitalRead(Y[index]));
+      if(index < 6) nmbs_bitfield_write(coils_out, i, !digitalRead(Y[index]));
       else if(index >= 6 && index < 8) nmbs_bitfield_write(coils_out, i, flagCoil[0][index - 6]);
       else if(index < 10 && index >= 8) nmbs_bitfield_write(coils_out, i, flagCoil[1][index - 8]);
       else nmbs_bitfield_write(coils_out, i, mb_flagCoil[index - 10]);
@@ -312,21 +314,21 @@ nmbs_error handle_read_coils(uint16_t address, uint16_t quantity, nmbs_bitfield 
 nmbs_error hadle_write_single_coils(uint16_t address, bool value, uint8_t unit_id, void *arg){
     UNUSED_PARAM(arg); UNUSED_PARAM(unit_id);
     if (address > mb_sizeCoil) return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
-    if(address < 6) digitalWrite(Y[address], value);
+    if(address < 6) digitalWrite(Y[address], !value);
     else if(address >= 6 && address < 8){
       flagCoil[0][address - 6] = value;
       if(address == 6){
-        if(!digitalRead(X[4]) && digitalRead(Y[0])){
+        if(!digitalRead(X[4]) && !digitalRead(Y[0])){
           if(!flagCoil[0][0]) flagCoil[0][0] = !flagCoil[0][0];
-        }else flagCoil[0][4] = true;
+        }else { flagCoil[0][4] = true; }
       }
     }
     else if(address < 10 && address >= 8){
       flagCoil[1][address - 8] = value;
       if(address == 8){
-        if(!digitalRead(X[5]) && digitalRead(Y[2])){
+        if(!digitalRead(X[5]) && !digitalRead(Y[2])){
           if(!flagCoil[1][0]) flagCoil[1][0] = !flagCoil[1][0];
-        }else flagCoil[1][4] = true;
+        }else { flagCoil[1][4] = true; }
       }
     }
     else{
@@ -339,11 +341,11 @@ nmbs_error handle_write_multiple_coils(uint16_t address, uint16_t quantity, cons
     if (address + quantity > mb_sizeCoil + 1) return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     for (int i = 0; i < quantity; i++){
       uint8_t index = address + i;
-      if(index < 6) digitalWrite(Y[address], nmbs_bitfield_read(coils, i));
+      if(index < 6) digitalWrite(Y[address], !nmbs_bitfield_read(coils, i));
       else if(index >= 6 && index < 8){
         flagCoil[0][index - 6] = nmbs_bitfield_read(coils, i);
         if(index == 6){
-          if(!digitalRead(X[4]) && digitalRead(Y[0])){
+          if(!digitalRead(X[4]) && !digitalRead(Y[0])){
             if(!flagCoil[0][0]) flagCoil[0][0] = !flagCoil[0][0];
           }else flagCoil[0][4] = true;
         }
@@ -351,7 +353,7 @@ nmbs_error handle_write_multiple_coils(uint16_t address, uint16_t quantity, cons
       else if(index < 10 && index >= 8){
         flagCoil[1][index - 8] = nmbs_bitfield_read(coils, i);
         if(index == 8){
-          if(!digitalRead(X[5]) && digitalRead(Y[2])){
+          if(!digitalRead(X[5]) && !digitalRead(Y[2])){
             if(!flagCoil[1][0]) flagCoil[1][0] = !flagCoil[1][0];
           }else flagCoil[1][4] = true;
         }
@@ -375,8 +377,8 @@ nmbs_error handler_read_holding_registers(uint16_t address, uint16_t quantity, u
 nmbs_error handler_write_single_register(uint16_t address, uint16_t value, uint8_t unit_id, void *arg){
     UNUSED_PARAM(arg); UNUSED_PARAM(unit_id);
     if (address > mb_sizeHoldingRegister + 1)  return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
-    if(address < 15) mbFloat[0].words[address] = value; 
-    else if(address >= 15 && address < 30) mbFloat[1].words[address - 15] = value;
+    if(address < 15) {mbFloat[0].words[address] = value; prefereces_partition1(false);}
+    else if(address >= 15 && address < 30) {mbFloat[1].words[address - 15] = value; prefereces_partition2(false);}
     return NMBS_ERROR_NONE;
 }
 nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, const uint16_t *registers, uint8_t unit_id, void *arg){
@@ -384,8 +386,8 @@ nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, 
     if (address + quantity > mb_sizeHoldingRegister + 1)  return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     for (int i = 0; i < quantity; i++){
       int8_t index = address + i;
-      if(index < 15) mbFloat[0].words[address] = registers[i];
-      else if(index >= 15 && index < 30) mbFloat[1].words[address - 15] = registers[i];registers[i];
+      if(index < 15) {mbFloat[0].words[index] = registers[i]; prefereces_partition1(false);}
+      else if(index >= 15 && index < 30) {mbFloat[1].words[index - 15] = registers[i];registers[i]; prefereces_partition2(false);}
     }
     return NMBS_ERROR_NONE;
 }
