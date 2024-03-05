@@ -151,7 +151,6 @@ C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\o
 C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.form_main.resources
 C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.form_tag.resources
 C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.Properties.Resources.resources
-C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.UserControls.uc_chart.resources
 C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.UserControls.uc_hmi.resources
 C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.UserControls.uc_log.resources
 C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.csproj.GenerateResource.cache

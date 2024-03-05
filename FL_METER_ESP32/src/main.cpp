@@ -9,6 +9,7 @@
 #include <esp_task_wdt.h>
 #include <Preferences.h>
 #include <nvs_flash.h>
+#include <Nextion.h>
 
 uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 124);
 IPAddress gateway(192, 168, 1, 1), dns_server(192, 168, 110, 201), subnet(255,255,255,0);
@@ -33,9 +34,59 @@ union mbFloatInt {
 };
 mbFloatInt mbFloat[2];
 /* OnOffFlow, FlagLog, flagOn, flagOff, flagEventOnOff, flagOffPrev, flagPrintserial */
-bool flagCoil[2][7], mb_flagCoil[12], IsConnectTCP;
+bool flagCoil[2][7], mb_flagCoil[12], IsConnectTCP, IsConnectTCP_Prev;
 uint8_t mb_sizeHoldingRegister = sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0]) * 2, mb_sizeCoil = 10 + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
 unsigned long timePrevOn[2], timePrevOff[2], timePrevIsConnectTCP;
+//Variable NEXTION
+const char *transfer_char[4] = {"Transfer Tank1" , "Transfer Tank2", "Transfer Tank3", "Transfer Tank4"};
+const char *sumber_char[2] = {"Sumber Air", "Sumber RO"};
+uint8_t index_setval, index_page, index_page_prev, index_page_change;
+bool flag_next_set_val, flag_next_read_val;
+bool mode_prev[2];
+unsigned long time_set_value, time_show_value;
+//HALAMAN 1 MAIN
+NexCheckbox nex_log[2] = {NexCheckbox(0, 19, "r0"), NexCheckbox(0, 20, "r1")};
+NexPage page[3] = {NexPage(0, 0, "page0"), NexPage(2, 0, "page1"), NexPage(1, 0, "KeybdB")};
+NexText nex_mode[2] = {NexText(0, 5, "t1"), NexText(0, 14, "t9")};
+NexNumber nex_set_liter[2] = {NexNumber (0, 2, "x0"), NexNumber (0, 14, "x4")};
+NexNumber nex_liter[2] = {NexNumber (0, 8, "x1"), NexNumber (0, 15, "x5")};
+NexNumber nex_FlowRate[2] = {NexNumber (0, 10, "x2"), NexNumber (0, 17, "x6")};
+NexNumber nex_factor_k[2] = {NexNumber (0, 21, "x8"), NexNumber (0, 23, "x9")};
+NexNumber nex_f_kurang[2] = {NexNumber (0, 27, "x7"), NexNumber (0, 25, "x3")};
+NexText nex_sumber[2] = {NexText(0, 29, "t11"), NexText(0, 30, "t14")};
+NexText nex_transfer[2] = {NexText(0, 31, "t15"), NexText(0, 32, "t17")};
+NexButton nex_btn_setting = NexButton (0, 33, "b0");
+//HALAMAN 2 SETTING
+NexNumber nex_capacity[2] = {NexNumber (2, 2, "x0"), NexNumber (2, 32, "x5")};
+NexNumber nex_over_fl_err[2] = {NexNumber (2, 7, "x8"), NexNumber (2, 30, "x4")};
+NexNumber nex_delay_on[2] = {NexNumber (2, 9, "x7"), NexNumber (2, 26, "x2")};
+NexNumber nex_delay_off[2] = {NexNumber (2, 14, "x1"), NexNumber (2, 29, "x3")};
+NexButton nex_btn_sumber_1[2] = {NexButton (2, 12, "b1"), NexButton (2, 13, "b2")};
+NexButton nex_btn_sumber_2[2] = {NexButton (2, 25, "b12"), NexButton (2, 24, "b11")};
+NexButton nex_btn_transfer_1[4] = {NexButton (2, 17, "b6"), NexButton (2, 16, "b5"), NexButton (2, 19, "b8"), NexButton (2, 18, "b7")};
+NexButton nex_btn_transfer_2[4] = {NexButton (2, 22, "b9"), NexButton (2, 23, "b10"), NexButton (2, 21, "b4"), NexButton (2, 20, "b3")};
+NexButton nex_btn_main = NexButton (2, 11, "b0");
+//HALAMAN 3 KEYBOARD
+NexButton next_btn_ok_keyboard = NexButton (1, 4, "b210");
+NexButton next_btn_x_keyboard = NexButton (1, 23, "b251");
+//EVENT SET FOR HMI
+NexTouch *nex_listen_list[] = {
+  &nex_set_liter[0], &nex_set_liter[1],
+  &nex_factor_k[0], &nex_factor_k[1],
+  &nex_f_kurang[0], &nex_f_kurang[1], 
+  &nex_btn_setting,
+  &nex_capacity[0], &nex_capacity[1],
+  &nex_over_fl_err[0], &nex_over_fl_err[1],
+  &nex_delay_on[0], &nex_delay_on[1],
+  &nex_delay_off[0], &nex_delay_off[1],
+  &nex_btn_sumber_1[0], &nex_btn_sumber_1[1],
+  &nex_btn_sumber_2[0], &nex_btn_sumber_2[1],
+  &nex_btn_transfer_1[0], &nex_btn_transfer_1[1], &nex_btn_transfer_1[2], &nex_btn_transfer_1[3],
+  &nex_btn_transfer_2[0], &nex_btn_transfer_2[1], &nex_btn_transfer_2[2], &nex_btn_transfer_2[3],
+  &nex_btn_main,
+  &next_btn_ok_keyboard, &next_btn_x_keyboard,
+  NULL
+};
 
 Bounce2::Button btn[2];
 Preferences prefs;
@@ -69,10 +120,45 @@ nmbs_error handle_write_multiple_coils(uint16_t address, uint16_t quantity, cons
 nmbs_error handler_read_holding_registers(uint16_t address, uint16_t quantity, uint16_t *registers_out, uint8_t unit_id, void *arg);
 nmbs_error handler_write_single_register(uint16_t address, uint16_t value, uint8_t unit_id, void *arg);
 nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, const uint16_t *registers, uint8_t unit_id, void *arg);
+void set_mb_flag(uint8_t index_flag, uint8_t index_start, uint8_t index_stop);
+void nex_read_value();
+void nex_show_value();
+void nex_show_tf_src();
+void nex_set_liter_0_event(void *ptr);
+void nex_set_liter_1_event(void *ptr);
+void nex_factor_k_0_event(void *ptr);
+void nex_factor_k_1_event(void *ptr);
+void nex_f_kurang_0_event(void *ptr);
+void nex_f_kurang_1_event(void *ptr);
+void nex_btn_setting_event(void *ptr);
+void nex_capacity_0_event(void *ptr);
+void nex_capacity_1_event(void *ptr);
+void nex_over_fl_err_0_event(void *ptr);
+void nex_over_fl_err_1_event(void *ptr);
+void nex_delay_on_0_event(void *ptr);
+void nex_delay_on_1_event(void *ptr);
+void nex_delay_off_0_event(void *ptr);
+void nex_delay_off_1_event(void *ptr);
+void nex_btn_sumber_1_0_event(void *ptr);
+void nex_btn_sumber_1_1_event(void *ptr);
+void nex_btn_sumber_2_0_event(void *ptr);
+void nex_btn_sumber_2_1_event(void *ptr);
+void nex_btn_transfer_1_0_event(void *ptr);
+void nex_btn_transfer_1_1_event(void *ptr);
+void nex_btn_transfer_1_2_event(void *ptr);
+void nex_btn_transfer_1_3_event(void *ptr);
+void nex_btn_transfer_2_0_event(void *ptr);
+void nex_btn_transfer_2_1_event(void *ptr);
+void nex_btn_transfer_2_2_event(void *ptr);
+void nex_btn_transfer_2_3_event(void *ptr);
+void nex_btn_main_event(void *ptr);
+void next_btn_ok_keyboard_event(void *ptr);
+void next_btn_x_keyboard_event(void *ptr);
 void setup() {
   //nvs_flash_erase(); nvs_flash_init(); while(true); //erase the NVS partition
   Serial.begin(9600);
   prefereces_partition1(true); prefereces_partition2(true);
+  mb_flagCoil[0] = mb_flagCoil[4] = mb_flagCoil[6] = mb_flagCoil[10] = true;
   for (int i = 0; i < 8; i++){
     pinMode(X[i], INPUT);
     if(i < 6) { pinMode(Y[i], OUTPUT); digitalWrite(Y[i], HIGH); }
@@ -103,6 +189,38 @@ void setup() {
   if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus connection TCP - %s\n", nmbs_strerror(errTCP));
   nmbs_set_read_timeout(&nmbsTCP, 1000);
   nmbs_set_byte_timeout(&nmbsTCP, 1000);
+  nexInit();
+  nex_set_liter[0].attachPush(nex_set_liter_0_event, &nex_set_liter[0]);
+  nex_set_liter[1].attachPush(nex_set_liter_1_event, &nex_set_liter[1]);
+  nex_factor_k[0].attachPush(nex_factor_k_0_event, &nex_factor_k[0]);
+  nex_factor_k[1].attachPush(nex_factor_k_1_event, &nex_factor_k[1]);
+  nex_f_kurang[0].attachPush(nex_f_kurang_0_event, &nex_f_kurang[0]);
+  nex_f_kurang[1].attachPush(nex_f_kurang_1_event, &nex_f_kurang[1]);
+  nex_btn_setting.attachPush(nex_btn_setting_event, &nex_btn_setting);
+  nex_capacity[0].attachPush(nex_capacity_0_event, &nex_capacity[0]);
+  nex_capacity[1].attachPush(nex_capacity_1_event, &nex_capacity[1]);
+  nex_over_fl_err[0].attachPush(nex_over_fl_err_0_event, &nex_over_fl_err[0]);
+  nex_over_fl_err[1].attachPush(nex_over_fl_err_1_event, &nex_over_fl_err[1]);
+  nex_delay_on[0].attachPush(nex_delay_on_0_event, &nex_delay_on[0]);
+  nex_delay_on[1].attachPush(nex_delay_on_1_event, &nex_delay_on[1]);
+  nex_delay_off[0].attachPush(nex_delay_off_0_event, &nex_delay_off[0]);
+  nex_delay_off[1].attachPush(nex_delay_off_1_event, &nex_delay_off[1]);
+  nex_btn_sumber_1[0].attachPush(nex_btn_sumber_1_0_event, &nex_btn_sumber_1[0]);
+  nex_btn_sumber_1[1].attachPush(nex_btn_sumber_1_1_event, &nex_btn_sumber_1[0]);
+  nex_btn_sumber_2[0].attachPush(nex_btn_sumber_2_0_event, &nex_btn_sumber_2[0]);
+  nex_btn_sumber_2[1].attachPush(nex_btn_sumber_2_1_event, &nex_btn_sumber_2[1]);
+  nex_btn_transfer_1[0].attachPush(nex_btn_transfer_1_0_event, &nex_btn_transfer_1[0]);
+  nex_btn_transfer_1[1].attachPush(nex_btn_transfer_1_1_event, &nex_btn_transfer_1[1]);
+  nex_btn_transfer_1[2].attachPush(nex_btn_transfer_1_2_event, &nex_btn_transfer_1[2]);
+  nex_btn_transfer_1[3].attachPush(nex_btn_transfer_1_3_event, &nex_btn_transfer_1[3]);
+  nex_btn_transfer_2[0].attachPush(nex_btn_transfer_2_0_event, &nex_btn_transfer_2[0]);
+  nex_btn_transfer_2[1].attachPush(nex_btn_transfer_2_1_event, &nex_btn_transfer_2[1]);
+  nex_btn_transfer_2[2].attachPush(nex_btn_transfer_2_2_event, &nex_btn_transfer_2[2]);
+  nex_btn_transfer_2[3].attachPush(nex_btn_transfer_2_3_event, &nex_btn_transfer_2[3]);
+  nex_btn_main.attachPush(nex_btn_main_event, &nex_btn_main);
+  next_btn_ok_keyboard.attachPop(next_btn_ok_keyboard_event, &next_btn_ok_keyboard); 
+  next_btn_x_keyboard.attachPop(next_btn_x_keyboard_event, &next_btn_x_keyboard);
+  index_page_change = !index_page;
   timer0 = timerBegin(0, 80, true); timerAttachInterrupt(timer0, &onTimer1, true); timerAlarmWrite(timer0, 10000, true);
   timer1 = timerBegin(1, 80, true); timerAttachInterrupt(timer1, &onTimer2, true); timerAlarmWrite(timer1, 10000, true);
   timerAlarmEnable(timer0); timerAlarmEnable(timer1);
@@ -117,6 +235,8 @@ void loop() {
   btnUpdate(0); btnUpdate(1);
   if(IsConnectTCP && millis() - timePrevIsConnectTCP >= 5000) IsConnectTCP = false;
   mbTCPpoll();
+  nexLoop(nex_listen_list);
+  nex_show_value();
   vTaskDelay(1/portTICK_PERIOD_MS); // Delay 1ms, adjust as needed
 }
 void btnUpdate(uint8_t index){
@@ -156,7 +276,7 @@ void InterruptPinChangeMode1(bool FlagInit){
 }
 void InterruptPinChangeMode2(bool FlagInit){    
   if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[1]), plsFL2, RISING); return; }
-  detachInterrupt(digitalPinToInterrupt(X[2]));
+  detachInterrupt(digitalPinToInterrupt(X[1]));
 }
 float formulaLiter1(double &volume){
   float setPoint_fl = mbFloat[0].values.setPoint - mbFloat[0].values.factorKurang;
@@ -332,7 +452,12 @@ nmbs_error hadle_write_single_coils(uint16_t address, bool value, uint8_t unit_i
       }
     }
     else{
+      uint8_t addr_mb_coil = address - 10;
       mb_flagCoil[address - 10] = value;
+      if(addr_mb_coil < 4) set_mb_flag(addr_mb_coil, 0, 4);
+      else if(addr_mb_coil >= 4 && addr_mb_coil < 6) set_mb_flag(addr_mb_coil, 4, 6);
+      else if(addr_mb_coil >= 6 && addr_mb_coil < 10) set_mb_flag(addr_mb_coil, 6, 10);
+      else if(addr_mb_coil >= 10 && addr_mb_coil < 12) set_mb_flag(addr_mb_coil, 10, 12);
     }
     return NMBS_ERROR_NONE;
 }
@@ -359,7 +484,11 @@ nmbs_error handle_write_multiple_coils(uint16_t address, uint16_t quantity, cons
         }
       }
       else{
-        mb_flagCoil[address - 10] = nmbs_bitfield_read(coils, i);
+        mb_flagCoil[index] = nmbs_bitfield_read(coils, i);
+        if(index < 4) set_mb_flag(index, 0, 4);
+        else if(index >= 4 && index < 6) set_mb_flag(index, 4, 6);
+        else if(index >= 6 && index < 10) set_mb_flag(index, 6, 10);
+        else if(index >= 10 && index < 12) set_mb_flag(index, 10, 12);
       }
     }
     return NMBS_ERROR_NONE;
@@ -390,4 +519,301 @@ nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, 
       else if(index >= 15 && index < 30) {mbFloat[1].words[index - 15] = registers[i];registers[i]; prefereces_partition2(false);}
     }
     return NMBS_ERROR_NONE;
+}
+void set_mb_flag(uint8_t index_flag, uint8_t index_start, uint8_t index_stop){
+  for (int i = index_start; i < index_stop; i++){
+    if(i != index_flag) mb_flagCoil[i] = false;
+  }
+}
+void nex_show_value(){
+  if(index_page == 0){
+    if(IsConnectTCP_Prev != IsConnectTCP){ IsConnectTCP_Prev = IsConnectTCP; nex_log[0].setValue(IsConnectTCP_Prev); nex_log[1].setValue(IsConnectTCP_Prev); }
+    if(mode_prev[0] != digitalRead(X[4])){
+      mode_prev[0] = digitalRead(X[4]);
+      nex_mode[0].setText(mode_prev[0] ? "Manual" : "Auto" );
+    }
+    if(mode_prev[1] != digitalRead(X[5])){
+      mode_prev[1] = digitalRead(X[5]);
+      nex_mode[1].setText(mode_prev[1] ? "Manual" : "Auto" );
+    }
+  }
+  nex_read_value();
+  if(millis() - time_show_value >= 1000){
+    time_show_value = millis();
+    if(index_page == 0){
+      nex_liter[0].setValue(mbFloat[0].values.liter * 100); nex_liter[1].setValue(mbFloat[1].values.liter * 100);
+      nex_FlowRate[0].setValue(mbFloat[0].values.Flowrate * 100); nex_FlowRate[1].setValue(mbFloat[1].values.Flowrate * 100);
+    }
+    if(index_page_change != index_page && !flag_next_set_val){
+      index_page_change = index_page;
+      if(index_page == 0){
+        nex_set_liter[0].setValue(mbFloat[0].values.setPoint * 100); nex_set_liter[1].setValue(mbFloat[1].values.setPoint * 100);
+        nex_factor_k[0].setValue(mbFloat[0].values.kFact * 10000); nex_factor_k[1].setValue(mbFloat[1].values.kFact * 10000);
+        nex_f_kurang[0].setValue(mbFloat[0].values.factorKurang * 100); nex_f_kurang[1].setValue(mbFloat[1].values.factorKurang * 100);
+        for (int i = 0; i < 4; i++){
+          if(mb_flagCoil[i]) { nex_transfer[0].setText(transfer_char[i]); }
+        }
+        for (int i = 4; i < 6; i++){
+          if(mb_flagCoil[i]) {nex_sumber[0].setText(sumber_char[i - 4]);}
+        }
+        for (int i = 6; i < 10; i++){
+          if(mb_flagCoil[i]) { nex_transfer[1].setText(transfer_char[i - 6]);}
+        }
+        for (int i = 10; i < 12; i++){
+          if(mb_flagCoil[i]) {nex_sumber[1].setText(sumber_char[i - 10]);}
+        }
+      }
+    }
+    if(index_page == 1){
+      nex_capacity[0].setValue(mbFloat[0].values.capacity * 100);
+      nex_capacity[1].setValue(mbFloat[1].values.capacity * 100);
+      nex_over_fl_err[0].setValue(mbFloat[0].values.over_fl_err);
+      nex_over_fl_err[1].setValue(mbFloat[1].values.over_fl_err);
+      nex_delay_on[0].setValue(mbFloat[0].values.timeInterval_OnValve);
+      nex_delay_on[1].setValue(mbFloat[1].values.timeInterval_OnValve);
+      nex_delay_off[0].setValue(mbFloat[0].values.timeInterval_OffValve);
+      nex_delay_off[1].setValue(mbFloat[1].values.timeInterval_OffValve);
+      nex_show_tf_src();
+    }
+  }
+}
+void nex_read_value(){
+  if(millis() - time_set_value >= 1000 && flag_next_read_val){
+    flag_next_read_val = false;
+    uint32_t value;
+    switch (index_setval)
+    {
+      case 1:
+        nex_set_liter[0].getValue(&value);
+        mbFloat[0].values.setPoint = (float)value/100;
+        break;
+      case 2:
+        nex_set_liter[1].getValue(&value);
+        mbFloat[1].values.setPoint = (float)value/100;
+        break;
+      case 3:
+        nex_factor_k[0].getValue(&value);
+        mbFloat[0].values.kFact = (float)value/10000;
+        break;
+      case 4:
+        nex_factor_k[1].getValue(&value);
+        mbFloat[1].values.kFact = (float)value/10000;
+        break;
+      case 5:
+        nex_f_kurang[0].getValue(&value);
+        mbFloat[0].values.factorKurang = (float)value/100;
+        break;
+      case 6:
+        nex_f_kurang[1].getValue(&value);
+        mbFloat[1].values.factorKurang = (float)value/100;
+        break;
+    }
+    flag_next_set_val = false;
+    time_show_value = millis();
+  }
+}
+void nex_show_tf_src(){
+  if(index_page == 1){
+    nex_btn_transfer_1[0].Set_background_color_bco( mb_flagCoil[0] ? 1024:63488);
+    nex_btn_transfer_1[1].Set_background_color_bco( mb_flagCoil[1] ? 1024:63488);
+    nex_btn_transfer_1[2].Set_background_color_bco( mb_flagCoil[2] ? 1024:63488);
+    nex_btn_transfer_1[3].Set_background_color_bco( mb_flagCoil[3] ? 1024:63488);
+    nex_btn_sumber_1[0].Set_background_color_bco( mb_flagCoil[4] ? 1024:63488);
+    nex_btn_sumber_1[1].Set_background_color_bco( mb_flagCoil[5] ? 1024:63488);
+    nex_btn_transfer_2[0].Set_background_color_bco( mb_flagCoil[6] ? 1024:63488);
+    nex_btn_transfer_2[1].Set_background_color_bco( mb_flagCoil[7] ? 1024:63488);
+    nex_btn_transfer_2[2].Set_background_color_bco( mb_flagCoil[8] ? 1024:63488);
+    nex_btn_transfer_2[3].Set_background_color_bco( mb_flagCoil[9] ? 1024:63488);
+    nex_btn_sumber_2[0].Set_background_color_bco( mb_flagCoil[10] ? 1024:63488);
+    nex_btn_sumber_2[1].Set_background_color_bco( mb_flagCoil[11] ? 1024:63488);
+  }
+}
+void nex_set_liter_0_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 1;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_set_liter_1_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 2;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_factor_k_0_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 3;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_factor_k_1_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 4;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_f_kurang_0_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 5;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_f_kurang_1_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 6;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_btn_setting_event(void *ptr){
+  flag_next_set_val = true;
+  page[1].show();
+  time_show_value = millis();
+  flag_next_set_val = false;
+  index_page = 1;
+}
+void nex_capacity_0_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 7;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_capacity_1_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 8;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_over_fl_err_0_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 9;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_over_fl_err_1_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 10;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_delay_on_0_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 11;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_delay_on_1_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 12;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_delay_off_0_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 13;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_delay_off_1_event(void *ptr){
+  flag_next_set_val = true;
+  index_page_prev = index_page;
+  index_page_change = index_page = 2;
+  index_setval = 14;
+  time_show_value = millis();
+  flag_next_set_val = false;
+}
+void nex_btn_sumber_1_0_event(void *ptr){
+  mb_flagCoil[4] = true; set_mb_flag(4, 4, 6);
+  nex_show_tf_src();
+}
+void nex_btn_sumber_1_1_event(void *ptr){
+  mb_flagCoil[5] = true; set_mb_flag(5, 4, 6);
+  nex_show_tf_src();
+}
+void nex_btn_sumber_2_0_event(void *ptr){
+  mb_flagCoil[10] = true; set_mb_flag(10, 10, 12);
+  nex_show_tf_src();
+}
+void nex_btn_sumber_2_1_event(void *ptr){
+  mb_flagCoil[11] = true; set_mb_flag(11, 10, 12);
+  nex_show_tf_src();
+}
+void nex_btn_transfer_1_0_event(void *ptr){
+  mb_flagCoil[0] = true; set_mb_flag(0, 0, 4);
+  nex_show_tf_src();
+}
+void nex_btn_transfer_1_1_event(void *ptr){
+  mb_flagCoil[1] = true; set_mb_flag(1, 0, 4);
+  nex_show_tf_src();
+}
+void nex_btn_transfer_1_2_event(void *ptr){
+  mb_flagCoil[2] = true; set_mb_flag(2, 0, 4);
+  nex_show_tf_src();
+}
+void nex_btn_transfer_1_3_event(void *ptr){
+  mb_flagCoil[3] = true; set_mb_flag(3, 0, 4);
+  nex_show_tf_src();
+}
+void nex_btn_transfer_2_0_event(void *ptr){
+  mb_flagCoil[6] = true; set_mb_flag(6, 6, 10);
+  nex_show_tf_src();
+}
+void nex_btn_transfer_2_1_event(void *ptr){
+  mb_flagCoil[7] = true; set_mb_flag(7, 6, 10);
+  nex_show_tf_src();
+}
+void nex_btn_transfer_2_2_event(void *ptr){
+  mb_flagCoil[8] = true; set_mb_flag(8, 6, 10);
+  nex_show_tf_src();
+}
+void nex_btn_transfer_2_3_event(void *ptr){
+  mb_flagCoil[9] = true; set_mb_flag(9, 6, 10);
+  nex_show_tf_src();
+}
+void nex_btn_main_event(void *ptr){
+  flag_next_set_val = true;
+
+  page[0].show();
+  time_show_value = millis();
+  flag_next_set_val = false;
+  index_page = 0;
+}
+void next_btn_ok_keyboard_event(void *ptr){
+  flag_next_set_val = true;
+  index_page = index_page_prev;
+
+  time_set_value = millis();
+  flag_next_read_val = true;
+}
+void next_btn_x_keyboard_event(void *ptr){
+  flag_next_set_val = true;
+  index_page = index_page_prev;
+  index_setval = 0;
+  flag_next_set_val = false;
+  time_show_value = millis();
 }

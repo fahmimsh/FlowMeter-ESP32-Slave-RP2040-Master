@@ -34,25 +34,22 @@ namespace SCADA
         internal IMqttClient MqttClient;
         internal BindingList<OPCData1> OPCData_1 = new BindingList<OPCData1>();
         internal ObservableCollection<TagData1> tagData1 = new ObservableCollection<TagData1>();
-        private uc_hmi uc_x_hmi;
-        private uc_log uc_x_log;
-        private uc_chart uc_x_chart;
+        public uc_hmi uc_x_hmi;
+        public uc_log uc_x_log;
         public form_main()
         {
             InitializeComponent();
             this.MaximumSize = new System.Drawing.Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
             uc_x_hmi = new uc_hmi(this);
             uc_x_log = new uc_log(this);
-            uc_x_chart = new uc_chart(this);
             OPCdiscovery = DaClientFactory.Instance.CreateOpcNetApiServerDiscovery();
         }
         private void form_main_Load(object sender, EventArgs e)
         {
+            XamppOpen();
             add_to_main_panel(uc_x_log);
-            add_to_main_panel(uc_x_chart);
             if(Properties.Settings.Default.auto_connect_opc) OPC1Connect_or_Disconnect(false);
             add_to_main_panel(uc_x_hmi);
-            XamppOpen();
         }
         private void form_main_Shown(object sender, EventArgs e)
         {
@@ -87,7 +84,7 @@ namespace SCADA
             string json = File.ReadAllText("opcTag.js");
             tagData1 = new ObservableCollection<TagData1>(JsonConvert.DeserializeObject<List<TagData1>>(json) ?? new List<TagData1>());
             OPCclient1.Connect();
-            OPCclient1.Add(new Group { Name = "default", UpdateRate = 1000, IsSubscribed = true });
+            OPCclient1.Add(new Group { Name = "default", UpdateRate = 10, IsSubscribed = true });
             OPCData_1.Clear();
             foreach (var data in tagData1.OrderBy(data => data.Id))
             {
@@ -208,9 +205,14 @@ namespace SCADA
                 { 4, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(4) && !GetOPCDataValue<bool>(1)) {
                         if(log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(5) ? "Auto" : "Manual", GetOPCDataValue<double>(7), GetOPCDataValue<double>(9), GetOPCDataValue<double>(6), flow_meter1.label_sumber, flow_meter1.label_transfer))
-                            OPCWriteAsync1(4, false);
+                        {  OPCWriteAsync1(4, false);
+                            OPCStatus1.IsLogData = true;
+                        }
                         else
-                            log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(5) ? "Auto" : "Manual", GetOPCDataValue<double>(7), GetOPCDataValue<double>(9), GetOPCDataValue<double>(6), flow_meter1.label_sumber, flow_meter1.label_transfer);
+                        {   log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(5) ? "Auto" : "Manual", GetOPCDataValue<double>(7), GetOPCDataValue<double>(9), GetOPCDataValue<double>(6), flow_meter1.label_sumber, flow_meter1.label_transfer);
+                            OPCWriteAsync1(4, false);
+                            OPCStatus1.IsLogData = true;
+                        }
                     }
                 }) },
                 { 5, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_mode", GetOPCDataValue<bool>(5) ? "Auto" : "Manual"); }) },
@@ -237,9 +239,14 @@ namespace SCADA
                 { 14, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(14) && !GetOPCDataValue<bool>(11)) {
                         if(log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(15) ? "Auto" : "Manual", GetOPCDataValue<double>(17), GetOPCDataValue<double>(19), GetOPCDataValue<double>(16), flow_meter2.label_sumber, flow_meter2.label_transfer))
-                            OPCWriteAsync1(14, false);
+                        {   OPCWriteAsync1(14, false);
+                            OPCStatus1.IsLogData = true;
+                        }
                         else
-                            log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(15) ? "Auto" : "Manual", GetOPCDataValue<double>(17), GetOPCDataValue<double>(19), GetOPCDataValue<double>(16), flow_meter2.label_sumber, flow_meter2.label_transfer);
+                        {   log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(15) ? "Auto" : "Manual", GetOPCDataValue<double>(17), GetOPCDataValue<double>(19), GetOPCDataValue<double>(16), flow_meter2.label_sumber, flow_meter2.label_transfer);
+                            OPCWriteAsync1(14, false);
+                            OPCStatus1.IsLogData = true;
+                        }
                     }
                 }) },
                 { 15, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_mode", GetOPCDataValue<bool>(15) ? "Auto" : "Manual"); }) },
@@ -280,9 +287,14 @@ namespace SCADA
                 { 32, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(32) && !GetOPCDataValue<bool>(29)) {
                         if(log_to_db(Properties.Settings.Default.fl3_header, GetOPCDataValue<bool>(33) ? "Auto" : "Manual", GetOPCDataValue<double>(35), GetOPCDataValue<double>(37), GetOPCDataValue<double>(34), flow_meter3.label_sumber, flow_meter3.label_transfer))
-                            OPCWriteAsync1(32, false);
+                        { OPCWriteAsync1(32, false);
+                            OPCStatus1.IsLogData = true;
+                        }
                         else
-                            log_to_db(Properties.Settings.Default.fl3_header, GetOPCDataValue<bool>(33) ? "Auto" : "Manual", GetOPCDataValue<double>(35), GetOPCDataValue<double>(37), GetOPCDataValue<double>(34), flow_meter3.label_sumber, flow_meter3.label_transfer);
+                        {   log_to_db(Properties.Settings.Default.fl3_header, GetOPCDataValue<bool>(33) ? "Auto" : "Manual", GetOPCDataValue<double>(35), GetOPCDataValue<double>(37), GetOPCDataValue<double>(34), flow_meter3.label_sumber, flow_meter3.label_transfer);
+                            OPCWriteAsync1(32, false);
+                            OPCStatus1.IsLogData = true;
+                        }
                     }
                 }) },
                 { 33, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "text_mode", GetOPCDataValue<bool>(33) ? "Auto" : "Manual"); }) },
@@ -312,9 +324,17 @@ namespace SCADA
                 { 42, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(42) && !GetOPCDataValue<bool>(39)) {
                         if(log_to_db(Properties.Settings.Default.fl4_header, GetOPCDataValue<bool>(43) ? "Auto" : "Manual", GetOPCDataValue<double>(45), GetOPCDataValue<double>(47), GetOPCDataValue<double>(44), flow_meter4.label_sumber, flow_meter4.label_transfer))
+                        {
                             OPCWriteAsync1(42, false);
+                            OPCStatus1.IsLogData = true;
+                        }
+                            
                         else
+                        {
                             log_to_db(Properties.Settings.Default.fl4_header, GetOPCDataValue<bool>(43) ? "Auto" : "Manual", GetOPCDataValue<double>(45), GetOPCDataValue<double>(47), GetOPCDataValue<double>(44), flow_meter4.label_sumber, flow_meter4.label_transfer);
+                            OPCWriteAsync1(42, false);
+                            OPCStatus1.IsLogData = true;
+                        }
                     }
                 }) },
                 { 43, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "text_mode", GetOPCDataValue<bool>(43) ? "Auto" : "Manual"); }) },
@@ -348,7 +368,7 @@ namespace SCADA
         {
             var db = DbDataAccess.Db();
             if (db == null) { ShowErrorMessage("Koneksi database gagal. Periksa pengaturan koneksi atau hubungi administrator"); return false; }
-            var log_fl_data = new { flow_meter = _flow_meter, mode = _mode, set_liter = _set_liter, liter = _liter, k_factor = _k_factor, from_source = _from_source, transfer_to = _transfer_to, date_time = DateTime.Now, };
+            var log_fl_data = new { flow_meter = _flow_meter, mode = _mode, set_liter = Math.Round(_set_liter, 2), liter = Math.Round(_liter, 2), k_factor = Math.Round(_k_factor, 3), from_source = _from_source, transfer_to = _transfer_to, date_time = DateTime.Now, };
             Query query = db.Query(Properties.Settings.Default.tabel_db_flowmeter);
             try
             {
@@ -357,7 +377,7 @@ namespace SCADA
                 var lastInsertIdResult = lastInsertIdQuery.First();
                 //add new tabel view
             }
-            catch (Exception ex) { ShowErrorMessage(ex is NullReferenceException ? $"Terjadi kesalahan null reference: {ex.Message}" : $"Terjadi kesalahan: {ex.Message}"); return false; }
+            catch (Exception ex) { ShowErrorMessage(ex is NullReferenceException ? $"Insert DB Terjadi kesalahan null reference: {ex.Message}" : $"Insert DB Terjadi kesalahan: {ex.Message}"); return false; }
 
             return true;
         }
@@ -388,8 +408,7 @@ namespace SCADA
             {
                 BeginInvoke((MethodInvoker)delegate
                 {
-                    string path = Properties.Settings.Default.PathXampp;
-                    ProcessStartInfo startInfo = new ProcessStartInfo { FileName = path + @"\xampp-control.exe", WindowStyle = ProcessWindowStyle.Minimized };
+                    ProcessStartInfo startInfo = new ProcessStartInfo { FileName = @"C:\xampp\xampp-control.exe", WindowStyle = ProcessWindowStyle.Minimized };
                     Process.Start(startInfo);
                 });
             }
@@ -402,7 +421,6 @@ namespace SCADA
                 ShowErrorMessage($"Terjadi kesalahan: {ex.Message}");
             }
         }
-        private void menu_view_chart_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_chart);
         private void menu_hmi_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_hmi);
         private void menu_log_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_log);
         private void add_to_main_panel(UserControl uc_x) { uc_x.Dock = DockStyle.Fill; panel_main.Controls.Add(uc_x); uc_x.BringToFront(); }

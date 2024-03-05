@@ -58,9 +58,6 @@ namespace SCADA.UserControls
             glgSetTag4.set_value += GlgSetTag4_set_value;
             glgSetTag4.set_on_off += GlgSetTag4_set_on_off;
             label_header_hmi4.Text = Properties.Settings.Default.fl4_header;
-
-            tabControl_hmi.TabPages[0].Text = $"{Properties.Settings.Default.fl1_header} & {Properties.Settings.Default.fl2_header}";
-            tabControl_hmi.TabPages[1].Text = $"{Properties.Settings.Default.fl3_header} & {Properties.Settings.Default.fl4_header}";
         }
         private void GlgSetTag1_set_on_off(object sender, GlgObject e)
         {
@@ -204,6 +201,7 @@ namespace SCADA.UserControls
             if (!OPCStatus1.Connected) return;
             form.OPCWriteAsync1(41, !form.GetOPCDataValue<bool>(41));
         }
+
         private void GlgSetTag4_set_value(object sender, string e)
         {
             if (!OPCStatus1.Connected) return;

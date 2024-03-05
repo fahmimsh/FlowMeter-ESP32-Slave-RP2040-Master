@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Drawing; 
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +15,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using ClosedXML.Excel;
 using System.Reflection;
 using DocumentFormat.OpenXml.Math;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 
 namespace SCADA.UserControls
 {
@@ -74,7 +75,7 @@ namespace SCADA.UserControls
             Query query = db.Query(Properties.Settings.Default.tabel_db_flowmeter);
             if (query == null) { form.ShowErrorMessage("Objek query null. Cek pengaturan koneksi atau hubungi administrator"); return; }
             if (date_start.Value != DateTime.MinValue && date_stop.Value != DateTime.MinValue)
-                query = query.WhereBetween("date_time", date_start.Value, date_stop.Value);
+                query = query.WhereBetween("date_time", date_start.Value.Date, date_stop.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
             if (!check_b_all.Checked)
             {
                 if (cb_flow_meter.SelectedItem != null || !string.IsNullOrEmpty(cb_flow_meter.Text)) query = query.WhereContains("flow_meter", cb_flow_meter.SelectedItem.ToString());
@@ -89,6 +90,7 @@ namespace SCADA.UserControls
                 {
                     data_log_db = new BindingList<data_log_entry>((IList<data_log_entry>)result);
                     dataGridViewDataLog.DataSource = data_log_db;
+                    form.uc_x_hmi.dataGridViewDataLog_hmi.DataSource = data_log_db;
                     label_total_liter.Text = $"Total Liter : {data_log_db.Sum(entry => entry.liter)} L";
                 }
             }
@@ -154,6 +156,15 @@ namespace SCADA.UserControls
                         MessageBox.Show(("exspor data excel :") + ex.Message.ToString(), "EXPORT DATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+            }
+        }
+
+        private void timer_refresh_db_Tick(object sender, EventArgs e)
+        {
+            if(OPCStatus1.IsLogData)
+            {
+                OPCStatus1.IsLogData = false;
+                btn_search_Click(null, null);
             }
         }
     }

@@ -4,6 +4,6 @@
     "\\SCADA",
     "\\SCADA\\UserControls"
   ],
-  "SelectedNode": "\\SCADA\\form_main.cs",
+  "SelectedNode": "\\SCADA\\UserControls\\uc_log.cs",
   "PreviewInSolutionExplorer": false
 }
