@@ -41,7 +41,7 @@ unsigned long timePrevOn[2], timePrevOff[2], timePrevIsConnectTCP;
 const char *transfer_char[4] = {"Transfer Tank1" , "Transfer Tank2", "Transfer Tank3", "Transfer Tank4"};
 const char *sumber_char[2] = {"Sumber Air", "Sumber RO"};
 uint8_t index_setval, index_page, index_page_prev, index_page_change;
-bool flag_next_set_val, flag_next_read_val;
+bool flag_next_set_val, flag_next_read_val, flag_next_setvalue;
 bool mode_prev[2];
 unsigned long time_set_value, time_show_value;
 //HALAMAN 1 MAIN
@@ -271,11 +271,11 @@ void btnUpdate(uint8_t index){
 }
 void eth_wiz_reset(uint8_t resetPin) { pinMode(resetPin, OUTPUT); digitalWrite(resetPin, HIGH); delay(250); digitalWrite(resetPin, LOW); delay(50); digitalWrite(resetPin, HIGH); delay(350); pinMode(resetPin, INPUT); }
 void InterruptPinChangeMode1(bool FlagInit){    
-  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[0]), plsFL1, RISING); return; }
+  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[0]), plsFL1, FALLING); return; }
   detachInterrupt(digitalPinToInterrupt(X[0]));
 }
 void InterruptPinChangeMode2(bool FlagInit){    
-  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[1]), plsFL2, RISING); return; }
+  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[1]), plsFL2, FALLING); return; }
   detachInterrupt(digitalPinToInterrupt(X[1]));
 }
 float formulaLiter1(double &volume){
@@ -530,23 +530,29 @@ void nex_show_value(){
     if(IsConnectTCP_Prev != IsConnectTCP){ IsConnectTCP_Prev = IsConnectTCP; nex_log[0].setValue(IsConnectTCP_Prev); nex_log[1].setValue(IsConnectTCP_Prev); }
     if(mode_prev[0] != digitalRead(X[4])){
       mode_prev[0] = digitalRead(X[4]);
+      flag_next_setvalue = true;
       nex_mode[0].setText(mode_prev[0] ? "Manual" : "Auto" );
+      flag_next_setvalue = false;
     }
     if(mode_prev[1] != digitalRead(X[5])){
       mode_prev[1] = digitalRead(X[5]);
+      flag_next_setvalue = true;
       nex_mode[1].setText(mode_prev[1] ? "Manual" : "Auto" );
+      flag_next_setvalue = false;
     }
   }
   nex_read_value();
   if(millis() - time_show_value >= 1000){
     time_show_value = millis();
     if(index_page == 0){
+      flag_next_setvalue = true;
       nex_liter[0].setValue(mbFloat[0].values.liter * 100); nex_liter[1].setValue(mbFloat[1].values.liter * 100);
       nex_FlowRate[0].setValue(mbFloat[0].values.Flowrate * 100); nex_FlowRate[1].setValue(mbFloat[1].values.Flowrate * 100);
+      flag_next_setvalue = false;
     }
     if(index_page_change != index_page && !flag_next_set_val){
-      index_page_change = index_page;
       if(index_page == 0){
+        flag_next_setvalue = true;
         nex_set_liter[0].setValue(mbFloat[0].values.setPoint * 100); nex_set_liter[1].setValue(mbFloat[1].values.setPoint * 100);
         nex_factor_k[0].setValue(mbFloat[0].values.kFact * 10000); nex_factor_k[1].setValue(mbFloat[1].values.kFact * 10000);
         nex_f_kurang[0].setValue(mbFloat[0].values.factorKurang * 100); nex_f_kurang[1].setValue(mbFloat[1].values.factorKurang * 100);
@@ -562,18 +568,22 @@ void nex_show_value(){
         for (int i = 10; i < 12; i++){
           if(mb_flagCoil[i]) {nex_sumber[1].setText(sumber_char[i - 10]);}
         }
+        flag_next_setvalue = false;
       }
-    }
-    if(index_page == 1){
-      nex_capacity[0].setValue(mbFloat[0].values.capacity * 100);
-      nex_capacity[1].setValue(mbFloat[1].values.capacity * 100);
-      nex_over_fl_err[0].setValue(mbFloat[0].values.over_fl_err);
-      nex_over_fl_err[1].setValue(mbFloat[1].values.over_fl_err);
-      nex_delay_on[0].setValue(mbFloat[0].values.timeInterval_OnValve);
-      nex_delay_on[1].setValue(mbFloat[1].values.timeInterval_OnValve);
-      nex_delay_off[0].setValue(mbFloat[0].values.timeInterval_OffValve);
-      nex_delay_off[1].setValue(mbFloat[1].values.timeInterval_OffValve);
+      if(index_page == 1){
+        flag_next_setvalue = true;
+        nex_capacity[0].setValue(mbFloat[0].values.capacity * 100);
+        nex_capacity[1].setValue(mbFloat[1].values.capacity * 100);
+        nex_over_fl_err[0].setValue(mbFloat[0].values.over_fl_err);
+        nex_over_fl_err[1].setValue(mbFloat[1].values.over_fl_err);
+        nex_delay_on[0].setValue(mbFloat[0].values.timeInterval_OnValve);
+        nex_delay_on[1].setValue(mbFloat[1].values.timeInterval_OnValve);
+        nex_delay_off[0].setValue(mbFloat[0].values.timeInterval_OffValve);
+        nex_delay_off[1].setValue(mbFloat[1].values.timeInterval_OffValve);
+        flag_next_setvalue = false;
+      }
       nex_show_tf_src();
+      index_page_change = index_page;
     }
   }
 }
@@ -586,26 +596,71 @@ void nex_read_value(){
       case 1:
         nex_set_liter[0].getValue(&value);
         mbFloat[0].values.setPoint = (float)value/100;
+        prefereces_partition1(false);
         break;
       case 2:
         nex_set_liter[1].getValue(&value);
         mbFloat[1].values.setPoint = (float)value/100;
+        prefereces_partition2(false);
         break;
       case 3:
         nex_factor_k[0].getValue(&value);
         mbFloat[0].values.kFact = (float)value/10000;
+        prefereces_partition1(false);
         break;
       case 4:
         nex_factor_k[1].getValue(&value);
         mbFloat[1].values.kFact = (float)value/10000;
+        prefereces_partition2(false);
         break;
       case 5:
         nex_f_kurang[0].getValue(&value);
         mbFloat[0].values.factorKurang = (float)value/100;
+        prefereces_partition1(false);
         break;
       case 6:
         nex_f_kurang[1].getValue(&value);
         mbFloat[1].values.factorKurang = (float)value/100;
+        prefereces_partition2(false);
+        break;
+      case 7:
+        nex_capacity[0].getValue(&value);
+        mbFloat[0].values.capacity = (float)value/100;
+        prefereces_partition1(false);
+        break;
+      case 8:
+        nex_capacity[1].getValue(&value);
+        mbFloat[1].values.capacity = (float)value/100;
+        prefereces_partition2(false);
+        break;
+      case 9:
+        nex_over_fl_err[0].getValue(&value);
+        mbFloat[0].values.over_fl_err = (float)value;
+        prefereces_partition1(false);
+        break;
+      case 10:
+        nex_over_fl_err[1].getValue(&value);
+        mbFloat[1].values.over_fl_err = (float)value;
+        prefereces_partition2(false);
+      case 11:
+        nex_delay_on[0].getValue(&value);
+        mbFloat[0].values.timeInterval_OnValve = (float)value;
+        prefereces_partition1(false);
+        break;
+      case 12:
+        nex_delay_on[1].getValue(&value);
+        mbFloat[1].values.timeInterval_OnValve = (float)value;
+        prefereces_partition2(false);
+        break;
+      case 13:
+        nex_delay_off[0].getValue(&value);
+        mbFloat[0].values.timeInterval_OffValve = (float)value;
+        prefereces_partition1(false);
+        break;
+      case 14:
+        nex_delay_off[1].getValue(&value);
+        mbFloat[1].values.timeInterval_OffValve = (float)value;
+        prefereces_partition2(false);
         break;
     }
     flag_next_set_val = false;
@@ -614,6 +669,7 @@ void nex_read_value(){
 }
 void nex_show_tf_src(){
   if(index_page == 1){
+    flag_next_setvalue = true;
     nex_btn_transfer_1[0].Set_background_color_bco( mb_flagCoil[0] ? 1024:63488);
     nex_btn_transfer_1[1].Set_background_color_bco( mb_flagCoil[1] ? 1024:63488);
     nex_btn_transfer_1[2].Set_background_color_bco( mb_flagCoil[2] ? 1024:63488);
@@ -626,9 +682,11 @@ void nex_show_tf_src(){
     nex_btn_transfer_2[3].Set_background_color_bco( mb_flagCoil[9] ? 1024:63488);
     nex_btn_sumber_2[0].Set_background_color_bco( mb_flagCoil[10] ? 1024:63488);
     nex_btn_sumber_2[1].Set_background_color_bco( mb_flagCoil[11] ? 1024:63488);
+    flag_next_setvalue = false;
   }
 }
 void nex_set_liter_0_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -637,6 +695,7 @@ void nex_set_liter_0_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_set_liter_1_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -645,6 +704,7 @@ void nex_set_liter_1_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_factor_k_0_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -653,6 +713,7 @@ void nex_factor_k_0_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_factor_k_1_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -661,6 +722,7 @@ void nex_factor_k_1_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_f_kurang_0_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -669,6 +731,7 @@ void nex_f_kurang_0_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_f_kurang_1_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -676,14 +739,8 @@ void nex_f_kurang_1_event(void *ptr){
   time_show_value = millis();
   flag_next_set_val = false;
 }
-void nex_btn_setting_event(void *ptr){
-  flag_next_set_val = true;
-  page[1].show();
-  time_show_value = millis();
-  flag_next_set_val = false;
-  index_page = 1;
-}
 void nex_capacity_0_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -692,6 +749,7 @@ void nex_capacity_0_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_capacity_1_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -700,6 +758,7 @@ void nex_capacity_1_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_over_fl_err_0_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -708,6 +767,7 @@ void nex_over_fl_err_0_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_over_fl_err_1_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -716,6 +776,7 @@ void nex_over_fl_err_1_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_delay_on_0_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -724,6 +785,7 @@ void nex_delay_on_0_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_delay_on_1_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -732,6 +794,7 @@ void nex_delay_on_1_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_delay_off_0_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -740,6 +803,7 @@ void nex_delay_off_0_event(void *ptr){
   flag_next_set_val = false;
 }
 void nex_delay_off_1_event(void *ptr){
+  if(flag_next_read_val || flag_next_setvalue) { page[index_page].show(); index_page_change = 2; time_show_value = millis(); return; }
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
@@ -796,12 +860,24 @@ void nex_btn_transfer_2_3_event(void *ptr){
   nex_show_tf_src();
 }
 void nex_btn_main_event(void *ptr){
+  if(flag_next_setvalue) return;
+  if(index_page_change != index_page) return;
   flag_next_set_val = true;
 
   page[0].show();
   time_show_value = millis();
   flag_next_set_val = false;
   index_page = 0;
+}
+void nex_btn_setting_event(void *ptr){
+  if(flag_next_setvalue) return;
+  if(index_page_change != index_page) return;
+  flag_next_set_val = true;
+  
+  page[1].show();
+  time_show_value = millis();
+  flag_next_set_val = false;
+  index_page = 1;
 }
 void next_btn_ok_keyboard_event(void *ptr){
   flag_next_set_val = true;
