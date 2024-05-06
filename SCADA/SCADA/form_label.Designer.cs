@@ -30,15 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form_label));
             this.group_fl1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tb_fl1_header = new System.Windows.Forms.TextBox();
-            this.tb_fl1_sumber_1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tb_fl1_transfer_1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tb_fl1_transfer_4 = new System.Windows.Forms.TextBox();
             this.tb_fl1_transfer_3 = new System.Windows.Forms.TextBox();
             this.tb_fl1_transfer_2 = new System.Windows.Forms.TextBox();
+            this.tb_fl1_transfer_1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tb_fl1_sumber_1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tb_fl1_header = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.group_fl2 = new System.Windows.Forms.GroupBox();
             this.tb_fl2_transfer_4 = new System.Windows.Forms.TextBox();
             this.tb_fl2_transfer_3 = new System.Windows.Forms.TextBox();
@@ -50,6 +50,7 @@
             this.tb_fl2_header = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.group_fl3 = new System.Windows.Forms.GroupBox();
+            this.tb_fl3_transfer_4 = new System.Windows.Forms.TextBox();
             this.tb_fl3_transfer_3 = new System.Windows.Forms.TextBox();
             this.tb_fl3_transfer_2 = new System.Windows.Forms.TextBox();
             this.tb_fl3_transfer_1 = new System.Windows.Forms.TextBox();
@@ -61,7 +62,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.btn_save = new System.Windows.Forms.Button();
             this.btn_cancle = new System.Windows.Forms.Button();
-            this.tb_fl3_transfer_4 = new System.Windows.Forms.TextBox();
             this.group_fl4 = new System.Windows.Forms.GroupBox();
             this.tb_fl4_transfer_4 = new System.Windows.Forms.TextBox();
             this.tb_fl4_transfer_3 = new System.Windows.Forms.TextBox();
@@ -73,6 +73,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.tb_fl4_header = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.check_b_auto_connect_opc = new System.Windows.Forms.CheckBox();
             this.group_fl1.SuspendLayout();
             this.group_fl2.SuspendLayout();
             this.group_fl3.SuspendLayout();
@@ -97,54 +98,6 @@
             this.group_fl1.TabStop = false;
             this.group_fl1.Text = "Flow Meter 1";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label Header";
-            // 
-            // tb_fl1_header
-            // 
-            this.tb_fl1_header.Location = new System.Drawing.Point(94, 20);
-            this.tb_fl1_header.Name = "tb_fl1_header";
-            this.tb_fl1_header.Size = new System.Drawing.Size(100, 20);
-            this.tb_fl1_header.TabIndex = 1;
-            // 
-            // tb_fl1_sumber_1
-            // 
-            this.tb_fl1_sumber_1.Location = new System.Drawing.Point(94, 44);
-            this.tb_fl1_sumber_1.Name = "tb_fl1_sumber_1";
-            this.tb_fl1_sumber_1.Size = new System.Drawing.Size(100, 20);
-            this.tb_fl1_sumber_1.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 47);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "label Sumber";
-            // 
-            // tb_fl1_transfer_1
-            // 
-            this.tb_fl1_transfer_1.Location = new System.Drawing.Point(94, 69);
-            this.tb_fl1_transfer_1.Name = "tb_fl1_transfer_1";
-            this.tb_fl1_transfer_1.Size = new System.Drawing.Size(100, 20);
-            this.tb_fl1_transfer_1.TabIndex = 4;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 72);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "label Transfer";
-            // 
             // tb_fl1_transfer_4
             // 
             this.tb_fl1_transfer_4.Location = new System.Drawing.Point(94, 144);
@@ -165,6 +118,54 @@
             this.tb_fl1_transfer_2.Name = "tb_fl1_transfer_2";
             this.tb_fl1_transfer_2.Size = new System.Drawing.Size(100, 20);
             this.tb_fl1_transfer_2.TabIndex = 6;
+            // 
+            // tb_fl1_transfer_1
+            // 
+            this.tb_fl1_transfer_1.Location = new System.Drawing.Point(94, 69);
+            this.tb_fl1_transfer_1.Name = "tb_fl1_transfer_1";
+            this.tb_fl1_transfer_1.Size = new System.Drawing.Size(100, 20);
+            this.tb_fl1_transfer_1.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 72);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "label Transfer";
+            // 
+            // tb_fl1_sumber_1
+            // 
+            this.tb_fl1_sumber_1.Location = new System.Drawing.Point(94, 44);
+            this.tb_fl1_sumber_1.Name = "tb_fl1_sumber_1";
+            this.tb_fl1_sumber_1.Size = new System.Drawing.Size(100, 20);
+            this.tb_fl1_sumber_1.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 47);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "label Sumber";
+            // 
+            // tb_fl1_header
+            // 
+            this.tb_fl1_header.Location = new System.Drawing.Point(94, 20);
+            this.tb_fl1_header.Name = "tb_fl1_header";
+            this.tb_fl1_header.Size = new System.Drawing.Size(100, 20);
+            this.tb_fl1_header.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(67, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label Header";
             // 
             // group_fl2
             // 
@@ -272,6 +273,13 @@
             this.group_fl3.TabStop = false;
             this.group_fl3.Text = "Flow Meter 3";
             // 
+            // tb_fl3_transfer_4
+            // 
+            this.tb_fl3_transfer_4.Location = new System.Drawing.Point(94, 170);
+            this.tb_fl3_transfer_4.Name = "tb_fl3_transfer_4";
+            this.tb_fl3_transfer_4.Size = new System.Drawing.Size(100, 20);
+            this.tb_fl3_transfer_4.TabIndex = 9;
+            // 
             // tb_fl3_transfer_3
             // 
             this.tb_fl3_transfer_3.Location = new System.Drawing.Point(94, 144);
@@ -360,13 +368,6 @@
             this.btn_cancle.Text = "Cancel";
             this.btn_cancle.UseVisualStyleBackColor = true;
             this.btn_cancle.Click += new System.EventHandler(this.btn_cancle_Click);
-            // 
-            // tb_fl3_transfer_4
-            // 
-            this.tb_fl3_transfer_4.Location = new System.Drawing.Point(94, 170);
-            this.tb_fl3_transfer_4.Name = "tb_fl3_transfer_4";
-            this.tb_fl3_transfer_4.Size = new System.Drawing.Size(100, 20);
-            this.tb_fl3_transfer_4.TabIndex = 9;
             // 
             // group_fl4
             // 
@@ -463,11 +464,22 @@
             this.label12.TabIndex = 1;
             this.label12.Text = "label Header";
             // 
+            // check_b_auto_connect_opc
+            // 
+            this.check_b_auto_connect_opc.AutoSize = true;
+            this.check_b_auto_connect_opc.Location = new System.Drawing.Point(130, 399);
+            this.check_b_auto_connect_opc.Name = "check_b_auto_connect_opc";
+            this.check_b_auto_connect_opc.Size = new System.Drawing.Size(116, 17);
+            this.check_b_auto_connect_opc.TabIndex = 10;
+            this.check_b_auto_connect_opc.Text = "Auto Connect OPC";
+            this.check_b_auto_connect_opc.UseVisualStyleBackColor = true;
+            // 
             // form_label
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(422, 425);
+            this.Controls.Add(this.check_b_auto_connect_opc);
             this.Controls.Add(this.group_fl4);
             this.Controls.Add(this.btn_cancle);
             this.Controls.Add(this.btn_save);
@@ -488,6 +500,7 @@
             this.group_fl4.ResumeLayout(false);
             this.group_fl4.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -537,5 +550,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tb_fl4_header;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox check_b_auto_connect_opc;
     }
 }

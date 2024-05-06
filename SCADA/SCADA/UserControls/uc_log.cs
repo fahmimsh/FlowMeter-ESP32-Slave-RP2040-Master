@@ -28,10 +28,11 @@ namespace SCADA.UserControls
             InitializeComponent();
             form = mainForm;
         }
-        private void uc_log_Load(object sender, EventArgs e)
+        private async void uc_log_Load(object sender, EventArgs e)
         {
             date_stop.Value = DateTime.Now;
             date_start.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            await Task.Delay(5000);
             btn_search_Click(null, null);
         }
         private void add_item_list()
@@ -88,6 +89,7 @@ namespace SCADA.UserControls
                 IEnumerable<data_log_entry> result = query.Get<data_log_entry>();
                 if (result != null)
                 {
+                    result = result.OrderByDescending(entry => entry.id).ToList();
                     data_log_db = new BindingList<data_log_entry>((IList<data_log_entry>)result);
                     dataGridViewDataLog.DataSource = data_log_db;
                     form.uc_x_hmi.dataGridViewDataLog_hmi.DataSource = data_log_db;
@@ -158,7 +160,6 @@ namespace SCADA.UserControls
                 }
             }
         }
-
         private void timer_refresh_db_Tick(object sender, EventArgs e)
         {
             if(OPCStatus1.IsLogData)

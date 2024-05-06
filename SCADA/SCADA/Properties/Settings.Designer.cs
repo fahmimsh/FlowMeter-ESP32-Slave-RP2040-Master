@@ -277,7 +277,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Sumber RO")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
         public string fl3_label_sumber1 {
             get {
                 return ((string)(this["fl3_label_sumber1"]));
@@ -289,7 +289,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sumber RO")]
         public string fl3_label_sumber2 {
             get {
                 return ((string)(this["fl3_label_sumber2"]));
@@ -361,7 +361,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Sumber RO")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
         public string fl4_label_sumber1 {
             get {
                 return ((string)(this["fl4_label_sumber1"]));
@@ -373,7 +373,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sumber RO")]
         public string fl4_label_sumber2 {
             get {
                 return ((string)(this["fl4_label_sumber2"]));

@@ -22,6 +22,7 @@ namespace SCADA
         public static form_label GetInstance(form_main form) => instance == null || instance.IsDisposed ? instance = new form_label(form) : instance;
         private void form_label_Load(object sender, EventArgs e)
         {
+            check_b_auto_connect_opc.Checked = Properties.Settings.Default.auto_connect_opc;
             tb_fl1_header.Text = Properties.Settings.Default.fl1_header;
             tb_fl1_sumber_1.Text = Properties.Settings.Default.fl1_label_sumber1;
             tb_fl1_transfer_1.Text = Properties.Settings.Default.fl1_label_tf1;
@@ -56,6 +57,7 @@ namespace SCADA
         }
         private void btn_save_Click(object sender, EventArgs e)
         {
+            Properties.Settings.Default.auto_connect_opc = check_b_auto_connect_opc.Checked;
             Properties.Settings.Default.fl1_header = tb_fl1_header.Text;
             Properties.Settings.Default.fl1_label_sumber1 = tb_fl1_sumber_1.Text;
             Properties.Settings.Default.fl1_label_tf1 = tb_fl1_transfer_1.Text;
