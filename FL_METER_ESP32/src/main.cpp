@@ -37,7 +37,7 @@ union mbFloatInt {
 mbFloatInt mbFloat[2];
 union mb_Int_Date_Time {
   struct {
-    uint16_t day; //
+    uint16_t day; //15
     uint16_t month; //16
     uint16_t year; //17
     uint16_t hour; //18
@@ -49,7 +49,8 @@ union mb_Int_Date_Time {
 mb_Int_Date_Time mb_int_date_time;
 /* OnOffFlow, FlagLog, flagOn, flagOff, flagEventOnOff, flagOffPrev, flagPrintserial */
 bool flagCoil[2][7], mb_flagCoil[29], IsConnectTCP, IsConnectTCP_Prev;
-uint8_t mb_sizeHoldingRegister = sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0]) * 2, mb_sizeCoil = 10 + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
+bool flag_prev_log[2];
+uint8_t mb_sizeHoldingRegister = (sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0]) * 2) + sizeof(mb_int_date_time.words) / sizeof(mb_int_date_time.words[0]), mb_sizeCoil = 10 + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
 unsigned long timePrevOn[2], timePrevOff[2], timePrevIsConnectTCP;
 //Variable NEXTION
 const char *tanki_1_char[5] = {"Tanki T1" , "Tanki T2", "Tanki T3", "Tanki T4", "Tanki T5"};
@@ -60,6 +61,7 @@ bool flag_next_set_val, flag_next_read_val, flag_next_setvalue;
 bool mode_prev[2];
 unsigned long time_set_value, time_show_value;
 //HALAMAN 1 MAIN
+NexText nex_com_conn = NexText(0, 36, "t15");
 NexText nex_date_time = NexText(0, 30, "t18");
 NexCheckbox nex_log[2] = {NexCheckbox(0, 19, "r0"), NexCheckbox(0, 20, "r1")};
 NexPage page[4] = {NexPage(0, 0, "page0"), NexPage(2, 0, "page1"), NexPage(1, 0, "KeybdB"), NexPage(2, 0, "page2"),};
@@ -283,6 +285,7 @@ void setup() {
   prefereces_partition2(true); vTaskDelay(1/portTICK_PERIOD_MS);
   prefereces_partition_date_time(true); vTaskDelay(1/portTICK_PERIOD_MS);
   mb_flagCoil[0] = mb_flagCoil[5] = mb_flagCoil[9] = mb_flagCoil[19] = true;
+  IsConnectTCP_Prev = !IsConnectTCP;
   for (int i = 0; i < 8; i++){
     pinMode(X[i], INPUT);
     if(i < 6) { pinMode(Y[i], OUTPUT); digitalWrite(Y[i], HIGH); }
@@ -340,7 +343,7 @@ void btnUpdate(uint8_t index){
     if(flagCoil[index][4]) flagCoil[index][4] = false;
     else if(!digitalRead(X[index+4]) && flagCoil[index][0]) return; // jika mode manual
     else flagCoil[index][0] = !flagCoil[index][0];
-    if(flagCoil[0] && digitalRead(Y[index * 2])){
+    if(flagCoil[index][0] && digitalRead(Y[index * 2])){
       flagCoil[index][2] = true;
       timePrevOn[index] = millis();
       digitalWrite(Y[index * 2], LOW);
@@ -407,7 +410,7 @@ void calculate1(void *pvParameters) {
       portENTER_CRITICAL_ISR(&timerMux0); flagTime[0] = false; portEXIT_CRITICAL_ISR(&timerMux0);
       portENTER_CRITICAL(&synch0); pulse[0] = count[0]; count[0] = 0; portEXIT_CRITICAL(&synch0);
       unsigned long mils = millis(); 
-      double _sec = (mils  - prevMillis[0]) / 1000.0f;
+      double _sec = (mils  - prevMillis[0]) / 1000.0;
       double _freq = pulse[0] / _sec;
       unsigned int _decile = floor(10.0f * _freq / (mbFloat[0].values.capacity * mbFloat[0].values.kFact));
       prevMillis[0] = mils;
@@ -415,7 +418,7 @@ void calculate1(void *pvParameters) {
       unsigned int ceiling =  9; 
       double _Correct = mbFloat[0].values.kFact / mFactor[min(_decile, ceiling)];
       double _Flowrate = _freq / _Correct;
-      double _Volume = _Flowrate / (60.0f/_sec);
+      double _Volume = _Flowrate / (60.0/_sec);
       mbFloat[0].values.Flowrate = _Flowrate;
       mbFloat[0].values.liter = formulaLiter1(_Volume);
       
@@ -430,7 +433,7 @@ void calculate2(void *pvParameters) {
       portENTER_CRITICAL_ISR(&timerMux1); flagTime[1] = false; portEXIT_CRITICAL_ISR(&timerMux1);
       portENTER_CRITICAL(&synch1); pulse[1] = count[1]; count[1] = 0; portEXIT_CRITICAL(&synch1);
       unsigned long mils = millis(); 
-      double _sec = (mils  - prevMillis[1]) / 1000.0f;
+      double _sec = (mils  - prevMillis[1]) / 1000.0;
       double _freq = pulse[1] / _sec;
       unsigned int _decile = floor(10.0f * _freq / (mbFloat[1].values.capacity * mbFloat[1].values.kFact));
       prevMillis[1] = mils;
@@ -438,7 +441,7 @@ void calculate2(void *pvParameters) {
       unsigned int ceiling =  9; 
       double _Correct = mbFloat[1].values.kFact / mFactor[min(_decile, ceiling)];
       double _Flowrate = _freq / _Correct;
-      double _Volume = _Flowrate / (60.0f/_sec);
+      double _Volume = _Flowrate / (60.0/_sec);
       mbFloat[1].values.Flowrate = _Flowrate;
       mbFloat[1].values.liter = formulaLiter2(_Volume);
       
@@ -624,7 +627,7 @@ nmbs_error handler_write_single_register(uint16_t address, uint16_t value, uint8
     if (address > mb_sizeHoldingRegister + 1)  return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     if(address < 15) {mbFloat[0].words[address] = value; prefereces_partition1(false);}
     else if(address >= 15 && address < 30) {mbFloat[1].words[address - 15] = value; prefereces_partition2(false);}
-    else if(address >= 30 && address < 37) {mb_int_date_time.words[address - 30] = value; prefereces_partition_date_time(false);}
+    else if(address >= 30 && address < 37) {mb_int_date_time.words[address - 30] = value; prefereces_partition_date_time(false); setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); }
     return NMBS_ERROR_NONE;
 }
 nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, const uint16_t *registers, uint8_t unit_id, void *arg){
@@ -634,7 +637,7 @@ nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, 
       int8_t index = address + i;
       if(index < 15) {mbFloat[0].words[index] = registers[i]; prefereces_partition1(false);}
       else if(index >= 15 && index < 30) {mbFloat[1].words[index - 15] = registers[i]; prefereces_partition2(false);}
-      else if(index >= 30 && index < 37) {mb_int_date_time.words[index - 30] = registers[i]; prefereces_partition_date_time(false);}
+      else if(index >= 30 && index < 37) {mb_int_date_time.words[index - 30] = registers[i]; prefereces_partition_date_time(false); setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); }
     }
     return NMBS_ERROR_NONE;
 }
@@ -656,7 +659,9 @@ void nex_show_date_time(){
 }
 void nex_show_value(){
   if(index_page == 0){
-    if(IsConnectTCP_Prev != IsConnectTCP){ IsConnectTCP_Prev = IsConnectTCP; nex_log[0].setValue(IsConnectTCP_Prev); nex_log[1].setValue(IsConnectTCP_Prev); }
+    if(IsConnectTCP_Prev != IsConnectTCP){ IsConnectTCP_Prev = IsConnectTCP; nex_com_conn.setText(IsConnectTCP ? "COM Connected" : "COM Disconnect"); nex_com_conn.Set_font_color_pco(IsConnectTCP ? 1024 : 63488); }
+    if(flag_prev_log[0] != flagCoil[0][1]){ flag_prev_log[0] = flagCoil[0][1]; nex_log[0].setValue(flagCoil[0][1]); }
+    if(flag_prev_log[1] != flagCoil[1][1]){ flag_prev_log[1] = flagCoil[1][1]; nex_log[1].setValue(flagCoil[1][1]); }
     if(mode_prev[0] != digitalRead(X[4])){
       mode_prev[0] = digitalRead(X[4]);
       flag_next_setvalue = true;
@@ -699,6 +704,7 @@ void nex_show_value(){
           if(mb_flagCoil[i]) nex_btn_batch2.setText(batch_char[i-19]);
         }
         flag_next_setvalue = false;
+        IsConnectTCP_Prev = !IsConnectTCP;
       }
       if(index_page == 1){
         flag_next_setvalue = true;
@@ -711,8 +717,11 @@ void nex_show_value(){
         nex_delay_off[0].setValue(mbFloat[0].values.timeInterval_OffValve);
         nex_delay_off[1].setValue(mbFloat[1].values.timeInterval_OffValve);
         flag_next_setvalue = false;
+        nex_show_set_and_tank();
       }
-      nex_show_set_and_tank();
+      if(index_page == 3){
+        nex_show_batch();
+      }
       index_page_change = index_page;
     }
   }

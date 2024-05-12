@@ -92,7 +92,7 @@ namespace SCADA.UserControls
                     result = result.OrderByDescending(entry => entry.id).ToList();
                     data_log_db = new BindingList<data_log_entry>((IList<data_log_entry>)result);
                     dataGridViewDataLog.DataSource = data_log_db;
-                    form.uc_x_hmi.dataGridViewDataLog_hmi.DataSource = data_log_db;
+                    form.uc_x_hmi.dataGridViewDataLog_hmi_fl1_fl2.DataSource = data_log_db;
                     label_total_liter.Text = $"Total Liter : {data_log_db.Sum(entry => entry.liter)} L";
                 }
             }
