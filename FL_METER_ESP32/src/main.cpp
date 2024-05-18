@@ -50,6 +50,7 @@ mb_Int_Date_Time mb_int_date_time;
 /* OnOffFlow, FlagLog, flagOn, flagOff, flagEventOnOff, flagOffPrev, flagPrintserial */
 bool flagCoil[2][7], mb_flagCoil[29], IsConnectTCP, IsConnectTCP_Prev;
 bool flag_prev_log[2];
+bool mode_produksi_persiapan[2];
 uint8_t mb_sizeHoldingRegister = (sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0]) * 2) + sizeof(mb_int_date_time.words) / sizeof(mb_int_date_time.words[0]), mb_sizeCoil = 10 + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
 unsigned long timePrevOn[2], timePrevOff[2], timePrevIsConnectTCP;
 //Variable NEXTION
@@ -75,6 +76,8 @@ NexButton nex_btn_tank1 = NexButton (0, 29, "b0");
 NexButton nex_btn_tank2 = NexButton (0, 35, "b3");
 NexButton nex_btn_batch1 = NexButton (0, 31, "b1");
 NexButton nex_btn_batch2 = NexButton (0, 34, "b2");
+NexButton nex_btn_mode_produksi1 = NexButton (0, 37, "b4");
+NexButton nex_btn_mode_produksi2 = NexButton (0, 38, "b5");
 //HALAMAN 2 SETTING 1
 NexNumber nex_capacity[2] = {NexNumber (2, 2, "x0"), NexNumber (2, 32, "x5")};
 NexNumber nex_over_fl_err[2] = {NexNumber (2, 7, "x8"), NexNumber (2, 30, "x4")};
@@ -100,7 +103,7 @@ NexTouch *nex_listen_list[] = {
   &nex_factor_k[0], &nex_factor_k[1],
   &nex_f_kurang[0], &nex_f_kurang[1],
 
-  &nex_btn_tank1, &nex_btn_tank2, &nex_btn_batch1, &nex_btn_batch2,
+  &nex_btn_tank1, &nex_btn_tank2, &nex_btn_batch1, &nex_btn_batch2, &nex_btn_mode_produksi1, &nex_btn_mode_produksi2,
 
   &nex_capacity[0], &nex_capacity[1],
   &nex_over_fl_err[0], &nex_over_fl_err[1],
@@ -174,6 +177,8 @@ void nex_btn_tank1_event(void *ptr);
 void nex_btn_tank2_event(void *ptr);
 void nex_btn_batch1_event(void *ptr);
 void nex_btn_batch2_event(void *ptr);
+void nex_btn_mode_produksi1_event(void *ptr);
+void nex_btn_mode_produksi2_event(void *ptr);
 
 void nex_capacity_0_event(void *ptr);
 void nex_capacity_1_event(void *ptr);
@@ -232,6 +237,8 @@ void nex_init_event_all(){
   nex_btn_tank2.attachPush(nex_btn_tank2_event, &nex_btn_tank2);
   nex_btn_batch1.attachPush(nex_btn_batch1_event, &nex_btn_batch1);
   nex_btn_batch2.attachPush(nex_btn_batch2_event, &nex_btn_batch2);
+  nex_btn_mode_produksi1.attachPush(nex_btn_mode_produksi1_event, &nex_btn_mode_produksi1);
+  nex_btn_mode_produksi2.attachPush(nex_btn_mode_produksi2_event, &nex_btn_mode_produksi2);
 
   nex_capacity[0].attachPush(nex_capacity_0_event, &nex_capacity[0]);
   nex_capacity[1].attachPush(nex_capacity_1_event, &nex_capacity[1]);
@@ -359,13 +366,14 @@ void btnUpdate(uint8_t index){
     digitalWrite(Y[(index * 2) + 1], LOW);
     if(index) InterruptPinChangeMode2(true);
     else InterruptPinChangeMode1(true);
+    flagCoil[index][1] = false;
   }
   if(flagCoil[index][3] && millis() - timePrevOff[index] >= mbFloat[index].values.timeInterval_OffValve){
     flagCoil[index][3] = false;
     digitalWrite(Y[index * 2], HIGH);
     if(index) InterruptPinChangeMode2(false);
     else InterruptPinChangeMode1(false);
-    flagCoil[index][1] = true;
+    flagCoil[index][1] = mode_produksi_persiapan[index] ? false : true;
   }
 }
 void eth_wiz_reset(uint8_t resetPin) { pinMode(resetPin, OUTPUT); digitalWrite(resetPin, HIGH); delay(250); digitalWrite(resetPin, LOW); delay(50); digitalWrite(resetPin, HIGH); delay(350); pinMode(resetPin, INPUT); }
@@ -703,6 +711,12 @@ void nex_show_value(){
         for (int i = 19; i < 29; i++){
           if(mb_flagCoil[i]) nex_btn_batch2.setText(batch_char[i-19]);
         }
+        nex_btn_mode_produksi1.setText(mode_produksi_persiapan[0] ? "Persiapan" : "Produksi");
+        nex_btn_mode_produksi1.Set_background_color_bco(mode_produksi_persiapan[0] ? 63488 : 2016);
+        nex_btn_mode_produksi1.Set_press_background_color_bco2(mode_produksi_persiapan[0] ? 63488 : 2016);
+        nex_btn_mode_produksi2.setText(mode_produksi_persiapan[1] ? "Persiapan" : "Produksi");
+        nex_btn_mode_produksi2.Set_background_color_bco(mode_produksi_persiapan[1] ? 63488 : 2016);
+        nex_btn_mode_produksi2.Set_press_background_color_bco2(mode_produksi_persiapan[1] ? 63488 : 2016);
         flag_next_setvalue = false;
         IsConnectTCP_Prev = !IsConnectTCP;
       }
@@ -910,6 +924,18 @@ void nex_btn_tank1_event(void *ptr){ nex_btn_set_all_event(ptr, 1); }
 void nex_btn_tank2_event(void *ptr){ nex_btn_set_all_event(ptr, 1); }
 void nex_btn_batch1_event(void *ptr){ nex_btn_set_all_event(ptr, 3); }
 void nex_btn_batch2_event(void *ptr){ nex_btn_set_all_event(ptr, 3); }
+void nex_btn_mode_produksi1_event(void *ptr){
+  mode_produksi_persiapan[0] = !mode_produksi_persiapan[0];
+  nex_btn_mode_produksi1.setText(mode_produksi_persiapan[0] ? "Persiapan" : "Produksi");
+  nex_btn_mode_produksi1.Set_background_color_bco(mode_produksi_persiapan[0] ? 63488 : 2016);
+  nex_btn_mode_produksi1.Set_press_background_color_bco2(mode_produksi_persiapan[0] ? 63488 : 2016);
+}
+void nex_btn_mode_produksi2_event(void *ptr){
+  mode_produksi_persiapan[1] = !mode_produksi_persiapan[1];
+  nex_btn_mode_produksi2.setText(mode_produksi_persiapan[1] ? "Persiapan" : "Produksi");
+  nex_btn_mode_produksi2.Set_background_color_bco(mode_produksi_persiapan[1] ? 63488 : 2016);
+  nex_btn_mode_produksi2.Set_press_background_color_bco2(mode_produksi_persiapan[1] ? 63488 : 2016);
+}
 void next_btn_ok_keyboard_event(void *ptr){
   flag_next_set_val = true;
   index_page = index_page_prev;
