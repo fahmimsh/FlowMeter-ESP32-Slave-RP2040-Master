@@ -7,7 +7,6 @@
 #include <Bounce2.h>
 #include <SPI.h>
 #include <Ethernet2.h>
-#include <IPAddress.h>
 #include <nanomodbus.h>
 #define UNUSED_PARAM(x) ((void)(x))
 
