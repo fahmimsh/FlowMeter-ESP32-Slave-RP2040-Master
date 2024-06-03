@@ -86,9 +86,9 @@ namespace SCADA
         private double KFactor { get; set; }
         [HeaderColumn("K-Faktor")]
         public double k_factor { get => KFactor; set { KFactor = value; OnPropertyChanged(nameof(KFactor)); } }
-        private string FromSource { get; set; }
-        [HeaderColumn("Sumber Flow Meter")]
-        public string from_source { get => FromSource; set { FromSource = value; OnPropertyChanged(nameof(FromSource)); } }
+        private string Batch { get; set; }
+        [HeaderColumn("No Batch")]
+        public string batch { get => Batch; set { Batch = value; OnPropertyChanged(nameof(Batch)); } }
         private string TransferTo { get; set; }
         [HeaderColumn("Transfer Ke")]
         public string transfer_to { get => TransferTo; set { TransferTo = value; OnPropertyChanged(nameof(TransferTo)); } }
@@ -100,24 +100,61 @@ namespace SCADA
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+    internal class data_log_entry2 : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        private int ID { get; set; }
+        [HeaderColumn("ID")]
+        public int id { get => ID; set { ID = value; OnPropertyChanged(nameof(id)); } }
+        private string Proses_mesin { get; set; }
+        [HeaderColumn("Proses Mesin")]
+        public string proses_mesin { get => Proses_mesin; set { Proses_mesin = value; OnPropertyChanged(nameof(Proses_mesin)); } }
+        private string TransferTo { get; set; }
+        [HeaderColumn("Transfer Ke MF")]
+        public string transfer_to { get => TransferTo; set { TransferTo = value; OnPropertyChanged(nameof(TransferTo)); } }
+        private string Batch { get; set; }
+        [HeaderColumn("No Batch")]
+        public string batch { get => Batch; set { Batch = value; OnPropertyChanged(nameof(Batch)); } }
+        private double Liter { get; set; }
+        [HeaderColumn("Hasil Liter")]
+        public double liter { get => Liter; set { Liter = value; OnPropertyChanged(nameof(Liter)); } }
+        private double KFactor { get; set; }
+        [HeaderColumn("K-Faktor")]
+        public double k_factor { get => KFactor; set { KFactor = value; OnPropertyChanged(nameof(KFactor)); } }
+        private DateTime Date_Time { get; set; }
+        [HeaderColumn("Tanggal Dan Waktu")]
+        public DateTime date_time { get => Date_Time; set { Date_Time = value; OnPropertyChanged(nameof(Date_Time)); } }
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
     internal static class flow_meter1
     {
         public static string label_transfer { get; set; }
-        public static string label_sumber{ get; set; }
+        public static string label_batch{ get; set; }
     }
     internal static class flow_meter2
     {
         public static string label_transfer { get; set; }
-        public static string label_sumber { get; set; }
+        public static string label_batch { get; set; }
     }
     internal static class flow_meter3
     {
         public static string label_transfer { get; set; }
-        public static string label_sumber { get; set; }
+        public static string label_batch { get; set; }
+        public static string label_proses_mesin { get; set; }
     }
     internal static class flow_meter4
     {
         public static string label_transfer { get; set; }
-        public static string label_sumber { get; set; }
+        public static string label_batch { get; set; }
+        public static string label_proses_mesin { get; set; }
+    }
+    internal static class flow_meter5
+    {
+        public static string label_transfer { get; set; }
+        public static string label_batch { get; set; }
+        public static string label_proses_mesin { get; set; }
     }
 }

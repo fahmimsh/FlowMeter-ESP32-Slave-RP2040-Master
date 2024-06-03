@@ -15,91 +15,163 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="fl1_label_tf1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mesin 1</Value>
+      <Value Profile="(Default)">Tank T1</Value>
     </Setting>
     <Setting Name="fl1_label_tf2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mesin 2</Value>
+      <Value Profile="(Default)">Tank T2</Value>
     </Setting>
     <Setting Name="fl1_label_tf3" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mesin 3</Value>
+      <Value Profile="(Default)">Tank T3</Value>
     </Setting>
     <Setting Name="fl1_label_tf4" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mesin 4</Value>
+      <Value Profile="(Default)">Tank T4</Value>
+    </Setting>
+    <Setting Name="fl1_label_tf5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tank T5</Value>
     </Setting>
     <Setting Name="fl1_header" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Flow Meter UHT 1</Value>
-    </Setting>
-    <Setting Name="fl1_label_sumber1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">UHT 1</Value>
+      <Value Profile="(Default)">Flow Rate 1</Value>
     </Setting>
     <Setting Name="fl2_label_tf1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mesin 1</Value>
+      <Value Profile="(Default)">Tank A1</Value>
     </Setting>
     <Setting Name="fl2_label_tf2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mesin 2</Value>
+      <Value Profile="(Default)">Tank A2</Value>
     </Setting>
     <Setting Name="fl2_label_tf3" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mesin 3</Value>
+      <Value Profile="(Default)">Tank B1</Value>
     </Setting>
     <Setting Name="fl2_label_tf4" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mesin 4</Value>
+      <Value Profile="(Default)">Tank B2</Value>
     </Setting>
     <Setting Name="fl2_header" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Flow Meter UHT 2</Value>
-    </Setting>
-    <Setting Name="fl2_label_sumber1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">UHT 2</Value>
-    </Setting>
-    <Setting Name="fl3_label_tf1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tank 1</Value>
-    </Setting>
-    <Setting Name="fl3_label_tf2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tank 2</Value>
-    </Setting>
-    <Setting Name="fl3_label_tf3" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tank 3</Value>
-    </Setting>
-    <Setting Name="fl3_label_tf4" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tank 4</Value>
-    </Setting>
-    <Setting Name="fl3_header" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Flow Meter Tank Double Jaket 1</Value>
-    </Setting>
-    <Setting Name="fl3_label_sumber1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Air</Value>
-    </Setting>
-    <Setting Name="fl3_label_sumber2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Sumber RO</Value>
-    </Setting>
-    <Setting Name="fl4_label_tf1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tank 1</Value>
-    </Setting>
-    <Setting Name="fl4_label_tf2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tank 2</Value>
-    </Setting>
-    <Setting Name="fl4_label_tf3" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tank 3</Value>
-    </Setting>
-    <Setting Name="fl4_label_tf4" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tank 4</Value>
-    </Setting>
-    <Setting Name="fl4_header" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Flow Meter Tank Double Jaket 2</Value>
-    </Setting>
-    <Setting Name="fl4_label_sumber1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Air</Value>
-    </Setting>
-    <Setting Name="fl4_label_sumber2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Sumber RO</Value>
+      <Value Profile="(Default)">Flow Rate 2</Value>
     </Setting>
     <Setting Name="DatabaseServer" Type="System.String" Scope="User">
       <Value Profile="(Default)">localhost</Value>
     </Setting>
     <Setting Name="DatabaseName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">flow_meter_db</Value>
+      <Value Profile="(Default)">flowmeter_db</Value>
     </Setting>
-    <Setting Name="tabel_db_flowmeter" Type="System.String" Scope="User">
-      <Value Profile="(Default)">log_data</Value>
+    <Setting Name="tabel_db_flowmeter_1_2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">log_data_1_2</Value>
+    </Setting>
+    <Setting Name="tabel_db_flowmeter_3_4_5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">log_data_3_4_5</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 01</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 02</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 03</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 04</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 05</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 06</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 07</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 08</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 09</Value>
+    </Setting>
+    <Setting Name="fl1_label_batch10" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 10</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 01</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 02</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 03</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 04</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 05</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 06</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 07</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 08</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 09</Value>
+    </Setting>
+    <Setting Name="fl2_label_batch10" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Batch 10</Value>
+    </Setting>
+    <Setting Name="fl3_header" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Flow Rate 3</Value>
+    </Setting>
+    <Setting Name="fl3_label_tf1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin MF 1</Value>
+    </Setting>
+    <Setting Name="fl3_label_tf2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin MF 2</Value>
+    </Setting>
+    <Setting Name="fl3_label_tf3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin MF 3</Value>
+    </Setting>
+    <Setting Name="fl3_label_pm1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PHE</Value>
+    </Setting>
+    <Setting Name="fl3_label_pm2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UHT</Value>
+    </Setting>
+    <Setting Name="fl4_header" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Flow Rate 4</Value>
+    </Setting>
+    <Setting Name="fl4_label_tf1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin MF 1</Value>
+    </Setting>
+    <Setting Name="fl4_label_tf2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin MF 2</Value>
+    </Setting>
+    <Setting Name="fl4_label_tf3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin MF 3</Value>
+    </Setting>
+    <Setting Name="fl4_label_pm1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UHT</Value>
+    </Setting>
+    <Setting Name="fl4_label_pm2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PHE</Value>
+    </Setting>
+    <Setting Name="fl5_header" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Flow Rate 5</Value>
+    </Setting>
+    <Setting Name="fl5_label_tf1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin MF 1</Value>
+    </Setting>
+    <Setting Name="fl5_label_tf2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin MF 2</Value>
+    </Setting>
+    <Setting Name="fl5_label_tf3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mesin MF 3</Value>
+    </Setting>
+    <Setting Name="fl5_label_pm1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DJ</Value>
+    </Setting>
+    <Setting Name="fl5_label_pm2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UHT</Value>
     </Setting>
   </Settings>
 </SettingsFile>

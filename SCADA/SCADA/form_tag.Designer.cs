@@ -43,6 +43,7 @@
             this.ToolStripMenuItemsetOPCServer = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemConnectOPC = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemAboutOpc = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_database = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridViewTagIo = new System.Windows.Forms.DataGridView();
             this.ColumnNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,6 +58,16 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.dbServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dbTabelFl12ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dbTabelFl345ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tb_db_server = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btn_save_db = new System.Windows.Forms.ToolStripMenuItem();
+            this.tb_tabel_1_2 = new System.Windows.Forms.ToolStripTextBox();
+            this.tb_tabel_3_4_5 = new System.Windows.Forms.ToolStripTextBox();
+            this.dbNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tb_db_name = new System.Windows.Forms.ToolStripTextBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTagIo)).BeginInit();
@@ -90,7 +101,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBoxHost,
             this.toolStripTextBoxServer,
-            this.PropertiesOpc1});
+            this.PropertiesOpc1,
+            this.btn_database});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(2, 2, 0, 2);
@@ -133,6 +145,20 @@
             this.ToolStripMenuItemAboutOpc.Size = new System.Drawing.Size(184, 26);
             this.ToolStripMenuItemAboutOpc.Text = "About Opc";
             this.ToolStripMenuItemAboutOpc.Click += new System.EventHandler(this.ToolStripMenuItemAboutOpc_Click);
+            // 
+            // btn_database
+            // 
+            this.btn_database.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dbServerToolStripMenuItem,
+            this.dbNameToolStripMenuItem,
+            this.dbTabelFl12ToolStripMenuItem,
+            this.dbTabelFl345ToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.btn_save_db});
+            this.btn_database.Image = global::SCADA.Properties.Resources.icons8_sync_16;
+            this.btn_database.Name = "btn_database";
+            this.btn_database.Size = new System.Drawing.Size(90, 24);
+            this.btn_database.Text = "Data Base";
             // 
             // panel1
             // 
@@ -316,6 +342,79 @@
             this.panel2.Size = new System.Drawing.Size(831, 481);
             this.panel2.TabIndex = 5;
             // 
+            // dbServerToolStripMenuItem
+            // 
+            this.dbServerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tb_db_server});
+            this.dbServerToolStripMenuItem.Image = global::SCADA.Properties.Resources.icons8_sync_16;
+            this.dbServerToolStripMenuItem.Name = "dbServerToolStripMenuItem";
+            this.dbServerToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.dbServerToolStripMenuItem.Text = "Db Server";
+            // 
+            // dbTabelFl12ToolStripMenuItem
+            // 
+            this.dbTabelFl12ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tb_tabel_1_2});
+            this.dbTabelFl12ToolStripMenuItem.Image = global::SCADA.Properties.Resources.icons8_sync_16;
+            this.dbTabelFl12ToolStripMenuItem.Name = "dbTabelFl12ToolStripMenuItem";
+            this.dbTabelFl12ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.dbTabelFl12ToolStripMenuItem.Text = "Db Tabel fl 1 2";
+            // 
+            // dbTabelFl345ToolStripMenuItem
+            // 
+            this.dbTabelFl345ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tb_tabel_3_4_5});
+            this.dbTabelFl345ToolStripMenuItem.Image = global::SCADA.Properties.Resources.icons8_sync_16;
+            this.dbTabelFl345ToolStripMenuItem.Name = "dbTabelFl345ToolStripMenuItem";
+            this.dbTabelFl345ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.dbTabelFl345ToolStripMenuItem.Text = "Db Tabel fl 3 4 5";
+            // 
+            // tb_db_server
+            // 
+            this.tb_db_server.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tb_db_server.Name = "tb_db_server";
+            this.tb_db_server.Size = new System.Drawing.Size(100, 23);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
+            // 
+            // btn_save_db
+            // 
+            this.btn_save_db.Image = global::SCADA.Properties.Resources.icons8_improvement_16;
+            this.btn_save_db.Name = "btn_save_db";
+            this.btn_save_db.Size = new System.Drawing.Size(184, 26);
+            this.btn_save_db.Text = "Save";
+            this.btn_save_db.Click += new System.EventHandler(this.btn_save_db_Click);
+            // 
+            // tb_tabel_1_2
+            // 
+            this.tb_tabel_1_2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tb_tabel_1_2.Name = "tb_tabel_1_2";
+            this.tb_tabel_1_2.Size = new System.Drawing.Size(100, 23);
+            // 
+            // tb_tabel_3_4_5
+            // 
+            this.tb_tabel_3_4_5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tb_tabel_3_4_5.Name = "tb_tabel_3_4_5";
+            this.tb_tabel_3_4_5.Size = new System.Drawing.Size(100, 23);
+            // 
+            // dbNameToolStripMenuItem
+            // 
+            this.dbNameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tb_db_name});
+            this.dbNameToolStripMenuItem.Image = global::SCADA.Properties.Resources.icons8_sync_16;
+            this.dbNameToolStripMenuItem.Name = "dbNameToolStripMenuItem";
+            this.dbNameToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.dbNameToolStripMenuItem.Text = "Db_Name";
+            // 
+            // tb_db_name
+            // 
+            this.tb_db_name.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tb_db_name.Name = "tb_db_name";
+            this.tb_db_name.Size = new System.Drawing.Size(100, 23);
+            // 
             // form_tag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -363,5 +462,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn count;
         private System.Windows.Forms.DataGridViewTextBoxColumn FlagOpc;
         private System.Windows.Forms.DataGridViewTextBoxColumn type;
+        private System.Windows.Forms.ToolStripMenuItem btn_database;
+        private System.Windows.Forms.ToolStripMenuItem dbServerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox tb_db_server;
+        private System.Windows.Forms.ToolStripMenuItem dbTabelFl12ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox tb_tabel_1_2;
+        private System.Windows.Forms.ToolStripMenuItem dbTabelFl345ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox tb_tabel_3_4_5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem btn_save_db;
+        private System.Windows.Forms.ToolStripMenuItem dbNameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox tb_db_name;
     }
 }

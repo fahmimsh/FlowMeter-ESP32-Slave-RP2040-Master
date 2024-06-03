@@ -28,27 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle73 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle82 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle74 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle75 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle76 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle77 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle78 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle79 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle80 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle81 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle83 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle84 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle85 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle86 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle87 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle88 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle89 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle90 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panels_hmi_tabel = new System.Windows.Forms.Panel();
             this.panel_datagridview = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewDataLog_hmi_fl1_fl2 = new System.Windows.Forms.DataGridView();
+            this.panels_hmi1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel_hmi1 = new System.Windows.Forms.Panel();
+            this.glgControl_hmi1 = new GenLogic.GlgControl();
+            this.panel_header_hmi1 = new System.Windows.Forms.Panel();
+            this.label_header_hmi1 = new System.Windows.Forms.Label();
+            this.panel_hmi2 = new System.Windows.Forms.Panel();
+            this.glgControl_hmi2 = new GenLogic.GlgControl();
+            this.panel_header_hmi2 = new System.Windows.Forms.Panel();
+            this.label_header_hmi2 = new System.Windows.Forms.Label();
+            this.glgControl_hmi4 = new GenLogic.GlgControl();
+            this.glgControl_hmi5 = new GenLogic.GlgControl();
+            this.panels_hmi2 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel_hmi3 = new System.Windows.Forms.Panel();
+            this.panel_hmi_form3 = new System.Windows.Forms.Panel();
+            this.glgControl_hmi3 = new GenLogic.GlgControl();
+            this.panel_header_hmi3 = new System.Windows.Forms.Panel();
+            this.label_header_hmi3 = new System.Windows.Forms.Label();
+            this.panel_hmi4 = new System.Windows.Forms.Panel();
+            this.panel_hmi_form5 = new System.Windows.Forms.Panel();
+            this.panel_header_hmi5 = new System.Windows.Forms.Panel();
+            this.label_header_hmi5 = new System.Windows.Forms.Label();
+            this.panel_hmi5 = new System.Windows.Forms.Panel();
+            this.panel_hmi_form4 = new System.Windows.Forms.Panel();
+            this.panel_header_hmi4 = new System.Windows.Forms.Panel();
+            this.label_header_hmi4 = new System.Windows.Forms.Label();
+            this.panel_hmi_all = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,7 +85,6 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewDataLog_hmi_fl1_fl2 = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flow_meter = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,35 +94,6 @@
             this.from_source = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.transfer_to = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panels_hmi1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel_hmi1 = new System.Windows.Forms.Panel();
-            this.glgControl_hmi4 = new GenLogic.GlgControl();
-            this.glgControl_hmi3 = new GenLogic.GlgControl();
-            this.glgControl_hmi1 = new GenLogic.GlgControl();
-            this.panel_header_hmi1 = new System.Windows.Forms.Panel();
-            this.label_header_hmi1 = new System.Windows.Forms.Label();
-            this.panel_hmi2 = new System.Windows.Forms.Panel();
-            this.glgControl_hmi5 = new GenLogic.GlgControl();
-            this.glgControl_hmi2 = new GenLogic.GlgControl();
-            this.panel_header_hmi2 = new System.Windows.Forms.Panel();
-            this.label_header_hmi2 = new System.Windows.Forms.Label();
-            this.panels_hmi2 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel_hmi3 = new System.Windows.Forms.Panel();
-            this.panel_header_hmi3 = new System.Windows.Forms.Panel();
-            this.label_header_hmi3 = new System.Windows.Forms.Label();
-            this.panel_hmi4 = new System.Windows.Forms.Panel();
-            this.panel_header_hmi5 = new System.Windows.Forms.Panel();
-            this.label_header_hmi5 = new System.Windows.Forms.Label();
-            this.panel_hmi5 = new System.Windows.Forms.Panel();
-            this.panel_header_hmi4 = new System.Windows.Forms.Panel();
-            this.label_header_hmi4 = new System.Windows.Forms.Label();
-            this.panel_hmi_all = new System.Windows.Forms.TableLayoutPanel();
-            this.panel_hmi_form3 = new System.Windows.Forms.Panel();
-            this.panel_hmi_form4 = new System.Windows.Forms.Panel();
-            this.panel_hmi_form5 = new System.Windows.Forms.Panel();
-            this.panel_form_hmi3 = new System.Windows.Forms.Panel();
-            this.panel_form_hmi4 = new System.Windows.Forms.Panel();
-            this.panel_form_hmi5 = new System.Windows.Forms.Panel();
             this.panels_hmi_tabel.SuspendLayout();
             this.panel_datagridview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDataLog_hmi_fl3_fl4_fl5)).BeginInit();
@@ -108,15 +105,15 @@
             this.panel_header_hmi2.SuspendLayout();
             this.panels_hmi2.SuspendLayout();
             this.panel_hmi3.SuspendLayout();
+            this.panel_hmi_form3.SuspendLayout();
             this.panel_header_hmi3.SuspendLayout();
             this.panel_hmi4.SuspendLayout();
+            this.panel_hmi_form5.SuspendLayout();
             this.panel_header_hmi5.SuspendLayout();
             this.panel_hmi5.SuspendLayout();
+            this.panel_hmi_form4.SuspendLayout();
             this.panel_header_hmi4.SuspendLayout();
             this.panel_hmi_all.SuspendLayout();
-            this.panel_hmi_form3.SuspendLayout();
-            this.panel_hmi_form4.SuspendLayout();
-            this.panel_hmi_form5.SuspendLayout();
             this.SuspendLayout();
             // 
             // panels_hmi_tabel
@@ -124,9 +121,9 @@
             this.panels_hmi_tabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panels_hmi_tabel.Controls.Add(this.panel_datagridview);
             this.panels_hmi_tabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panels_hmi_tabel.Location = new System.Drawing.Point(0, 407);
+            this.panels_hmi_tabel.Location = new System.Drawing.Point(0, 366);
             this.panels_hmi_tabel.Name = "panels_hmi_tabel";
-            this.panels_hmi_tabel.Size = new System.Drawing.Size(1243, 155);
+            this.panels_hmi_tabel.Size = new System.Drawing.Size(1243, 196);
             this.panels_hmi_tabel.TabIndex = 1;
             // 
             // panel_datagridview
@@ -142,7 +139,7 @@
             this.panel_datagridview.RowCount = 1;
             this.panel_datagridview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panel_datagridview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 153F));
-            this.panel_datagridview.Size = new System.Drawing.Size(1241, 153);
+            this.panel_datagridview.Size = new System.Drawing.Size(1241, 194);
             this.panel_datagridview.TabIndex = 0;
             // 
             // dataGridViewDataLog_hmi_fl3_fl4_fl5
@@ -152,14 +149,14 @@
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.AllowUserToResizeRows = false;
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.BackgroundColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.InactiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewDataLog_hmi_fl3_fl4_fl5.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle73.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle73.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            dataGridViewCellStyle73.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle73.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle73.SelectionBackColor = System.Drawing.SystemColors.InactiveCaption;
+            dataGridViewCellStyle73.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle73.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewDataLog_hmi_fl3_fl4_fl5.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle73;
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.ColumnHeadersHeight = 35;
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -181,107 +178,8 @@
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.RowHeadersWidth = 51;
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.RowTemplate.Height = 24;
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewDataLog_hmi_fl3_fl4_fl5.Size = new System.Drawing.Size(617, 149);
+            this.dataGridViewDataLog_hmi_fl3_fl4_fl5.Size = new System.Drawing.Size(617, 190);
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.TabIndex = 3;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "id";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewTextBoxColumn1.FillWeight = 25F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Id";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "flow_meter";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Nama FlowMeter";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "mode";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewTextBoxColumn3.FillWeight = 40F;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Mode";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "setLiter";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = "0.00";
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridViewTextBoxColumn4.FillWeight = 50F;
-            this.dataGridViewTextBoxColumn4.HeaderText = "Set Liter";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "liter";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = "0.00";
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridViewTextBoxColumn5.FillWeight = 50F;
-            this.dataGridViewTextBoxColumn5.HeaderText = "Liter";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "k_factor";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.NullValue = "0";
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridViewTextBoxColumn6.FillWeight = 50F;
-            this.dataGridViewTextBoxColumn6.HeaderText = "K-Factor";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.DataPropertyName = "from_source";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dataGridViewTextBoxColumn7.FillWeight = 70F;
-            this.dataGridViewTextBoxColumn7.HeaderText = "From Source";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.DataPropertyName = "transfer_to";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridViewTextBoxColumn8.FillWeight = 34F;
-            this.dataGridViewTextBoxColumn8.HeaderText = "Transfer To";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "date_time";
-            dataGridViewCellStyle9.Format = "G";
-            dataGridViewCellStyle9.NullValue = null;
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridViewTextBoxColumn9.FillWeight = 80F;
-            this.dataGridViewTextBoxColumn9.HeaderText = "Date Time";
-            this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
             // 
             // dataGridViewDataLog_hmi_fl1_fl2
             // 
@@ -290,14 +188,14 @@
             this.dataGridViewDataLog_hmi_fl1_fl2.AllowUserToResizeRows = false;
             this.dataGridViewDataLog_hmi_fl1_fl2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewDataLog_hmi_fl1_fl2.BackgroundColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.InactiveCaption;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewDataLog_hmi_fl1_fl2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle82.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle82.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            dataGridViewCellStyle82.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle82.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle82.SelectionBackColor = System.Drawing.SystemColors.InactiveCaption;
+            dataGridViewCellStyle82.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle82.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewDataLog_hmi_fl1_fl2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle82;
             this.dataGridViewDataLog_hmi_fl1_fl2.ColumnHeadersHeight = 35;
             this.dataGridViewDataLog_hmi_fl1_fl2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridViewDataLog_hmi_fl1_fl2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -319,107 +217,8 @@
             this.dataGridViewDataLog_hmi_fl1_fl2.RowHeadersWidth = 51;
             this.dataGridViewDataLog_hmi_fl1_fl2.RowTemplate.Height = 24;
             this.dataGridViewDataLog_hmi_fl1_fl2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewDataLog_hmi_fl1_fl2.Size = new System.Drawing.Size(616, 149);
+            this.dataGridViewDataLog_hmi_fl1_fl2.Size = new System.Drawing.Size(616, 190);
             this.dataGridViewDataLog_hmi_fl1_fl2.TabIndex = 2;
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "id";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Id.DefaultCellStyle = dataGridViewCellStyle11;
-            this.Id.FillWeight = 25F;
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            // 
-            // flow_meter
-            // 
-            this.flow_meter.DataPropertyName = "flow_meter";
-            this.flow_meter.HeaderText = "Nama FlowMeter";
-            this.flow_meter.MinimumWidth = 6;
-            this.flow_meter.Name = "flow_meter";
-            this.flow_meter.ReadOnly = true;
-            // 
-            // mode
-            // 
-            this.mode.DataPropertyName = "mode";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mode.DefaultCellStyle = dataGridViewCellStyle12;
-            this.mode.FillWeight = 40F;
-            this.mode.HeaderText = "Mode";
-            this.mode.MinimumWidth = 6;
-            this.mode.Name = "mode";
-            this.mode.ReadOnly = true;
-            // 
-            // set_liter
-            // 
-            this.set_liter.DataPropertyName = "setLiter";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Format = "N2";
-            dataGridViewCellStyle13.NullValue = "0.00";
-            this.set_liter.DefaultCellStyle = dataGridViewCellStyle13;
-            this.set_liter.FillWeight = 50F;
-            this.set_liter.HeaderText = "Set Liter";
-            this.set_liter.MinimumWidth = 6;
-            this.set_liter.Name = "set_liter";
-            this.set_liter.ReadOnly = true;
-            // 
-            // liter
-            // 
-            this.liter.DataPropertyName = "liter";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.Format = "N2";
-            dataGridViewCellStyle14.NullValue = "0.00";
-            this.liter.DefaultCellStyle = dataGridViewCellStyle14;
-            this.liter.FillWeight = 50F;
-            this.liter.HeaderText = "Liter";
-            this.liter.MinimumWidth = 6;
-            this.liter.Name = "liter";
-            this.liter.ReadOnly = true;
-            // 
-            // k_factor
-            // 
-            this.k_factor.DataPropertyName = "k_factor";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.NullValue = "0";
-            this.k_factor.DefaultCellStyle = dataGridViewCellStyle15;
-            this.k_factor.FillWeight = 50F;
-            this.k_factor.HeaderText = "K-Factor";
-            this.k_factor.MinimumWidth = 6;
-            this.k_factor.Name = "k_factor";
-            this.k_factor.ReadOnly = true;
-            // 
-            // from_source
-            // 
-            this.from_source.DataPropertyName = "from_source";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.from_source.DefaultCellStyle = dataGridViewCellStyle16;
-            this.from_source.FillWeight = 70F;
-            this.from_source.HeaderText = "From Source";
-            this.from_source.Name = "from_source";
-            this.from_source.ReadOnly = true;
-            // 
-            // transfer_to
-            // 
-            this.transfer_to.DataPropertyName = "transfer_to";
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.transfer_to.DefaultCellStyle = dataGridViewCellStyle17;
-            this.transfer_to.FillWeight = 34F;
-            this.transfer_to.HeaderText = "Transfer To";
-            this.transfer_to.Name = "transfer_to";
-            this.transfer_to.ReadOnly = true;
-            // 
-            // date_time
-            // 
-            this.date_time.DataPropertyName = "date_time";
-            dataGridViewCellStyle18.Format = "G";
-            dataGridViewCellStyle18.NullValue = null;
-            this.date_time.DefaultCellStyle = dataGridViewCellStyle18;
-            this.date_time.FillWeight = 80F;
-            this.date_time.HeaderText = "Date Time";
-            this.date_time.MinimumWidth = 6;
-            this.date_time.Name = "date_time";
-            this.date_time.ReadOnly = true;
             // 
             // panels_hmi1
             // 
@@ -433,7 +232,7 @@
             this.panels_hmi1.Name = "panels_hmi1";
             this.panels_hmi1.RowCount = 1;
             this.panels_hmi1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.panels_hmi1.Size = new System.Drawing.Size(615, 401);
+            this.panels_hmi1.Size = new System.Drawing.Size(615, 360);
             this.panels_hmi1.TabIndex = 2;
             // 
             // panel_hmi1
@@ -443,48 +242,8 @@
             this.panel_hmi1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_hmi1.Location = new System.Drawing.Point(3, 3);
             this.panel_hmi1.Name = "panel_hmi1";
-            this.panel_hmi1.Size = new System.Drawing.Size(301, 395);
+            this.panel_hmi1.Size = new System.Drawing.Size(301, 354);
             this.panel_hmi1.TabIndex = 0;
-            // 
-            // glgControl_hmi4
-            // 
-            this.glgControl_hmi4.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.glgControl_hmi4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glgControl_hmi4.DrawingFile = "";
-            this.glgControl_hmi4.DrawingObject = null;
-            this.glgControl_hmi4.DrawingURL = "";
-            this.glgControl_hmi4.HierarchyEnabled = true;
-            this.glgControl_hmi4.Location = new System.Drawing.Point(0, 268);
-            this.glgControl_hmi4.Margin = new System.Windows.Forms.Padding(20);
-            this.glgControl_hmi4.MinimumSize = new System.Drawing.Size(5, 5);
-            this.glgControl_hmi4.Name = "glgControl_hmi4";
-            this.glgControl_hmi4.Padding = new System.Windows.Forms.Padding(2);
-            this.glgControl_hmi4.SelectEnabled = true;
-            this.glgControl_hmi4.Size = new System.Drawing.Size(199, 102);
-            this.glgControl_hmi4.TabIndex = 2;
-            this.glgControl_hmi4.Text = "glgControl1";
-            this.glgControl_hmi4.Trace2Enabled = false;
-            this.glgControl_hmi4.TraceEnabled = false;
-            // 
-            // glgControl_hmi3
-            // 
-            this.glgControl_hmi3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.glgControl_hmi3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glgControl_hmi3.DrawingFile = "";
-            this.glgControl_hmi3.DrawingObject = null;
-            this.glgControl_hmi3.DrawingURL = "";
-            this.glgControl_hmi3.HierarchyEnabled = true;
-            this.glgControl_hmi3.Location = new System.Drawing.Point(0, 0);
-            this.glgControl_hmi3.Margin = new System.Windows.Forms.Padding(20);
-            this.glgControl_hmi3.MinimumSize = new System.Drawing.Size(5, 5);
-            this.glgControl_hmi3.Name = "glgControl_hmi3";
-            this.glgControl_hmi3.Padding = new System.Windows.Forms.Padding(2);
-            this.glgControl_hmi3.SelectEnabled = true;
-            this.glgControl_hmi3.Size = new System.Drawing.Size(199, 370);
-            this.glgControl_hmi3.TabIndex = 1;
-            this.glgControl_hmi3.Text = "glgControl1";
-            this.glgControl_hmi3.Trace2Enabled = false;
-            this.glgControl_hmi3.TraceEnabled = false;
             // 
             // glgControl_hmi1
             // 
@@ -500,7 +259,7 @@
             this.glgControl_hmi1.Name = "glgControl_hmi1";
             this.glgControl_hmi1.Padding = new System.Windows.Forms.Padding(2);
             this.glgControl_hmi1.SelectEnabled = true;
-            this.glgControl_hmi1.Size = new System.Drawing.Size(301, 370);
+            this.glgControl_hmi1.Size = new System.Drawing.Size(301, 329);
             this.glgControl_hmi1.TabIndex = 1;
             this.glgControl_hmi1.Text = "glgControl1";
             this.glgControl_hmi1.Trace2Enabled = false;
@@ -522,11 +281,13 @@
             // 
             this.label_header_hmi1.AutoSize = true;
             this.label_header_hmi1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_header_hmi1.Image = global::SCADA.Properties.Resources.icons8_disconnect;
+            this.label_header_hmi1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label_header_hmi1.Location = new System.Drawing.Point(3, 3);
             this.label_header_hmi1.Name = "label_header_hmi1";
-            this.label_header_hmi1.Size = new System.Drawing.Size(94, 18);
+            this.label_header_hmi1.Size = new System.Drawing.Size(118, 18);
             this.label_header_hmi1.TabIndex = 0;
-            this.label_header_hmi1.Text = "Flow Meter 1";
+            this.label_header_hmi1.Text = "Flow Meter 1      ";
             // 
             // panel_hmi2
             // 
@@ -535,28 +296,8 @@
             this.panel_hmi2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_hmi2.Location = new System.Drawing.Point(310, 3);
             this.panel_hmi2.Name = "panel_hmi2";
-            this.panel_hmi2.Size = new System.Drawing.Size(302, 395);
+            this.panel_hmi2.Size = new System.Drawing.Size(302, 354);
             this.panel_hmi2.TabIndex = 1;
-            // 
-            // glgControl_hmi5
-            // 
-            this.glgControl_hmi5.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.glgControl_hmi5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glgControl_hmi5.DrawingFile = "";
-            this.glgControl_hmi5.DrawingObject = null;
-            this.glgControl_hmi5.DrawingURL = "";
-            this.glgControl_hmi5.HierarchyEnabled = true;
-            this.glgControl_hmi5.Location = new System.Drawing.Point(0, 268);
-            this.glgControl_hmi5.Margin = new System.Windows.Forms.Padding(20);
-            this.glgControl_hmi5.MinimumSize = new System.Drawing.Size(5, 5);
-            this.glgControl_hmi5.Name = "glgControl_hmi5";
-            this.glgControl_hmi5.Padding = new System.Windows.Forms.Padding(2);
-            this.glgControl_hmi5.SelectEnabled = true;
-            this.glgControl_hmi5.Size = new System.Drawing.Size(200, 102);
-            this.glgControl_hmi5.TabIndex = 1;
-            this.glgControl_hmi5.Text = "glgControl1";
-            this.glgControl_hmi5.Trace2Enabled = false;
-            this.glgControl_hmi5.TraceEnabled = false;
             // 
             // glgControl_hmi2
             // 
@@ -572,7 +313,7 @@
             this.glgControl_hmi2.Name = "glgControl_hmi2";
             this.glgControl_hmi2.Padding = new System.Windows.Forms.Padding(2);
             this.glgControl_hmi2.SelectEnabled = true;
-            this.glgControl_hmi2.Size = new System.Drawing.Size(302, 370);
+            this.glgControl_hmi2.Size = new System.Drawing.Size(302, 329);
             this.glgControl_hmi2.TabIndex = 2;
             this.glgControl_hmi2.Text = "glgControl1";
             this.glgControl_hmi2.Trace2Enabled = false;
@@ -594,11 +335,53 @@
             // 
             this.label_header_hmi2.AutoSize = true;
             this.label_header_hmi2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_header_hmi2.Image = global::SCADA.Properties.Resources.icons8_disconnect;
+            this.label_header_hmi2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label_header_hmi2.Location = new System.Drawing.Point(3, 3);
             this.label_header_hmi2.Name = "label_header_hmi2";
-            this.label_header_hmi2.Size = new System.Drawing.Size(94, 18);
+            this.label_header_hmi2.Size = new System.Drawing.Size(118, 18);
             this.label_header_hmi2.TabIndex = 0;
-            this.label_header_hmi2.Text = "Flow Meter 2";
+            this.label_header_hmi2.Text = "Flow Meter 2      ";
+            // 
+            // glgControl_hmi4
+            // 
+            this.glgControl_hmi4.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.glgControl_hmi4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glgControl_hmi4.DrawingFile = "";
+            this.glgControl_hmi4.DrawingObject = null;
+            this.glgControl_hmi4.DrawingURL = "";
+            this.glgControl_hmi4.HierarchyEnabled = true;
+            this.glgControl_hmi4.Location = new System.Drawing.Point(0, 0);
+            this.glgControl_hmi4.Margin = new System.Windows.Forms.Padding(20);
+            this.glgControl_hmi4.MinimumSize = new System.Drawing.Size(5, 5);
+            this.glgControl_hmi4.Name = "glgControl_hmi4";
+            this.glgControl_hmi4.Padding = new System.Windows.Forms.Padding(2);
+            this.glgControl_hmi4.SelectEnabled = true;
+            this.glgControl_hmi4.Size = new System.Drawing.Size(199, 329);
+            this.glgControl_hmi4.TabIndex = 2;
+            this.glgControl_hmi4.Text = "glgControl1";
+            this.glgControl_hmi4.Trace2Enabled = false;
+            this.glgControl_hmi4.TraceEnabled = false;
+            // 
+            // glgControl_hmi5
+            // 
+            this.glgControl_hmi5.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.glgControl_hmi5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glgControl_hmi5.DrawingFile = "";
+            this.glgControl_hmi5.DrawingObject = null;
+            this.glgControl_hmi5.DrawingURL = "";
+            this.glgControl_hmi5.HierarchyEnabled = true;
+            this.glgControl_hmi5.Location = new System.Drawing.Point(0, 0);
+            this.glgControl_hmi5.Margin = new System.Windows.Forms.Padding(20);
+            this.glgControl_hmi5.MinimumSize = new System.Drawing.Size(5, 5);
+            this.glgControl_hmi5.Name = "glgControl_hmi5";
+            this.glgControl_hmi5.Padding = new System.Windows.Forms.Padding(2);
+            this.glgControl_hmi5.SelectEnabled = true;
+            this.glgControl_hmi5.Size = new System.Drawing.Size(200, 329);
+            this.glgControl_hmi5.TabIndex = 1;
+            this.glgControl_hmi5.Text = "glgControl1";
+            this.glgControl_hmi5.Trace2Enabled = false;
+            this.glgControl_hmi5.TraceEnabled = false;
             // 
             // panels_hmi2
             // 
@@ -615,7 +398,7 @@
             this.panels_hmi2.Name = "panels_hmi2";
             this.panels_hmi2.RowCount = 1;
             this.panels_hmi2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.panels_hmi2.Size = new System.Drawing.Size(616, 401);
+            this.panels_hmi2.Size = new System.Drawing.Size(616, 360);
             this.panels_hmi2.TabIndex = 3;
             // 
             // panel_hmi3
@@ -625,8 +408,37 @@
             this.panel_hmi3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_hmi3.Location = new System.Drawing.Point(3, 3);
             this.panel_hmi3.Name = "panel_hmi3";
-            this.panel_hmi3.Size = new System.Drawing.Size(199, 395);
+            this.panel_hmi3.Size = new System.Drawing.Size(199, 354);
             this.panel_hmi3.TabIndex = 0;
+            // 
+            // panel_hmi_form3
+            // 
+            this.panel_hmi_form3.Controls.Add(this.glgControl_hmi3);
+            this.panel_hmi_form3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_hmi_form3.Location = new System.Drawing.Point(0, 25);
+            this.panel_hmi_form3.Name = "panel_hmi_form3";
+            this.panel_hmi_form3.Size = new System.Drawing.Size(199, 329);
+            this.panel_hmi_form3.TabIndex = 1;
+            // 
+            // glgControl_hmi3
+            // 
+            this.glgControl_hmi3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.glgControl_hmi3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glgControl_hmi3.DrawingFile = "";
+            this.glgControl_hmi3.DrawingObject = null;
+            this.glgControl_hmi3.DrawingURL = "";
+            this.glgControl_hmi3.HierarchyEnabled = true;
+            this.glgControl_hmi3.Location = new System.Drawing.Point(0, 0);
+            this.glgControl_hmi3.Margin = new System.Windows.Forms.Padding(20);
+            this.glgControl_hmi3.MinimumSize = new System.Drawing.Size(5, 5);
+            this.glgControl_hmi3.Name = "glgControl_hmi3";
+            this.glgControl_hmi3.Padding = new System.Windows.Forms.Padding(2);
+            this.glgControl_hmi3.SelectEnabled = true;
+            this.glgControl_hmi3.Size = new System.Drawing.Size(199, 329);
+            this.glgControl_hmi3.TabIndex = 3;
+            this.glgControl_hmi3.Text = "glgControl1";
+            this.glgControl_hmi3.Trace2Enabled = false;
+            this.glgControl_hmi3.TraceEnabled = false;
             // 
             // panel_header_hmi3
             // 
@@ -644,11 +456,13 @@
             // 
             this.label_header_hmi3.AutoSize = true;
             this.label_header_hmi3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_header_hmi3.Image = global::SCADA.Properties.Resources.icons8_disconnect;
+            this.label_header_hmi3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label_header_hmi3.Location = new System.Drawing.Point(3, 3);
             this.label_header_hmi3.Name = "label_header_hmi3";
-            this.label_header_hmi3.Size = new System.Drawing.Size(94, 18);
+            this.label_header_hmi3.Size = new System.Drawing.Size(118, 18);
             this.label_header_hmi3.TabIndex = 0;
-            this.label_header_hmi3.Text = "Flow Meter 3";
+            this.label_header_hmi3.Text = "Flow Meter 3      ";
             // 
             // panel_hmi4
             // 
@@ -657,8 +471,17 @@
             this.panel_hmi4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_hmi4.Location = new System.Drawing.Point(413, 3);
             this.panel_hmi4.Name = "panel_hmi4";
-            this.panel_hmi4.Size = new System.Drawing.Size(200, 395);
+            this.panel_hmi4.Size = new System.Drawing.Size(200, 354);
             this.panel_hmi4.TabIndex = 0;
+            // 
+            // panel_hmi_form5
+            // 
+            this.panel_hmi_form5.Controls.Add(this.glgControl_hmi5);
+            this.panel_hmi_form5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_hmi_form5.Location = new System.Drawing.Point(0, 25);
+            this.panel_hmi_form5.Name = "panel_hmi_form5";
+            this.panel_hmi_form5.Size = new System.Drawing.Size(200, 329);
+            this.panel_hmi_form5.TabIndex = 1;
             // 
             // panel_header_hmi5
             // 
@@ -676,11 +499,13 @@
             // 
             this.label_header_hmi5.AutoSize = true;
             this.label_header_hmi5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_header_hmi5.Image = global::SCADA.Properties.Resources.icons8_disconnect;
+            this.label_header_hmi5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label_header_hmi5.Location = new System.Drawing.Point(3, 3);
             this.label_header_hmi5.Name = "label_header_hmi5";
-            this.label_header_hmi5.Size = new System.Drawing.Size(94, 18);
+            this.label_header_hmi5.Size = new System.Drawing.Size(114, 18);
             this.label_header_hmi5.TabIndex = 0;
-            this.label_header_hmi5.Text = "Flow Meter 5";
+            this.label_header_hmi5.Text = "Flow Meter 5     ";
             // 
             // panel_hmi5
             // 
@@ -689,8 +514,17 @@
             this.panel_hmi5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_hmi5.Location = new System.Drawing.Point(208, 3);
             this.panel_hmi5.Name = "panel_hmi5";
-            this.panel_hmi5.Size = new System.Drawing.Size(199, 395);
+            this.panel_hmi5.Size = new System.Drawing.Size(199, 354);
             this.panel_hmi5.TabIndex = 1;
+            // 
+            // panel_hmi_form4
+            // 
+            this.panel_hmi_form4.Controls.Add(this.glgControl_hmi4);
+            this.panel_hmi_form4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_hmi_form4.Location = new System.Drawing.Point(0, 25);
+            this.panel_hmi_form4.Name = "panel_hmi_form4";
+            this.panel_hmi_form4.Size = new System.Drawing.Size(199, 329);
+            this.panel_hmi_form4.TabIndex = 2;
             // 
             // panel_header_hmi4
             // 
@@ -708,11 +542,13 @@
             // 
             this.label_header_hmi4.AutoSize = true;
             this.label_header_hmi4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_header_hmi4.Image = global::SCADA.Properties.Resources.icons8_disconnect;
+            this.label_header_hmi4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label_header_hmi4.Location = new System.Drawing.Point(3, 3);
             this.label_header_hmi4.Name = "label_header_hmi4";
-            this.label_header_hmi4.Size = new System.Drawing.Size(94, 18);
+            this.label_header_hmi4.Size = new System.Drawing.Size(118, 18);
             this.label_header_hmi4.TabIndex = 0;
-            this.label_header_hmi4.Text = "Flow Meter 4";
+            this.label_header_hmi4.Text = "Flow Meter 4      ";
             // 
             // panel_hmi_all
             // 
@@ -727,62 +563,210 @@
             this.panel_hmi_all.RowCount = 1;
             this.panel_hmi_all.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panel_hmi_all.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.panel_hmi_all.Size = new System.Drawing.Size(1243, 407);
+            this.panel_hmi_all.Size = new System.Drawing.Size(1243, 366);
             this.panel_hmi_all.TabIndex = 2;
             // 
-            // panel_hmi_form3
+            // dataGridViewTextBoxColumn1
             // 
-            this.panel_hmi_form3.Controls.Add(this.panel_form_hmi3);
-            this.panel_hmi_form3.Controls.Add(this.glgControl_hmi3);
-            this.panel_hmi_form3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_hmi_form3.Location = new System.Drawing.Point(0, 25);
-            this.panel_hmi_form3.Name = "panel_hmi_form3";
-            this.panel_hmi_form3.Size = new System.Drawing.Size(199, 370);
-            this.panel_hmi_form3.TabIndex = 1;
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "id";
+            dataGridViewCellStyle74.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle74;
+            this.dataGridViewTextBoxColumn1.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Id";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Visible = false;
             // 
-            // panel_hmi_form4
+            // dataGridViewTextBoxColumn2
             // 
-            this.panel_hmi_form4.Controls.Add(this.glgControl_hmi4);
-            this.panel_hmi_form4.Controls.Add(this.panel_form_hmi4);
-            this.panel_hmi_form4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_hmi_form4.Location = new System.Drawing.Point(0, 25);
-            this.panel_hmi_form4.Name = "panel_hmi_form4";
-            this.panel_hmi_form4.Size = new System.Drawing.Size(199, 370);
-            this.panel_hmi_form4.TabIndex = 2;
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "flow_meter";
+            this.dataGridViewTextBoxColumn2.FillWeight = 85F;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Nama FlowMeter";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
-            // panel_hmi_form5
+            // dataGridViewTextBoxColumn3
             // 
-            this.panel_hmi_form5.Controls.Add(this.glgControl_hmi5);
-            this.panel_hmi_form5.Controls.Add(this.panel_form_hmi5);
-            this.panel_hmi_form5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_hmi_form5.Location = new System.Drawing.Point(0, 25);
-            this.panel_hmi_form5.Name = "panel_hmi_form5";
-            this.panel_hmi_form5.Size = new System.Drawing.Size(200, 370);
-            this.panel_hmi_form5.TabIndex = 1;
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "mode";
+            dataGridViewCellStyle75.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle75;
+            this.dataGridViewTextBoxColumn3.FillWeight = 40F;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Mode";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
-            // panel_form_hmi3
+            // dataGridViewTextBoxColumn4
             // 
-            this.panel_form_hmi3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_form_hmi3.Location = new System.Drawing.Point(0, 0);
-            this.panel_form_hmi3.Name = "panel_form_hmi3";
-            this.panel_form_hmi3.Size = new System.Drawing.Size(199, 268);
-            this.panel_form_hmi3.TabIndex = 0;
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "setLiter";
+            dataGridViewCellStyle76.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle76.Format = "N2";
+            dataGridViewCellStyle76.NullValue = "0.00";
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle76;
+            this.dataGridViewTextBoxColumn4.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn4.HeaderText = "Set Liter";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
-            // panel_form_hmi4
+            // dataGridViewTextBoxColumn5
             // 
-            this.panel_form_hmi4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_form_hmi4.Location = new System.Drawing.Point(0, 0);
-            this.panel_form_hmi4.Name = "panel_form_hmi4";
-            this.panel_form_hmi4.Size = new System.Drawing.Size(199, 268);
-            this.panel_form_hmi4.TabIndex = 0;
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "liter";
+            dataGridViewCellStyle77.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle77.Format = "N2";
+            dataGridViewCellStyle77.NullValue = "0.00";
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle77;
+            this.dataGridViewTextBoxColumn5.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn5.HeaderText = "Liter";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
             // 
-            // panel_form_hmi5
+            // dataGridViewTextBoxColumn6
             // 
-            this.panel_form_hmi5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_form_hmi5.Location = new System.Drawing.Point(0, 0);
-            this.panel_form_hmi5.Name = "panel_form_hmi5";
-            this.panel_form_hmi5.Size = new System.Drawing.Size(200, 268);
-            this.panel_form_hmi5.TabIndex = 0;
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "k_factor";
+            dataGridViewCellStyle78.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle78.NullValue = "0";
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle78;
+            this.dataGridViewTextBoxColumn6.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn6.HeaderText = "K-Factor";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "from_source";
+            dataGridViewCellStyle79.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle79;
+            this.dataGridViewTextBoxColumn7.FillWeight = 70F;
+            this.dataGridViewTextBoxColumn7.HeaderText = "From Source";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.DataPropertyName = "transfer_to";
+            dataGridViewCellStyle80.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle80;
+            this.dataGridViewTextBoxColumn8.FillWeight = 34F;
+            this.dataGridViewTextBoxColumn8.HeaderText = "Transfer To";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "date_time";
+            dataGridViewCellStyle81.Format = "G";
+            dataGridViewCellStyle81.NullValue = null;
+            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle81;
+            this.dataGridViewTextBoxColumn9.FillWeight = 80F;
+            this.dataGridViewTextBoxColumn9.HeaderText = "Date Time";
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "id";
+            dataGridViewCellStyle83.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Id.DefaultCellStyle = dataGridViewCellStyle83;
+            this.Id.FillWeight = 25F;
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // flow_meter
+            // 
+            this.flow_meter.DataPropertyName = "flow_meter";
+            this.flow_meter.FillWeight = 85F;
+            this.flow_meter.HeaderText = "Nama FlowMeter";
+            this.flow_meter.MinimumWidth = 6;
+            this.flow_meter.Name = "flow_meter";
+            this.flow_meter.ReadOnly = true;
+            // 
+            // mode
+            // 
+            this.mode.DataPropertyName = "mode";
+            dataGridViewCellStyle84.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mode.DefaultCellStyle = dataGridViewCellStyle84;
+            this.mode.FillWeight = 40F;
+            this.mode.HeaderText = "Mode";
+            this.mode.MinimumWidth = 6;
+            this.mode.Name = "mode";
+            this.mode.ReadOnly = true;
+            // 
+            // set_liter
+            // 
+            this.set_liter.DataPropertyName = "setLiter";
+            dataGridViewCellStyle85.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle85.Format = "N2";
+            dataGridViewCellStyle85.NullValue = "0.00";
+            this.set_liter.DefaultCellStyle = dataGridViewCellStyle85;
+            this.set_liter.FillWeight = 50F;
+            this.set_liter.HeaderText = "Set Liter";
+            this.set_liter.MinimumWidth = 6;
+            this.set_liter.Name = "set_liter";
+            this.set_liter.ReadOnly = true;
+            // 
+            // liter
+            // 
+            this.liter.DataPropertyName = "liter";
+            dataGridViewCellStyle86.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle86.Format = "N2";
+            dataGridViewCellStyle86.NullValue = "0.00";
+            this.liter.DefaultCellStyle = dataGridViewCellStyle86;
+            this.liter.FillWeight = 50F;
+            this.liter.HeaderText = "Liter";
+            this.liter.MinimumWidth = 6;
+            this.liter.Name = "liter";
+            this.liter.ReadOnly = true;
+            // 
+            // k_factor
+            // 
+            this.k_factor.DataPropertyName = "k_factor";
+            dataGridViewCellStyle87.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle87.NullValue = "0";
+            this.k_factor.DefaultCellStyle = dataGridViewCellStyle87;
+            this.k_factor.FillWeight = 50F;
+            this.k_factor.HeaderText = "K-Factor";
+            this.k_factor.MinimumWidth = 6;
+            this.k_factor.Name = "k_factor";
+            this.k_factor.ReadOnly = true;
+            // 
+            // from_source
+            // 
+            this.from_source.DataPropertyName = "batch";
+            dataGridViewCellStyle88.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.from_source.DefaultCellStyle = dataGridViewCellStyle88;
+            this.from_source.FillWeight = 70F;
+            this.from_source.HeaderText = "Batch";
+            this.from_source.Name = "from_source";
+            this.from_source.ReadOnly = true;
+            // 
+            // transfer_to
+            // 
+            this.transfer_to.DataPropertyName = "transfer_to";
+            dataGridViewCellStyle89.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.transfer_to.DefaultCellStyle = dataGridViewCellStyle89;
+            this.transfer_to.FillWeight = 34F;
+            this.transfer_to.HeaderText = "Transfer To";
+            this.transfer_to.Name = "transfer_to";
+            this.transfer_to.ReadOnly = true;
+            // 
+            // date_time
+            // 
+            this.date_time.DataPropertyName = "date_time";
+            dataGridViewCellStyle90.Format = "G";
+            dataGridViewCellStyle90.NullValue = null;
+            this.date_time.DefaultCellStyle = dataGridViewCellStyle90;
+            this.date_time.FillWeight = 80F;
+            this.date_time.HeaderText = "Date Time";
+            this.date_time.MinimumWidth = 6;
+            this.date_time.Name = "date_time";
+            this.date_time.ReadOnly = true;
             // 
             // uc_hmi
             // 
@@ -806,18 +790,18 @@
             this.panel_header_hmi2.PerformLayout();
             this.panels_hmi2.ResumeLayout(false);
             this.panel_hmi3.ResumeLayout(false);
+            this.panel_hmi_form3.ResumeLayout(false);
             this.panel_header_hmi3.ResumeLayout(false);
             this.panel_header_hmi3.PerformLayout();
             this.panel_hmi4.ResumeLayout(false);
+            this.panel_hmi_form5.ResumeLayout(false);
             this.panel_header_hmi5.ResumeLayout(false);
             this.panel_header_hmi5.PerformLayout();
             this.panel_hmi5.ResumeLayout(false);
+            this.panel_hmi_form4.ResumeLayout(false);
             this.panel_header_hmi4.ResumeLayout(false);
             this.panel_header_hmi4.PerformLayout();
             this.panel_hmi_all.ResumeLayout(false);
-            this.panel_hmi_form3.ResumeLayout(false);
-            this.panel_hmi_form4.ResumeLayout(false);
-            this.panel_hmi_form5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -829,24 +813,12 @@
         private System.Windows.Forms.Panel panel_hmi1;
         public GenLogic.GlgControl glgControl_hmi1;
         private System.Windows.Forms.Panel panel_header_hmi1;
-        private System.Windows.Forms.Label label_header_hmi1;
         private System.Windows.Forms.Panel panel_hmi2;
         public GenLogic.GlgControl glgControl_hmi2;
         private System.Windows.Forms.Panel panel_header_hmi2;
-        private System.Windows.Forms.Label label_header_hmi2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn flow_meter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn set_liter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn liter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn k_factor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn from_source;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transfer_to;
-        private System.Windows.Forms.DataGridViewTextBoxColumn date_time;
         public System.Windows.Forms.DataGridView dataGridViewDataLog_hmi_fl1_fl2;
         public System.Windows.Forms.TableLayoutPanel panels_hmi2;
         private System.Windows.Forms.Panel panel_hmi3;
-        public GenLogic.GlgControl glgControl_hmi3;
         private System.Windows.Forms.Panel panel_header_hmi3;
         private System.Windows.Forms.Label label_header_hmi3;
         private System.Windows.Forms.Panel panel_hmi4;
@@ -860,6 +832,12 @@
         private System.Windows.Forms.TableLayoutPanel panel_hmi_all;
         private System.Windows.Forms.TableLayoutPanel panel_datagridview;
         public System.Windows.Forms.DataGridView dataGridViewDataLog_hmi_fl3_fl4_fl5;
+        private System.Windows.Forms.Panel panel_hmi_form3;
+        private System.Windows.Forms.Panel panel_hmi_form5;
+        private System.Windows.Forms.Panel panel_hmi_form4;
+        public GenLogic.GlgControl glgControl_hmi3;
+        internal System.Windows.Forms.Label label_header_hmi1;
+        internal System.Windows.Forms.Label label_header_hmi2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -869,11 +847,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.Panel panel_hmi_form3;
-        private System.Windows.Forms.Panel panel_hmi_form5;
-        private System.Windows.Forms.Panel panel_hmi_form4;
-        private System.Windows.Forms.Panel panel_form_hmi3;
-        private System.Windows.Forms.Panel panel_form_hmi5;
-        private System.Windows.Forms.Panel panel_form_hmi4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn flow_meter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn set_liter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn liter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn k_factor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn from_source;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transfer_to;
+        private System.Windows.Forms.DataGridViewTextBoxColumn date_time;
     }
 }

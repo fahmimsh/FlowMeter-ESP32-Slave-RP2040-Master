@@ -92,7 +92,7 @@ namespace SCADA
                 BackColor = Color.FromArgb(255, 255, 254),
                 ForeColor = Color.Black,
                 Maximum = 100000,
-                DecimalPlaces = 2,
+                DecimalPlaces = 4,
                 Value = (decimal) value,
             };
             Button confirmation = new Button()

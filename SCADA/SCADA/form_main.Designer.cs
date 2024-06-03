@@ -50,6 +50,7 @@
             this.timer_handle_opc_tag1 = new System.Windows.Forms.Timer(this.components);
             this.timer_handle_opc_tag2 = new System.Windows.Forms.Timer(this.components);
             this.timer_delete_glg_popup = new System.Windows.Forms.Timer(this.components);
+            this.timer_handle_opc_tag3 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -225,6 +226,11 @@
             this.timer_delete_glg_popup.Interval = 1;
             this.timer_delete_glg_popup.Tick += new System.EventHandler(this.timer_delete_glg_popup_Tick);
             // 
+            // timer_handle_opc_tag3
+            // 
+            this.timer_handle_opc_tag3.Interval = 1;
+            this.timer_handle_opc_tag3.Tick += new System.EventHandler(this.timer_handle_opc_tag3_Tick);
+            // 
             // form_main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -271,6 +277,7 @@
         private System.Windows.Forms.Timer timer_handle_opc_tag2;
         private System.Windows.Forms.Timer timer_delete_glg_popup;
         public System.Windows.Forms.ToolStripStatusLabel status_txt;
+        private System.Windows.Forms.Timer timer_handle_opc_tag3;
     }
 }
 

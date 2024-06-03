@@ -37,7 +37,7 @@ namespace SCADA.UserControls
         }
         private void add_item_list()
         {
-            string[] item_Fl_header = { string.Empty, Properties.Settings.Default.fl1_header, Properties.Settings.Default.fl2_header, Properties.Settings.Default.fl3_header, Properties.Settings.Default.fl4_header };
+            string[] item_Fl_header = { string.Empty, Properties.Settings.Default.fl1_label_tf5, Properties.Settings.Default.fl2_header };
             cb_flow_meter.Items.AddRange(item_Fl_header);
             string[] item_mode = { string.Empty, "Auto", "Manual" };
             cb_mode.Items.AddRange(item_mode);
@@ -45,15 +45,15 @@ namespace SCADA.UserControls
             {string.Empty,
                     Properties.Settings.Default.fl1_label_tf1, Properties.Settings.Default.fl1_label_tf2, Properties.Settings.Default.fl1_label_tf3, Properties.Settings.Default.fl1_label_tf4,
                     Properties.Settings.Default.fl2_label_tf1, Properties.Settings.Default.fl2_label_tf2, Properties.Settings.Default.fl2_label_tf3, Properties.Settings.Default.fl2_label_tf4,
-                    Properties.Settings.Default.fl3_label_tf1, Properties.Settings.Default.fl3_label_tf2, Properties.Settings.Default.fl3_label_tf3, Properties.Settings.Default.fl3_label_tf4,
-                    Properties.Settings.Default.fl4_label_tf1, Properties.Settings.Default.fl4_label_tf2, Properties.Settings.Default.fl4_label_tf3, Properties.Settings.Default.fl4_label_tf4,
                 };
             cb_transfer_to.Items.AddRange(item_transfer_to);
             string[] item_form_source =
             {string.Empty,
-                    Properties.Settings.Default.fl1_label_sumber1, Properties.Settings.Default.fl2_label_sumber1,
-                    Properties.Settings.Default.fl3_label_sumber1, Properties.Settings.Default.fl3_label_sumber2,
-                    Properties.Settings.Default.fl4_label_sumber1, Properties.Settings.Default.fl4_label_sumber2
+                    Properties.Settings.Default.fl1_label_batch1, Properties.Settings.Default.fl1_label_batch2, Properties.Settings.Default.fl1_label_batch3, Properties.Settings.Default.fl1_label_batch4,
+                    Properties.Settings.Default.fl1_label_batch5, Properties.Settings.Default.fl1_label_batch6, Properties.Settings.Default.fl1_label_batch7, Properties.Settings.Default.fl1_label_batch8,
+                    Properties.Settings.Default.fl1_label_batch9, Properties.Settings.Default.fl1_label_batch10, Properties.Settings.Default.fl2_label_batch1, Properties.Settings.Default.fl2_label_batch2,
+                    Properties.Settings.Default.fl2_label_batch3, Properties.Settings.Default.fl2_label_batch4, Properties.Settings.Default.fl2_label_batch5, Properties.Settings.Default.fl2_label_batch6,
+                    Properties.Settings.Default.fl2_label_batch7, Properties.Settings.Default.fl2_label_batch8, Properties.Settings.Default.fl2_label_batch9, Properties.Settings.Default.fl2_label_batch10
                 };
             cb_from_source.Items.AddRange(item_form_source);
         }
@@ -73,7 +73,8 @@ namespace SCADA.UserControls
         {
             var db = DbDataAccess.Db();
             if (db == null) { form.ShowErrorMessage("Koneksi database gagal. Periksa pengaturan koneksi atau hubungi administrator"); return; }
-            Query query = db.Query(Properties.Settings.Default.tabel_db_flowmeter);
+            Query query = db.Query(Properties.Settings.Default.tabel_db_flowmeter_1_2);
+            //Query query = db.Query("log_data");
             if (query == null) { form.ShowErrorMessage("Objek query null. Cek pengaturan koneksi atau hubungi administrator"); return; }
             if (date_start.Value != DateTime.MinValue && date_stop.Value != DateTime.MinValue)
                 query = query.WhereBetween("date_time", date_start.Value.Date, date_stop.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
@@ -82,7 +83,7 @@ namespace SCADA.UserControls
                 if (cb_flow_meter.SelectedItem != null || !string.IsNullOrEmpty(cb_flow_meter.Text)) query = query.WhereContains("flow_meter", cb_flow_meter.SelectedItem.ToString());
                 if (cb_mode.SelectedItem != null || !string.IsNullOrEmpty(cb_mode.Text)) query = query.WhereContains("mode", cb_mode.SelectedItem.ToString());
                 if (cb_transfer_to.SelectedItem != null || !string.IsNullOrEmpty(cb_transfer_to.Text)) query = query.WhereContains("transfer_to", cb_transfer_to.SelectedItem.ToString());
-                if (cb_from_source.SelectedItem != null || !string.IsNullOrEmpty(cb_from_source.Text)) query = query.WhereContains("from_source", cb_from_source.SelectedItem.ToString());
+                if (cb_from_source.SelectedItem != null || !string.IsNullOrEmpty(cb_from_source.Text)) query = query.WhereContains("batch", cb_from_source.SelectedItem.ToString());
             }
             try
             {

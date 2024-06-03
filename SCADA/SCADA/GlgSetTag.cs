@@ -9,20 +9,22 @@ namespace SCADA
     public class GlgSetTag
     {
         private GlgCallback callback;
-        public event EventHandler<GlgObject> set_sumber;
+        public event EventHandler<GlgObject> set_batch;
         public event EventHandler<GlgObject> set_transfer;
         public event EventHandler<string> set_value;
         public event EventHandler<GlgObject> set_on_off;
+        public event EventHandler<GlgObject> set_proses_mesin;
         public void Initialize(uc_hmi form_p, dynamic glg_object, string Path_p)
         {
             glg_object.SetDResource("$config/GlgPickResolution", 1600.0);
             glg_object.DrawingFile = Path_p;
             callback = new GlgCallback(form_p);
             glg_object.AddListener(GlgCallbackType.INPUT_CB, callback);
-            callback.set_sumber += Callback_set_sumber;
+            callback.set_batch += Callback_set_batch;
             callback.set_transfer += Callback_set_transfer;
             callback.set_value += Callback_set_value;
             callback.set_on_off += Callback_set_on_off;
+            callback.set_proses_mesin += Callback_set_proses_mesin;
         }
         public Dictionary<string, string[]> TagMaps = new Dictionary<string, string[]>
         {
@@ -55,19 +57,21 @@ namespace SCADA
         {
             glg_object.SetSResource($"{tag}/String", arg);
         }
-        private void Callback_set_sumber(object sender, GlgObject e) => set_sumber?.Invoke(sender, e);
+        private void Callback_set_batch(object sender, GlgObject e) => set_batch?.Invoke(sender, e);
         private void Callback_set_on_off(object sender, GlgObject e) => set_on_off?.Invoke(sender, e);
         private void Callback_set_value(object sender, string e) => set_value?.Invoke(sender, e);
         private void Callback_set_transfer(object sender, GlgObject e) => set_transfer?.Invoke(sender, e);
+        private void Callback_set_proses_mesin(object sender, GlgObject e) => set_proses_mesin?.Invoke(sender, e);
     }
     public class GlgCallback : GlgInputListener
     {
         uc_hmi form;
         public GlgCallback(uc_hmi Form1_p) { form = Form1_p; }
-        public event EventHandler<GlgObject> set_sumber;
+        public event EventHandler<GlgObject> set_batch;
         public event EventHandler<GlgObject> set_transfer;
         public event EventHandler<string> set_value;
         public event EventHandler<GlgObject> set_on_off;
+        public event EventHandler<GlgObject> set_proses_mesin;
         public void InputCallback(GlgObject glg_object, GlgObject message)
         {
             string origin = message.GetSResource("Origin"); //name off obj
@@ -78,12 +82,13 @@ namespace SCADA
                 return;
             Dictionary<string, Action> originMethodMap = new Dictionary<string, Action>
                 {
-                    {"set_sumber", () => set_sumber?.Invoke(this, glg_object) },
+                    {"set_batch", () => set_batch?.Invoke(this, glg_object) },
                     {"set_transfer", () => set_transfer?.Invoke(this, glg_object) },
                     {"set_setliter", () => set_value?.Invoke(this, "set_setliter") },
                     {"set_k-factor", () => set_value?.Invoke(this, "set_k-factor")  },
                     {"set_f-kurang", () => set_value?.Invoke(this, "set_f-kurang")   },
-                    {"set_on_off", () => set_on_off?.Invoke(this, glg_object) }
+                    {"set_on_off", () => set_on_off?.Invoke(this, glg_object) },
+                    {"set_proses_mesin", () => set_proses_mesin?.Invoke(this, glg_object) }
                 };
             if (originMethodMap.ContainsKey(origin)) form.BeginInvoke((MethodInvoker)delegate { originMethodMap[origin].Invoke(); });
         }

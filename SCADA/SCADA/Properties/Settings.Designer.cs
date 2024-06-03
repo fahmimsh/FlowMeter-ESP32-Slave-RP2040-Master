@@ -73,7 +73,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mesin 1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank T1")]
         public string fl1_label_tf1 {
             get {
                 return ((string)(this["fl1_label_tf1"]));
@@ -85,7 +85,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mesin 2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank T2")]
         public string fl1_label_tf2 {
             get {
                 return ((string)(this["fl1_label_tf2"]));
@@ -97,7 +97,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mesin 3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank T3")]
         public string fl1_label_tf3 {
             get {
                 return ((string)(this["fl1_label_tf3"]));
@@ -109,7 +109,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mesin 4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank T4")]
         public string fl1_label_tf4 {
             get {
                 return ((string)(this["fl1_label_tf4"]));
@@ -121,7 +121,19 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Flow Meter UHT 1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank T5")]
+        public string fl1_label_tf5 {
+            get {
+                return ((string)(this["fl1_label_tf5"]));
+            }
+            set {
+                this["fl1_label_tf5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Flow Rate 1")]
         public string fl1_header {
             get {
                 return ((string)(this["fl1_header"]));
@@ -133,19 +145,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("UHT 1")]
-        public string fl1_label_sumber1 {
-            get {
-                return ((string)(this["fl1_label_sumber1"]));
-            }
-            set {
-                this["fl1_label_sumber1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mesin 1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank A1")]
         public string fl2_label_tf1 {
             get {
                 return ((string)(this["fl2_label_tf1"]));
@@ -157,7 +157,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mesin 2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank A2")]
         public string fl2_label_tf2 {
             get {
                 return ((string)(this["fl2_label_tf2"]));
@@ -169,7 +169,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mesin 3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank B1")]
         public string fl2_label_tf3 {
             get {
                 return ((string)(this["fl2_label_tf3"]));
@@ -181,7 +181,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mesin 4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tank B2")]
         public string fl2_label_tf4 {
             get {
                 return ((string)(this["fl2_label_tf4"]));
@@ -193,193 +193,13 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Flow Meter UHT 2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Flow Rate 2")]
         public string fl2_header {
             get {
                 return ((string)(this["fl2_header"]));
             }
             set {
                 this["fl2_header"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("UHT 2")]
-        public string fl2_label_sumber1 {
-            get {
-                return ((string)(this["fl2_label_sumber1"]));
-            }
-            set {
-                this["fl2_label_sumber1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tank 1")]
-        public string fl3_label_tf1 {
-            get {
-                return ((string)(this["fl3_label_tf1"]));
-            }
-            set {
-                this["fl3_label_tf1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tank 2")]
-        public string fl3_label_tf2 {
-            get {
-                return ((string)(this["fl3_label_tf2"]));
-            }
-            set {
-                this["fl3_label_tf2"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tank 3")]
-        public string fl3_label_tf3 {
-            get {
-                return ((string)(this["fl3_label_tf3"]));
-            }
-            set {
-                this["fl3_label_tf3"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tank 4")]
-        public string fl3_label_tf4 {
-            get {
-                return ((string)(this["fl3_label_tf4"]));
-            }
-            set {
-                this["fl3_label_tf4"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Flow Meter Tank Double Jaket 1")]
-        public string fl3_header {
-            get {
-                return ((string)(this["fl3_header"]));
-            }
-            set {
-                this["fl3_header"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
-        public string fl3_label_sumber1 {
-            get {
-                return ((string)(this["fl3_label_sumber1"]));
-            }
-            set {
-                this["fl3_label_sumber1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Sumber RO")]
-        public string fl3_label_sumber2 {
-            get {
-                return ((string)(this["fl3_label_sumber2"]));
-            }
-            set {
-                this["fl3_label_sumber2"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tank 1")]
-        public string fl4_label_tf1 {
-            get {
-                return ((string)(this["fl4_label_tf1"]));
-            }
-            set {
-                this["fl4_label_tf1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tank 2")]
-        public string fl4_label_tf2 {
-            get {
-                return ((string)(this["fl4_label_tf2"]));
-            }
-            set {
-                this["fl4_label_tf2"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tank 3")]
-        public string fl4_label_tf3 {
-            get {
-                return ((string)(this["fl4_label_tf3"]));
-            }
-            set {
-                this["fl4_label_tf3"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tank 4")]
-        public string fl4_label_tf4 {
-            get {
-                return ((string)(this["fl4_label_tf4"]));
-            }
-            set {
-                this["fl4_label_tf4"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Flow Meter Tank Double Jaket 2")]
-        public string fl4_header {
-            get {
-                return ((string)(this["fl4_header"]));
-            }
-            set {
-                this["fl4_header"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
-        public string fl4_label_sumber1 {
-            get {
-                return ((string)(this["fl4_label_sumber1"]));
-            }
-            set {
-                this["fl4_label_sumber1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Sumber RO")]
-        public string fl4_label_sumber2 {
-            get {
-                return ((string)(this["fl4_label_sumber2"]));
-            }
-            set {
-                this["fl4_label_sumber2"] = value;
             }
         }
         
@@ -397,7 +217,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("flow_meter_db")]
+        [global::System.Configuration.DefaultSettingValueAttribute("flowmeter_db")]
         public string DatabaseName {
             get {
                 return ((string)(this["DatabaseName"]));
@@ -409,13 +229,481 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("log_data")]
-        public string tabel_db_flowmeter {
+        [global::System.Configuration.DefaultSettingValueAttribute("log_data_1_2")]
+        public string tabel_db_flowmeter_1_2 {
             get {
-                return ((string)(this["tabel_db_flowmeter"]));
+                return ((string)(this["tabel_db_flowmeter_1_2"]));
             }
             set {
-                this["tabel_db_flowmeter"] = value;
+                this["tabel_db_flowmeter_1_2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("log_data_3_4_5")]
+        public string tabel_db_flowmeter_3_4_5 {
+            get {
+                return ((string)(this["tabel_db_flowmeter_3_4_5"]));
+            }
+            set {
+                this["tabel_db_flowmeter_3_4_5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 01")]
+        public string fl1_label_batch1 {
+            get {
+                return ((string)(this["fl1_label_batch1"]));
+            }
+            set {
+                this["fl1_label_batch1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 02")]
+        public string fl1_label_batch2 {
+            get {
+                return ((string)(this["fl1_label_batch2"]));
+            }
+            set {
+                this["fl1_label_batch2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 03")]
+        public string fl1_label_batch3 {
+            get {
+                return ((string)(this["fl1_label_batch3"]));
+            }
+            set {
+                this["fl1_label_batch3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 04")]
+        public string fl1_label_batch4 {
+            get {
+                return ((string)(this["fl1_label_batch4"]));
+            }
+            set {
+                this["fl1_label_batch4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 05")]
+        public string fl1_label_batch5 {
+            get {
+                return ((string)(this["fl1_label_batch5"]));
+            }
+            set {
+                this["fl1_label_batch5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 06")]
+        public string fl1_label_batch6 {
+            get {
+                return ((string)(this["fl1_label_batch6"]));
+            }
+            set {
+                this["fl1_label_batch6"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 07")]
+        public string fl1_label_batch7 {
+            get {
+                return ((string)(this["fl1_label_batch7"]));
+            }
+            set {
+                this["fl1_label_batch7"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 08")]
+        public string fl1_label_batch8 {
+            get {
+                return ((string)(this["fl1_label_batch8"]));
+            }
+            set {
+                this["fl1_label_batch8"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 09")]
+        public string fl1_label_batch9 {
+            get {
+                return ((string)(this["fl1_label_batch9"]));
+            }
+            set {
+                this["fl1_label_batch9"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 10")]
+        public string fl1_label_batch10 {
+            get {
+                return ((string)(this["fl1_label_batch10"]));
+            }
+            set {
+                this["fl1_label_batch10"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 01")]
+        public string fl2_label_batch1 {
+            get {
+                return ((string)(this["fl2_label_batch1"]));
+            }
+            set {
+                this["fl2_label_batch1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 02")]
+        public string fl2_label_batch2 {
+            get {
+                return ((string)(this["fl2_label_batch2"]));
+            }
+            set {
+                this["fl2_label_batch2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 03")]
+        public string fl2_label_batch3 {
+            get {
+                return ((string)(this["fl2_label_batch3"]));
+            }
+            set {
+                this["fl2_label_batch3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 04")]
+        public string fl2_label_batch4 {
+            get {
+                return ((string)(this["fl2_label_batch4"]));
+            }
+            set {
+                this["fl2_label_batch4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 05")]
+        public string fl2_label_batch5 {
+            get {
+                return ((string)(this["fl2_label_batch5"]));
+            }
+            set {
+                this["fl2_label_batch5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 06")]
+        public string fl2_label_batch6 {
+            get {
+                return ((string)(this["fl2_label_batch6"]));
+            }
+            set {
+                this["fl2_label_batch6"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 07")]
+        public string fl2_label_batch7 {
+            get {
+                return ((string)(this["fl2_label_batch7"]));
+            }
+            set {
+                this["fl2_label_batch7"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 08")]
+        public string fl2_label_batch8 {
+            get {
+                return ((string)(this["fl2_label_batch8"]));
+            }
+            set {
+                this["fl2_label_batch8"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 09")]
+        public string fl2_label_batch9 {
+            get {
+                return ((string)(this["fl2_label_batch9"]));
+            }
+            set {
+                this["fl2_label_batch9"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Batch 10")]
+        public string fl2_label_batch10 {
+            get {
+                return ((string)(this["fl2_label_batch10"]));
+            }
+            set {
+                this["fl2_label_batch10"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Flow Rate 3")]
+        public string fl3_header {
+            get {
+                return ((string)(this["fl3_header"]));
+            }
+            set {
+                this["fl3_header"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mesin MF 1")]
+        public string fl3_label_tf1 {
+            get {
+                return ((string)(this["fl3_label_tf1"]));
+            }
+            set {
+                this["fl3_label_tf1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mesin MF 2")]
+        public string fl3_label_tf2 {
+            get {
+                return ((string)(this["fl3_label_tf2"]));
+            }
+            set {
+                this["fl3_label_tf2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mesin MF 3")]
+        public string fl3_label_tf3 {
+            get {
+                return ((string)(this["fl3_label_tf3"]));
+            }
+            set {
+                this["fl3_label_tf3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("PHE")]
+        public string fl3_label_pm1 {
+            get {
+                return ((string)(this["fl3_label_pm1"]));
+            }
+            set {
+                this["fl3_label_pm1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("UHT")]
+        public string fl3_label_pm2 {
+            get {
+                return ((string)(this["fl3_label_pm2"]));
+            }
+            set {
+                this["fl3_label_pm2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Flow Rate 4")]
+        public string fl4_header {
+            get {
+                return ((string)(this["fl4_header"]));
+            }
+            set {
+                this["fl4_header"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mesin MF 1")]
+        public string fl4_label_tf1 {
+            get {
+                return ((string)(this["fl4_label_tf1"]));
+            }
+            set {
+                this["fl4_label_tf1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mesin MF 2")]
+        public string fl4_label_tf2 {
+            get {
+                return ((string)(this["fl4_label_tf2"]));
+            }
+            set {
+                this["fl4_label_tf2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mesin MF 3")]
+        public string fl4_label_tf3 {
+            get {
+                return ((string)(this["fl4_label_tf3"]));
+            }
+            set {
+                this["fl4_label_tf3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("UHT")]
+        public string fl4_label_pm1 {
+            get {
+                return ((string)(this["fl4_label_pm1"]));
+            }
+            set {
+                this["fl4_label_pm1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("PHE")]
+        public string fl4_label_pm2 {
+            get {
+                return ((string)(this["fl4_label_pm2"]));
+            }
+            set {
+                this["fl4_label_pm2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Flow Rate 5")]
+        public string fl5_header {
+            get {
+                return ((string)(this["fl5_header"]));
+            }
+            set {
+                this["fl5_header"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mesin MF 1")]
+        public string fl5_label_tf1 {
+            get {
+                return ((string)(this["fl5_label_tf1"]));
+            }
+            set {
+                this["fl5_label_tf1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mesin MF 2")]
+        public string fl5_label_tf2 {
+            get {
+                return ((string)(this["fl5_label_tf2"]));
+            }
+            set {
+                this["fl5_label_tf2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Mesin MF 3")]
+        public string fl5_label_tf3 {
+            get {
+                return ((string)(this["fl5_label_tf3"]));
+            }
+            set {
+                this["fl5_label_tf3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DJ")]
+        public string fl5_label_pm1 {
+            get {
+                return ((string)(this["fl5_label_pm1"]));
+            }
+            set {
+                this["fl5_label_pm1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("UHT")]
+        public string fl5_label_pm2 {
+            get {
+                return ((string)(this["fl5_label_pm2"]));
+            }
+            set {
+                this["fl5_label_pm2"] = value;
             }
         }
     }

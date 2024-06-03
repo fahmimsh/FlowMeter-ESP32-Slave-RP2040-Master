@@ -33,6 +33,10 @@ namespace SCADA
                 ToolStripMenuItemConnectOPC.Enabled = true; return;
             }
             treeViewOPC();
+            tb_db_server.Text = Properties.Settings.Default.DatabaseServer;
+            tb_db_name.Text = Properties.Settings.Default.DatabaseName;
+            tb_tabel_1_2.Text = Properties.Settings.Default.tabel_db_flowmeter_1_2;
+            tb_tabel_3_4_5.Text = Properties.Settings.Default.tabel_db_flowmeter_3_4_5;
         }
         private void treeViewOPC()
         {
@@ -105,6 +109,16 @@ namespace SCADA
         {
             form.OPC1Connect_or_Disconnect(false);
             if (OPCStatus1.Connected) treeViewOPC();
+        }
+
+        private void btn_save_db_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.DatabaseServer = tb_db_server.Text;
+            Properties.Settings.Default.DatabaseName = tb_db_name.Text;
+            Properties.Settings.Default.tabel_db_flowmeter_1_2 = tb_tabel_1_2.Text;
+            Properties.Settings.Default.tabel_db_flowmeter_3_4_5 = tb_tabel_3_4_5.Text;
+            Properties.Settings.Default.Save();
+            form.ShowMessage("Data Berhasil di Save", "DB Save", MessageBoxIcon.Information);
         }
     }
 }

@@ -61,12 +61,13 @@ uint8_t index_setval, index_page, index_page_prev, index_page_change;
 bool flag_next_set_val, flag_next_read_val, flag_next_setvalue;
 bool mode_prev[2];
 unsigned long time_set_value, time_show_value;
+//ALL HALAMAN
+NexPage page[4] = {NexPage(0, 0, "page0"), NexPage(2, 0, "page1"), NexPage(1, 0, "KeybdB"), NexPage(3, 0, "page2")};
 //HALAMAN 1 MAIN
 NexText nex_com_conn = NexText(0, 36, "t15");
 NexText nex_date_time = NexText(0, 30, "t18");
 NexCheckbox nex_log[2] = {NexCheckbox(0, 19, "r0"), NexCheckbox(0, 20, "r1")};
-NexPage page[4] = {NexPage(0, 0, "page0"), NexPage(2, 0, "page1"), NexPage(1, 0, "KeybdB"), NexPage(2, 0, "page2"),};
-NexText nex_mode[2] = {NexText(0, 5, "t1"), NexText(0, 14, "t9")};
+NexText nex_mode[2] = {NexText(0, 5, "t1"), NexText(0, 12, "t9")};
 NexNumber nex_set_liter[2] = {NexNumber (0, 2, "x0"), NexNumber (0, 14, "x4")};
 NexNumber nex_liter[2] = {NexNumber (0, 8, "x1"), NexNumber (0, 15, "x5")};
 NexNumber nex_FlowRate[2] = {NexNumber (0, 10, "x2"), NexNumber (0, 17, "x6")};
@@ -79,10 +80,10 @@ NexButton nex_btn_batch2 = NexButton (0, 34, "b2");
 NexButton nex_btn_mode_produksi1 = NexButton (0, 37, "b4");
 NexButton nex_btn_mode_produksi2 = NexButton (0, 38, "b5");
 //HALAMAN 2 SETTING 1
-NexNumber nex_capacity[2] = {NexNumber (2, 2, "x0"), NexNumber (2, 32, "x5")};
-NexNumber nex_over_fl_err[2] = {NexNumber (2, 7, "x8"), NexNumber (2, 30, "x4")};
-NexNumber nex_delay_on[2] = {NexNumber (2, 9, "x7"), NexNumber (2, 26, "x2")};
-NexNumber nex_delay_off[2] = {NexNumber (2, 14, "x1"), NexNumber (2, 29, "x3")};
+NexNumber nex_capacity[2] = {NexNumber (2, 2, "x0"), NexNumber (2, 28, "x5")};
+NexNumber nex_over_fl_err[2] = {NexNumber (2, 7, "x8"), NexNumber (2, 26, "x4")};
+NexNumber nex_delay_on[2] = {NexNumber (2, 9, "x7"), NexNumber (2, 22, "x2")};
+NexNumber nex_delay_off[2] = {NexNumber (2, 12, "x1"), NexNumber (2, 25, "x3")};
 NexButton nex_btn_set_tank1[5] = {NexButton (2, 15, "b6"), NexButton (2, 14, "b5"), NexButton (2, 17, "b8"), NexButton (2, 16, "b7"), NexButton (2, 32, "b1")};
 NexButton nex_btn_set_tank2[4] = {NexButton (2, 20, "b9"), NexButton (2, 21, "b10"), NexButton (2, 19, "b4"), NexButton (2, 18, "b3")};
 NexButton nex_btn_main = NexButton (2, 11, "b0");
@@ -162,7 +163,7 @@ void nex_show_value();
 void nex_show_set_and_tank();
 void nex_show_batch();
 void nex_init_event_all();
-void nex_set_value_for_event(void *ptr, int index_setval);
+void nex_set_value_for_event(void *ptr, int index_setval_);
 void nex_btn_set_tank_event(void *ptr, int index, int start_index, int end_index);
 void nex_btn_set_batch_event(void *ptr, int index, int start_index, int end_index);
 void nex_btn_set_all_event(void *ptr, int page_index);
@@ -194,6 +195,7 @@ void nex_btn_set_tank1_1_event(void *ptr);
 void nex_btn_set_tank1_2_event(void *ptr);
 void nex_btn_set_tank1_3_event(void *ptr);
 void nex_btn_set_tank1_4_event(void *ptr);
+
 void nex_btn_set_tank2_0_event(void *ptr);
 void nex_btn_set_tank2_1_event(void *ptr);
 void nex_btn_set_tank2_2_event(void *ptr);
@@ -254,6 +256,7 @@ void nex_init_event_all(){
   nex_btn_set_tank1[2].attachPush(nex_btn_set_tank1_2_event, &nex_btn_set_tank1[2]);
   nex_btn_set_tank1[3].attachPush(nex_btn_set_tank1_3_event, &nex_btn_set_tank1[3]);
   nex_btn_set_tank1[4].attachPush(nex_btn_set_tank1_4_event, &nex_btn_set_tank1[4]);
+
   nex_btn_set_tank2[0].attachPush(nex_btn_set_tank2_0_event, &nex_btn_set_tank2[0]);
   nex_btn_set_tank2[1].attachPush(nex_btn_set_tank2_1_event, &nex_btn_set_tank2[1]);
   nex_btn_set_tank2[2].attachPush(nex_btn_set_tank2_2_event, &nex_btn_set_tank2[2]);
@@ -297,7 +300,7 @@ void setup() {
     pinMode(X[i], INPUT);
     if(i < 6) { pinMode(Y[i], OUTPUT); digitalWrite(Y[i], HIGH); }
     if(i < 2){
-      btn[i].attach(X[i+2], INPUT); btn[i].interval(50); btn[i].setPressedState(HIGH);
+      btn[i].attach(X[i+2], INPUT); btn[i].interval(70); btn[i].setPressedState(HIGH);
     }
   }
   esp_task_wdt_init(75, true); esp_task_wdt_add(NULL);
@@ -580,10 +583,10 @@ nmbs_error hadle_write_single_coils(uint16_t address, bool value, uint8_t unit_i
     else{
       uint8_t addr_mb_coil = address - 10;
       mb_flagCoil[address - 10] = value;
-      if(addr_mb_coil < 5) set_mb_flag(addr_mb_coil, 0, 5);
-      else if(addr_mb_coil >= 5 && addr_mb_coil < 9) {set_mb_flag(addr_mb_coil, 5, 9); index_page_change = !index_page; }
-      else if(addr_mb_coil >= 9 && addr_mb_coil < 19) {set_mb_flag(addr_mb_coil, 9, 19); index_page_change = !index_page; }
-      else if(addr_mb_coil >= 19 && addr_mb_coil < 29) {set_mb_flag(addr_mb_coil, 19, 29); index_page_change = !index_page; }
+      if(addr_mb_coil < 5) { set_mb_flag(addr_mb_coil, 0, 5); index_page_change = !index_page; flag_next_set_val = false; }
+      else if(addr_mb_coil >= 5 && addr_mb_coil < 9) {set_mb_flag(addr_mb_coil, 5, 9); index_page_change = !index_page; flag_next_set_val = false; }
+      else if(addr_mb_coil >= 9 && addr_mb_coil < 19) {set_mb_flag(addr_mb_coil, 9, 19); index_page_change = !index_page; flag_next_set_val = false; }
+      else if(addr_mb_coil >= 19 && addr_mb_coil < 29) {set_mb_flag(addr_mb_coil, 19, 29); index_page_change = !index_page; flag_next_set_val = false; }
     }
     return NMBS_ERROR_NONE;
 }
@@ -611,10 +614,10 @@ nmbs_error handle_write_multiple_coils(uint16_t address, uint16_t quantity, cons
       }
       else{
         mb_flagCoil[index] = nmbs_bitfield_read(coils, i);
-        if(index < 5) set_mb_flag(index, 0, 5);
-        else if(index >= 5 && index < 9) { set_mb_flag(index, 5, 9); index_page_change = !index_page; }
-        else if(index >= 9 && index < 19) { set_mb_flag(index, 9, 19); index_page_change = !index_page; }
-        else if(index >= 19 && index < 29) { set_mb_flag(index, 19, 29); index_page_change = !index_page; }
+        if(index < 5){ set_mb_flag(index, 0, 5); index_page_change = !index_page; flag_next_set_val = false; }
+        else if(index >= 5 && index < 9) { set_mb_flag(index, 5, 9); index_page_change = !index_page; flag_next_set_val = false;}
+        else if(index >= 9 && index < 19) { set_mb_flag(index, 9, 19); index_page_change = !index_page; flag_next_set_val = false;}
+        else if(index >= 19 && index < 29) { set_mb_flag(index, 19, 29); index_page_change = !index_page; flag_next_set_val = false;}
       }
     }
     return NMBS_ERROR_NONE;
@@ -712,11 +715,11 @@ void nex_show_value(){
           if(mb_flagCoil[i]) nex_btn_batch2.setText(batch_char[i-19]);
         }
         nex_btn_mode_produksi1.setText(mode_produksi_persiapan[0] ? "Persiapan" : "Produksi");
-        nex_btn_mode_produksi1.Set_background_color_bco(mode_produksi_persiapan[0] ? 63488 : 2016);
-        nex_btn_mode_produksi1.Set_press_background_color_bco2(mode_produksi_persiapan[0] ? 63488 : 2016);
+        nex_btn_mode_produksi1.Set_background_color_bco(mode_produksi_persiapan[0] ? 63488 : 1040);
+        nex_btn_mode_produksi1.Set_press_background_color_bco2(mode_produksi_persiapan[0] ? 63488 : 1040);
         nex_btn_mode_produksi2.setText(mode_produksi_persiapan[1] ? "Persiapan" : "Produksi");
-        nex_btn_mode_produksi2.Set_background_color_bco(mode_produksi_persiapan[1] ? 63488 : 2016);
-        nex_btn_mode_produksi2.Set_press_background_color_bco2(mode_produksi_persiapan[1] ? 63488 : 2016);
+        nex_btn_mode_produksi2.Set_background_color_bco(mode_produksi_persiapan[1] ? 63488 : 1040);
+        nex_btn_mode_produksi2.Set_press_background_color_bco2(mode_produksi_persiapan[1] ? 63488 : 1040);
         flag_next_setvalue = false;
         IsConnectTCP_Prev = !IsConnectTCP;
       }
@@ -840,7 +843,7 @@ void nex_read_value(){
     time_show_value = millis();
   }
 }
-void nex_set_value_for_event(void *ptr, int index_setval){
+void nex_set_value_for_event(void *ptr, int index_setval_){
   if(flag_next_read_val || flag_next_setvalue) { 
     page[index_page].show();
     index_page_change = 2; 
@@ -850,7 +853,7 @@ void nex_set_value_for_event(void *ptr, int index_setval){
   flag_next_set_val = true;
   index_page_prev = index_page;
   index_page_change = index_page = 2;
-  index_setval = index_setval;
+  index_setval = index_setval_;
   time_show_value = millis();
   flag_next_set_val = false;
 }
@@ -883,6 +886,7 @@ void nex_btn_set_tank1_1_event(void *ptr){ nex_btn_set_tank_event(ptr, 1, 0, 5);
 void nex_btn_set_tank1_2_event(void *ptr){ nex_btn_set_tank_event(ptr, 2, 0, 5); }
 void nex_btn_set_tank1_3_event(void *ptr){ nex_btn_set_tank_event(ptr, 3, 0, 5); }
 void nex_btn_set_tank1_4_event(void *ptr){ nex_btn_set_tank_event(ptr, 4, 0, 5); }
+
 void nex_btn_set_tank2_0_event(void *ptr){ nex_btn_set_tank_event(ptr, 5, 5, 9); }
 void nex_btn_set_tank2_1_event(void *ptr){ nex_btn_set_tank_event(ptr, 6, 5, 9); }
 void nex_btn_set_tank2_2_event(void *ptr){ nex_btn_set_tank_event(ptr, 7, 5, 9); }
@@ -898,6 +902,7 @@ void next_btn_set_batch1_6_event(void *ptr){ nex_btn_set_batch_event(ptr, 15, 9,
 void next_btn_set_batch1_7_event(void *ptr){ nex_btn_set_batch_event(ptr, 16, 9, 19); }
 void next_btn_set_batch1_8_event(void *ptr){ nex_btn_set_batch_event(ptr, 17, 9, 19); }
 void next_btn_set_batch1_9_event(void *ptr){ nex_btn_set_batch_event(ptr, 18, 9, 19); }
+
 void next_btn_set_batch2_0_event(void *ptr){ nex_btn_set_batch_event(ptr, 19, 19, 29); }
 void next_btn_set_batch2_1_event(void *ptr){ nex_btn_set_batch_event(ptr, 20, 19, 29); }
 void next_btn_set_batch2_2_event(void *ptr){ nex_btn_set_batch_event(ptr, 21, 19, 29); }
@@ -908,6 +913,7 @@ void next_btn_set_batch2_6_event(void *ptr){ nex_btn_set_batch_event(ptr, 25, 19
 void next_btn_set_batch2_7_event(void *ptr){ nex_btn_set_batch_event(ptr, 26, 19, 29); }
 void next_btn_set_batch2_8_event(void *ptr){ nex_btn_set_batch_event(ptr, 27, 19, 29); }
 void next_btn_set_batch2_9_event(void *ptr){ nex_btn_set_batch_event(ptr, 28, 19, 29); }
+
 void nex_btn_set_all_event(void *ptr, int page_index){
   if(flag_next_setvalue) return;
   if(index_page_change != index_page) return;
@@ -927,14 +933,14 @@ void nex_btn_batch2_event(void *ptr){ nex_btn_set_all_event(ptr, 3); }
 void nex_btn_mode_produksi1_event(void *ptr){
   mode_produksi_persiapan[0] = !mode_produksi_persiapan[0];
   nex_btn_mode_produksi1.setText(mode_produksi_persiapan[0] ? "Persiapan" : "Produksi");
-  nex_btn_mode_produksi1.Set_background_color_bco(mode_produksi_persiapan[0] ? 63488 : 2016);
-  nex_btn_mode_produksi1.Set_press_background_color_bco2(mode_produksi_persiapan[0] ? 63488 : 2016);
+  nex_btn_mode_produksi1.Set_background_color_bco(mode_produksi_persiapan[0] ? 63488 : 1040);
+  nex_btn_mode_produksi1.Set_press_background_color_bco2(mode_produksi_persiapan[0] ? 63488 : 1040);
 }
 void nex_btn_mode_produksi2_event(void *ptr){
   mode_produksi_persiapan[1] = !mode_produksi_persiapan[1];
   nex_btn_mode_produksi2.setText(mode_produksi_persiapan[1] ? "Persiapan" : "Produksi");
-  nex_btn_mode_produksi2.Set_background_color_bco(mode_produksi_persiapan[1] ? 63488 : 2016);
-  nex_btn_mode_produksi2.Set_press_background_color_bco2(mode_produksi_persiapan[1] ? 63488 : 2016);
+  nex_btn_mode_produksi2.Set_background_color_bco(mode_produksi_persiapan[1] ? 63488 : 1040);
+  nex_btn_mode_produksi2.Set_press_background_color_bco2(mode_produksi_persiapan[1] ? 63488 : 1040);
 }
 void next_btn_ok_keyboard_event(void *ptr){
   flag_next_set_val = true;
