@@ -32,6 +32,8 @@ namespace SCADA
             {"sensor_flow", new string[] { "sensor_flow/State", "sensor_flow/turbine/Enabled" }},
             {"pump_flow", new string[] { "pump_flow/Enabled", "pipe_flow/Flow/Visibility"}},
             {"val_setliter", new string[] { "val_setliter/Value", "level_liter/high_level", "level_liter/HighLevel/LevelHigh"}},
+
+            {"valve_pipe", new string[] { "valve_flow/State", "valve_flow/handle/Visibility", "pipe_flow/Flow/Visibility" }},
         };
         public void SetDRsc(dynamic glg_object, string tag, bool flag) => glg_object.SetDResource(tag, flag ? 1.0 : 0.0);
         public void SetDRsc(dynamic glg_object, string tag, double currentValue) => glg_object.SetDResource(tag, currentValue);
@@ -53,10 +55,7 @@ namespace SCADA
             glg_object.SetGResource($"{glgTag}/BodyColor", !state_ ? color00_ : color10_, !state_ ? color01_ : color11_, !state_ ? color02_ : color12_); //hijau:merah
             glg_object.SetSResource($"{glgTag}/Label/String", !state_ ? label0 : label1);
         }
-        public void SetSRsc(dynamic glg_object, string tag, string arg)
-        {
-            glg_object.SetSResource($"{tag}/String", arg);
-        }
+        public void SetSRsc(dynamic glg_object, string tag, string arg) => glg_object.SetSResource($"{tag}/String", arg);
         private void Callback_set_batch(object sender, GlgObject e) => set_batch?.Invoke(sender, e);
         private void Callback_set_on_off(object sender, GlgObject e) => set_on_off?.Invoke(sender, e);
         private void Callback_set_value(object sender, string e) => set_value?.Invoke(sender, e);

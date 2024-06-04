@@ -34,6 +34,10 @@ namespace SCADA.UserControls
             glgSetTag1.set_value += GlgSetTag1_set_value;
             glgSetTag1.set_on_off += GlgSetTag1_set_on_off;
             label_header_hmi1.Text = $"{Properties.Settings.Default.fl1_header}      ";
+            flow_meter1.label_transfer = Properties.Settings.Default.fl1_label_tf1;
+            glgSetTag1.SetSRsc(glgControl_hmi1, "text_transfer", flow_meter1.label_transfer);
+            flow_meter1.label_batch = Properties.Settings.Default.fl1_label_batch1;
+            glgSetTag1.SetSRsc(glgControl_hmi1, "text_batch", flow_meter1.label_batch);
 
             glgSetTag2.Initialize(this, glgControl_hmi2, Path.Combine(Application.StartupPath, "GUI_FL1_FL2.g"));
             glgSetTag2.set_batch += GlgSetTag2_set_batch;
@@ -41,6 +45,10 @@ namespace SCADA.UserControls
             glgSetTag2.set_value += GlgSetTag2_set_value;
             glgSetTag2.set_on_off += GlgSetTag2_set_on_off;
             label_header_hmi2.Text = $"{Properties.Settings.Default.fl2_header}      ";
+            flow_meter2.label_transfer = Properties.Settings.Default.fl2_label_tf1;
+            glgSetTag2.SetSRsc(glgControl_hmi2, "text_transfer", flow_meter2.label_transfer);
+            flow_meter2.label_batch = Properties.Settings.Default.fl2_label_batch1;
+            glgSetTag2.SetSRsc(glgControl_hmi2, "text_batch", flow_meter2.label_batch);
 
             glgSetTag3.Initialize(this, glgControl_hmi3, Path.Combine(Application.StartupPath, "GUI_FL3_FL4_FL5.g"));
             glgSetTag3.set_batch += GlgSetTag3_set_batch;
@@ -49,6 +57,12 @@ namespace SCADA.UserControls
             glgSetTag3.set_on_off += GlgSetTag3_set_on_off;
             glgSetTag3.set_proses_mesin += GlgSetTag3_set_proses_mesin;
             label_header_hmi3.Text = $"{Properties.Settings.Default.fl3_header}      ";
+            flow_meter3.label_transfer = Properties.Settings.Default.fl3_label_tf1;
+            glgSetTag3.SetSRsc(glgControl_hmi3, "transfer_to/String", flow_meter3.label_transfer);
+            flow_meter3.label_batch = Properties.Settings.Default.fl1_label_batch1;
+            glgSetTag3.SetSRsc(glgControl_hmi3, "batch/String", flow_meter3.label_batch);
+            flow_meter3.label_proses_mesin = Properties.Settings.Default.fl3_label_pm1;
+            glgSetTag3.SetSRsc(glgControl_hmi3, "proses_mesin/String", flow_meter3.label_proses_mesin);
 
             glgSetTag4.Initialize(this, glgControl_hmi4, Path.Combine(Application.StartupPath, "GUI_FL3_FL4_FL5.g"));
             glgSetTag4.set_batch += GlgSetTag4_set_batch;
@@ -57,6 +71,12 @@ namespace SCADA.UserControls
             glgSetTag4.set_on_off += GlgSetTag4_set_on_off;
             glgSetTag4.set_proses_mesin += GlgSetTag4_set_proses_mesin;
             label_header_hmi4.Text = $"{Properties.Settings.Default.fl4_header}      ";
+            flow_meter4.label_transfer = Properties.Settings.Default.fl2_label_tf1;
+            glgSetTag4.SetSRsc(glgControl_hmi4, "transfer_to/String", flow_meter4.label_transfer);
+            flow_meter4.label_batch = Properties.Settings.Default.fl1_label_batch1;
+            glgSetTag4.SetSRsc(glgControl_hmi4, "batch/String", flow_meter4.label_batch);
+            flow_meter4.label_proses_mesin = Properties.Settings.Default.fl4_label_pm1;
+            glgSetTag4.SetSRsc(glgControl_hmi4, "proses_mesin/String", flow_meter4.label_proses_mesin);
 
             glgSetTag5.Initialize(this, glgControl_hmi5, Path.Combine(Application.StartupPath, "GUI_FL3_FL4_FL5.g"));
             glgSetTag5.set_batch += GlgSetTag5_set_batch;
@@ -65,6 +85,12 @@ namespace SCADA.UserControls
             glgSetTag5.set_on_off += GlgSetTag5_set_on_off;
             glgSetTag5.set_proses_mesin += GlgSetTag5_set_proses_mesin;
             label_header_hmi5.Text = $"{Properties.Settings.Default.fl5_header}      ";
+            flow_meter5.label_transfer = Properties.Settings.Default.fl2_label_tf1;
+            glgSetTag5.SetSRsc(glgControl_hmi5, "transfer_to/String", flow_meter5.label_transfer);
+            flow_meter5.label_batch = Properties.Settings.Default.fl1_label_batch1;
+            glgSetTag5.SetSRsc(glgControl_hmi5, "batch/String", flow_meter5.label_batch);
+            flow_meter5.label_proses_mesin = Properties.Settings.Default.fl5_label_pm1;
+            glgSetTag5.SetSRsc(glgControl_hmi5, "proses_mesin/String", flow_meter5.label_proses_mesin);
         }
         //=================================================================================================================================================================================
         private void GlgSetTag1_set_on_off(object sender, GlgObject e)

@@ -173,6 +173,26 @@ namespace SCADA.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons_sort_down {
+            get {
+                object obj = ResourceManager.GetObject("icons_sort_down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons_sort_up {
+            get {
+                object obj = ResourceManager.GetObject("icons_sort_up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons_users_settings {
             get {
                 object obj = ResourceManager.GetObject("icons-users-settings", resourceCulture);

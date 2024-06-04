@@ -426,5 +426,11 @@
   <ItemGroup>
     <None Include="Resources\icons8-excel-16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons_sort_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons_sort_up.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

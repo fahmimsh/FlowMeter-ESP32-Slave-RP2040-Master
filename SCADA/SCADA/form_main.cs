@@ -210,31 +210,19 @@ namespace SCADA
                 { 5, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.BtnGlgSet(uc_x_hmi.glgControl_hmi1, "set_on_off", GetOPCDataValue<bool>(5), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
                 { 6, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(6) && !GetOPCDataValue<bool>(1)) {
-                        if(log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(38) ? "Auto" : "Manual", GetOPCDataValue<double>(42), GetOPCDataValue<double>(44), GetOPCDataValue<double>(41), flow_meter1.label_batch, flow_meter1.label_transfer))
-                        {  OPCWriteAsync1(6, false);
-                            OPCStatus1.IsLogData = true;
-                        }
-                        else
-                        {   log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(38) ? "Auto" : "Manual", GetOPCDataValue<double>(42), GetOPCDataValue<double>(44), GetOPCDataValue<double>(41), flow_meter1.label_batch, flow_meter1.label_transfer);
-                            OPCWriteAsync1(6, false);
-                            OPCStatus1.IsLogData = true;
-                        }
+                        if(!log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(38) ? "Auto" : "Manual", GetOPCDataValue<double>(42), GetOPCDataValue<double>(44), GetOPCDataValue<double>(41), flow_meter1.label_batch, flow_meter1.label_transfer))
+                            log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(38) ? "Auto" : "Manual", GetOPCDataValue<double>(42), GetOPCDataValue<double>(44), GetOPCDataValue<double>(41), flow_meter1.label_batch, flow_meter1.label_transfer);
+                        OPCWriteAsync1(6, false);
+                        OPCStatus1.IsLogData = true;
                     }
                 }) },
                 { 7, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.BtnGlgSet(uc_x_hmi.glgControl_hmi2, "set_on_off", GetOPCDataValue<bool>(7), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
                 { 8, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(8) && !GetOPCDataValue<bool>(3)) {
-                        if(log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(39) ? "Auto" : "Manual", GetOPCDataValue<double>(47), GetOPCDataValue<double>(49), GetOPCDataValue<double>(46), flow_meter2.label_batch, flow_meter2.label_transfer))
-                        {   
-                            OPCWriteAsync1(8, false);
-                            OPCStatus1.IsLogData = true;
-                        }
-                        else
-                        {   
+                        if(!log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(39) ? "Auto" : "Manual", GetOPCDataValue<double>(47), GetOPCDataValue<double>(49), GetOPCDataValue<double>(46), flow_meter2.label_batch, flow_meter2.label_transfer))
                             log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(39) ? "Auto" : "Manual", GetOPCDataValue<double>(47), GetOPCDataValue<double>(49), GetOPCDataValue<double>(46), flow_meter2.label_batch, flow_meter2.label_transfer);
-                            OPCWriteAsync1(8, false);
-                            OPCStatus1.IsLogData = true;
-                        }
+                        OPCWriteAsync1(8, false);
+                        OPCStatus1.IsLogData = true;
                     }
                 }) },
                 { 9, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(9)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_transfer", Properties.Settings.Default.fl1_label_tf1); flow_meter1.label_transfer = Properties.Settings.Default.fl1_label_tf1; } }) },
@@ -248,7 +236,7 @@ namespace SCADA
                 { 16, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(16)){ uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_transfer", Properties.Settings.Default.fl2_label_tf3); flow_meter2.label_transfer = Properties.Settings.Default.fl2_label_tf3; } }) },
                 { 17, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(17)){ uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_transfer", Properties.Settings.Default.fl2_label_tf4); flow_meter2.label_transfer = Properties.Settings.Default.fl2_label_tf4; } }) },
 
-                { 18, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(18)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_batch", Properties.Settings.Default.fl1_label_batch1); flow_meter1.label_batch = Properties.Settings.Default.fl1_label_batch1; } }) },
+                { 18, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(18)){     flow_meter1.label_batch = Properties.Settings.Default.fl1_label_batch1; } }) },
                 { 19, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(19)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_batch", Properties.Settings.Default.fl1_label_batch2); flow_meter1.label_batch = Properties.Settings.Default.fl1_label_batch2; } }) },
                 { 20, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(20)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_batch", Properties.Settings.Default.fl1_label_batch3); flow_meter1.label_batch = Properties.Settings.Default.fl1_label_batch3; } }) },
                 { 21, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(21)){ uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_batch", Properties.Settings.Default.fl1_label_batch4); flow_meter1.label_batch = Properties.Settings.Default.fl1_label_batch4; } }) },
@@ -314,33 +302,48 @@ namespace SCADA
         {
             Dictionary<int, Action> tagMapping = new Dictionary<int, Action> // Dictionary untuk menyimpan informasi terkait indeks dan fungsi delegate yang sesuai
             {
-                { 57, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 58, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 59, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 60, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 61, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 62, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 63, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 64, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 65, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 66, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 67, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 68, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 69, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 70, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 71, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 72, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 73, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 74, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 75, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 76, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 77, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 78, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 79, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 80, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 81, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 82, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 83, () => BeginInvoke((MethodInvoker)delegate {  }) }
+                { 57, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, uc_x_hmi.glgSetTag3.TagMaps["sensor_flow"], GetOPCDataValue<bool>(57)); }) },
+                { 58, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.BtnGlgSet(uc_x_hmi.glgControl_hmi3, "set_on_off", GetOPCDataValue<bool>(58), "STOP PRODUKSI", "PRODUKSI", 0.945892, 0.0, 0.0, 0.0, 0.725475, 0.0); }) },
+                { 59, () => BeginInvoke((MethodInvoker)delegate {
+                   if(GetOPCDataValue<bool>(59)) {
+                        if(!log_to_db2(flow_meter3.label_proses_mesin, flow_meter3.label_batch, flow_meter3.label_transfer, GetOPCDataValue<double>(77), GetOPCDataValue<double>(76)))
+                            log_to_db2(flow_meter3.label_proses_mesin, flow_meter3.label_batch, flow_meter3.label_transfer, GetOPCDataValue<double>(77), GetOPCDataValue<double>(76));
+                        OPCWriteAsync1(59, false);
+                        OPCStatus1.IsLogData = true;
+                    }
+                }) },
+                { 60, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, uc_x_hmi.glgSetTag4.TagMaps["sensor_flow"], GetOPCDataValue<bool>(60)); }) },
+                { 61, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.BtnGlgSet(uc_x_hmi.glgControl_hmi4, "set_on_off", GetOPCDataValue<bool>(61), "STOP PRODUKSI", "PRODUKSI", 0.945892, 0.0, 0.0, 0.0, 0.725475, 0.0); }) },
+                { 62, () => BeginInvoke((MethodInvoker)delegate {
+                    if(GetOPCDataValue<bool>(62)) {
+                        if(!log_to_db2(flow_meter4.label_proses_mesin, flow_meter4.label_batch, flow_meter4.label_transfer, GetOPCDataValue<double>(80), GetOPCDataValue<double>(79)))
+                            log_to_db2(flow_meter4.label_proses_mesin, flow_meter4.label_batch, flow_meter4.label_transfer, GetOPCDataValue<double>(80), GetOPCDataValue<double>(79));
+                        OPCWriteAsync1(62, false);
+                        OPCStatus1.IsLogData = true;
+                    }
+                }) },
+                { 63, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(63)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "transfer_to/String", Properties.Settings.Default.fl3_label_tf1); flow_meter3.label_transfer = Properties.Settings.Default.fl3_label_tf1; } }) },
+                { 64, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(64)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "transfer_to/String", Properties.Settings.Default.fl3_label_tf2); flow_meter3.label_transfer = Properties.Settings.Default.fl3_label_tf2; } }) },
+                { 65, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(65)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "transfer_to/String", Properties.Settings.Default.fl3_label_tf3); flow_meter3.label_transfer = Properties.Settings.Default.fl3_label_tf3; } }) },
+                { 66, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(66)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "proses_mesin/String", Properties.Settings.Default.fl3_label_pm1); flow_meter3.label_proses_mesin = Properties.Settings.Default.fl3_label_pm1; } }) },
+                { 67, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(67)){ uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "proses_mesin/String", Properties.Settings.Default.fl3_label_pm2); flow_meter3.label_proses_mesin = Properties.Settings.Default.fl3_label_pm2; } }) },
+
+                { 68, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(68)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "transfer_to/String", Properties.Settings.Default.fl4_label_tf1); flow_meter4.label_transfer = Properties.Settings.Default.fl4_label_tf1; } }) },
+                { 69, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(69)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "transfer_to/String", Properties.Settings.Default.fl4_label_tf2); flow_meter4.label_transfer = Properties.Settings.Default.fl4_label_tf2; } }) },
+                { 70, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(70)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "transfer_to/String", Properties.Settings.Default.fl4_label_tf3); flow_meter4.label_transfer = Properties.Settings.Default.fl4_label_tf3; } }) },
+                { 71, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(71)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "proses_mesin/String", Properties.Settings.Default.fl4_label_pm1); flow_meter4.label_proses_mesin = Properties.Settings.Default.fl4_label_pm1; } }) },
+                { 72, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(72)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "proses_mesin/String", Properties.Settings.Default.fl4_label_pm2); flow_meter4.label_proses_mesin = Properties.Settings.Default.fl4_label_pm2; } }) },
+                { 73, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, uc_x_hmi.glgSetTag3.TagMaps["valve_pipe"], GetOPCDataValue<bool>(73)); }) },
+                { 74, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, uc_x_hmi.glgSetTag4.TagMaps["valve_pipe"], GetOPCDataValue<bool>(74)); }) },
+                { 75, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.label_header_hmi4.Image = uc_x_hmi.label_header_hmi3.Image = GetOPCDataValue<bool>(75) ? Properties.Resources.icons8_connect : Properties.Resources.icons8_disconnect; }) },
+                { 76, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_k-factor/Value", GetOPCDataValue<double>(76)); }) },
+                { 77, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_liter/Value", GetOPCDataValue<double>(77)); }) },
+                { 78, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_lpm/Value", GetOPCDataValue<double>(78)); }) },
+                { 79, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "val_k-factor/Value", GetOPCDataValue<double>(79)); }) },
+                { 80, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "val_liter/Value", GetOPCDataValue<double>(80)); }) },
+                { 81, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, "val_lpm/Value", GetOPCDataValue<double>(81)); }) },
+                { 82, () => BeginInvoke((MethodInvoker)delegate { flow_meter3.label_batch = $"Batch {(GetOPCDataValue<int>(82) < 10 ? "0" : "")}{GetOPCDataValue<int>(82)}"; uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "batch/String", flow_meter3.label_batch); }) },
+                { 83, () => BeginInvoke((MethodInvoker)delegate { flow_meter4.label_batch = $"Batch {(GetOPCDataValue<int>(83) < 10 ? "0" : "")}{GetOPCDataValue<int>(83)}"; uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "batch/String", flow_meter4.label_batch); }) }
             };
             foreach (var kvp in tagMapping.OrderBy(x => GetOPCDataValue<bool>(x.Key)))
             {
@@ -356,20 +359,27 @@ namespace SCADA
         {
             Dictionary<int, Action> tagMapping = new Dictionary<int, Action> // Dictionary untuk menyimpan informasi terkait indeks dan fungsi delegate yang sesuai
             {
-                { 84, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 85, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 86, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 87, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 88, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 89, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 90, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 91, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 92, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 93, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 94, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 95, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 96, () => BeginInvoke((MethodInvoker)delegate {  }) },
-                { 97, () => BeginInvoke((MethodInvoker)delegate {  }) }
+                { 84, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, uc_x_hmi.glgSetTag5.TagMaps["sensor_flow"], GetOPCDataValue<bool>(84)); }) },
+                { 85, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.BtnGlgSet(uc_x_hmi.glgControl_hmi5, "set_on_off", GetOPCDataValue<bool>(85), "STOP PRODUKSI", "PRODUKSI", 0.945892, 0.0, 0.0, 0.0, 0.725475, 0.0); }) },
+                { 86, () => BeginInvoke((MethodInvoker)delegate {
+                    if(GetOPCDataValue<bool>(86)) {
+                        if(!log_to_db2(flow_meter5.label_proses_mesin, flow_meter5.label_batch, flow_meter5.label_transfer, GetOPCDataValue<double>(95), GetOPCDataValue<double>(94)))
+                            log_to_db2(flow_meter5.label_proses_mesin, flow_meter5.label_batch, flow_meter5.label_transfer, GetOPCDataValue<double>(95), GetOPCDataValue<double>(94));
+                        OPCWriteAsync1(86, false);
+                        OPCStatus1.IsLogData = true;
+                    }
+                }) },
+                { 87, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(87)){ uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "transfer_to/String", Properties.Settings.Default.fl5_label_tf1); flow_meter5.label_transfer = Properties.Settings.Default.fl5_label_tf1; } }) },
+                { 88, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(88)){ uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "transfer_to/String", Properties.Settings.Default.fl5_label_tf2); flow_meter5.label_transfer = Properties.Settings.Default.fl5_label_tf2; } }) },
+                { 89, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(89)){ uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "transfer_to/String", Properties.Settings.Default.fl5_label_tf3); flow_meter5.label_transfer = Properties.Settings.Default.fl5_label_tf3; } }) },
+                { 90, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(90)){ uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "proses_mesin/String", Properties.Settings.Default.fl5_label_pm1); flow_meter5.label_proses_mesin = Properties.Settings.Default.fl5_label_pm1; } }) },
+                { 91, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(91)){ uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "proses_mesin/String", Properties.Settings.Default.fl5_label_pm2); flow_meter5.label_proses_mesin = Properties.Settings.Default.fl5_label_pm2; } }) },
+                { 92, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, uc_x_hmi.glgSetTag5.TagMaps["valve_pipe"], GetOPCDataValue<bool>(92)); }) },
+                { 93, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.label_header_hmi5.Image = GetOPCDataValue<bool>(93) ? Properties.Resources.icons8_connect : Properties.Resources.icons8_disconnect; }) },
+                { 94, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, "val_k-factor/Value", GetOPCDataValue<double>(94)); }) },
+                { 95, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, "val_liter/Value", GetOPCDataValue<double>(95)); }) },
+                { 96, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, "val_lpm/Value", GetOPCDataValue<double>(96)); }) },
+                { 97, () => BeginInvoke((MethodInvoker)delegate { flow_meter5.label_batch = $"Batch {(GetOPCDataValue<int>(97) < 10 ? "0" : "")}{GetOPCDataValue<int>(97)}"; uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "batch/String", flow_meter5.label_batch); }) }
             };
             foreach (var kvp in tagMapping.OrderBy(x => GetOPCDataValue<bool>(x.Key)))
             {

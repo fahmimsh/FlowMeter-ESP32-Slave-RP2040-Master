@@ -54,7 +54,6 @@
 {"Id":54,"Tag":"FlowMeter1.Register.date_time_hour"},
 {"Id":55,"Tag":"FlowMeter1.Register.date_time_minute"},
 {"Id":56,"Tag":"FlowMeter1.Register.date_time_second"},
-
 {"Id":57,"Tag":"FlowMeter2.Coil.FL1_Pump"},
 {"Id":58,"Tag":"FlowMeter2.Coil.FL1_StartStop"},
 {"Id":59,"Tag":"FlowMeter2.Coil.FL1_Log"},
