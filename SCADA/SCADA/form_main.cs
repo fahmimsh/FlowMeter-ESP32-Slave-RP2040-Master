@@ -36,12 +36,14 @@ namespace SCADA
         internal ObservableCollection<TagData1> tagData1 = new ObservableCollection<TagData1>();
         public uc_hmi uc_x_hmi;
         public uc_log uc_x_log;
+        public uc_hmi_suhu uc_x_hmi_suhu;
         public form_main()
         {
             InitializeComponent();
             this.MaximumSize = new System.Drawing.Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
             uc_x_hmi = new uc_hmi(this);
             uc_x_log = new uc_log(this);
+            uc_x_hmi_suhu = new uc_hmi_suhu(this);
             OPCdiscovery = DaClientFactory.Instance.CreateOpcNetApiServerDiscovery();
         }
         private void form_main_Load(object sender, EventArgs e)
@@ -49,7 +51,9 @@ namespace SCADA
             XamppOpen();
             add_to_main_panel(uc_x_log);
             if(Properties.Settings.Default.auto_connect_opc) OPC1Connect_or_Disconnect(false);
+            add_to_main_panel(uc_x_hmi_suhu);
             add_to_main_panel(uc_x_hmi);
+            menu_hmi.BackColor = SystemColors.Window;
         }
         private void form_main_Shown(object sender, EventArgs e)
         {
@@ -306,8 +310,8 @@ namespace SCADA
                 { 58, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.BtnGlgSet(uc_x_hmi.glgControl_hmi3, "set_on_off", GetOPCDataValue<bool>(58), "STOP PRODUKSI", "PRODUKSI", 0.945892, 0.0, 0.0, 0.0, 0.725475, 0.0); }) },
                 { 59, () => BeginInvoke((MethodInvoker)delegate {
                    if(GetOPCDataValue<bool>(59)) {
-                        if(!log_to_db2(flow_meter3.label_proses_mesin, flow_meter3.label_batch, flow_meter3.label_transfer, GetOPCDataValue<double>(77), GetOPCDataValue<double>(76)))
-                            log_to_db2(flow_meter3.label_proses_mesin, flow_meter3.label_batch, flow_meter3.label_transfer, GetOPCDataValue<double>(77), GetOPCDataValue<double>(76));
+                        if(!log_to_db2(flow_meter3.label_proses_mesin, flow_meter3.label_batch, flow_meter3.label_produk, flow_meter3.label_transfer, GetOPCDataValue<double>(77), GetOPCDataValue<double>(76)))
+                            log_to_db2(flow_meter3.label_proses_mesin, flow_meter3.label_batch, flow_meter3.label_produk, flow_meter3.label_transfer, GetOPCDataValue<double>(77), GetOPCDataValue<double>(76));
                         OPCWriteAsync1(59, false);
                         OPCStatus1.IsLogData = true;
                     }
@@ -316,8 +320,8 @@ namespace SCADA
                 { 61, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.BtnGlgSet(uc_x_hmi.glgControl_hmi4, "set_on_off", GetOPCDataValue<bool>(61), "STOP PRODUKSI", "PRODUKSI", 0.945892, 0.0, 0.0, 0.0, 0.725475, 0.0); }) },
                 { 62, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(62)) {
-                        if(!log_to_db2(flow_meter4.label_proses_mesin, flow_meter4.label_batch, flow_meter4.label_transfer, GetOPCDataValue<double>(80), GetOPCDataValue<double>(79)))
-                            log_to_db2(flow_meter4.label_proses_mesin, flow_meter4.label_batch, flow_meter4.label_transfer, GetOPCDataValue<double>(80), GetOPCDataValue<double>(79));
+                        if(!log_to_db2(flow_meter4.label_proses_mesin, flow_meter4.label_batch, flow_meter4.label_produk, flow_meter4.label_transfer, GetOPCDataValue<double>(80), GetOPCDataValue<double>(79)))
+                            log_to_db2(flow_meter4.label_proses_mesin, flow_meter4.label_batch, flow_meter4.label_produk, flow_meter4.label_transfer, GetOPCDataValue<double>(80), GetOPCDataValue<double>(79));
                         OPCWriteAsync1(62, false);
                         OPCStatus1.IsLogData = true;
                     }
@@ -363,8 +367,8 @@ namespace SCADA
                 { 85, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.BtnGlgSet(uc_x_hmi.glgControl_hmi5, "set_on_off", GetOPCDataValue<bool>(85), "STOP PRODUKSI", "PRODUKSI", 0.945892, 0.0, 0.0, 0.0, 0.725475, 0.0); }) },
                 { 86, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(86)) {
-                        if(!log_to_db2(flow_meter5.label_proses_mesin, flow_meter5.label_batch, flow_meter5.label_transfer, GetOPCDataValue<double>(95), GetOPCDataValue<double>(94)))
-                            log_to_db2(flow_meter5.label_proses_mesin, flow_meter5.label_batch, flow_meter5.label_transfer, GetOPCDataValue<double>(95), GetOPCDataValue<double>(94));
+                        if(!log_to_db2(flow_meter5.label_proses_mesin, flow_meter5.label_batch, flow_meter5.label_produk, flow_meter5.label_transfer, GetOPCDataValue<double>(95), GetOPCDataValue<double>(94)))
+                            log_to_db2(flow_meter5.label_proses_mesin, flow_meter5.label_batch, flow_meter5.label_produk, flow_meter5.label_transfer, GetOPCDataValue<double>(95), GetOPCDataValue<double>(94));
                         OPCWriteAsync1(86, false);
                         OPCStatus1.IsLogData = true;
                     }
@@ -379,7 +383,34 @@ namespace SCADA
                 { 94, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, "val_k-factor/Value", GetOPCDataValue<double>(94)); }) },
                 { 95, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, "val_liter/Value", GetOPCDataValue<double>(95)); }) },
                 { 96, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, "val_lpm/Value", GetOPCDataValue<double>(96)); }) },
-                { 97, () => BeginInvoke((MethodInvoker)delegate { flow_meter5.label_batch = $"Batch {(GetOPCDataValue<int>(97) < 10 ? "0" : "")}{GetOPCDataValue<int>(97)}"; uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "batch/String", flow_meter5.label_batch); }) }
+                { 97, () => BeginInvoke((MethodInvoker)delegate { flow_meter5.label_batch = $"Batch {(GetOPCDataValue<int>(97) < 10 ? "0" : "")}{GetOPCDataValue<int>(97)}"; uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "batch/String", flow_meter5.label_batch); }) },
+                { 98, () => BeginInvoke((MethodInvoker)delegate {
+                    string[] list_produk = {
+                        Properties.Settings.Default.fl3_produk1, Properties.Settings.Default.fl3_produk2, Properties.Settings.Default.fl3_produk3, Properties.Settings.Default.fl3_produk4,
+                        Properties.Settings.Default.fl3_produk5, Properties.Settings.Default.fl3_produk6, Properties.Settings.Default.fl3_produk7, Properties.Settings.Default.fl3_produk8,
+                        Properties.Settings.Default.fl3_produk9, Properties.Settings.Default.fl3_produk10, Properties.Settings.Default.fl3_produk11
+                    };
+                    flow_meter3.label_produk = list_produk[GetOPCDataValue<int>(98)];
+                    uc_x_hmi.glgSetTag3.SetSRsc(uc_x_hmi.glgControl_hmi3, "produk/String", flow_meter3.label_produk);
+                }) },
+                { 99, () => BeginInvoke((MethodInvoker)delegate {
+                    string[] list_produk = {
+                        Properties.Settings.Default.fl4_produk1, Properties.Settings.Default.fl4_produk2, Properties.Settings.Default.fl4_produk3, Properties.Settings.Default.fl4_produk4,
+                        Properties.Settings.Default.fl4_produk5, Properties.Settings.Default.fl4_produk6, Properties.Settings.Default.fl4_produk7, Properties.Settings.Default.fl4_produk8,
+                        Properties.Settings.Default.fl4_produk9, Properties.Settings.Default.fl4_produk10, Properties.Settings.Default.fl4_produk11
+                    };
+                    flow_meter4.label_produk = list_produk[GetOPCDataValue<int>(99)];
+                    uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "produk/String", flow_meter4.label_produk);
+                }) },
+                { 100, () => BeginInvoke((MethodInvoker)delegate {
+                    string[] list_produk = {
+                        Properties.Settings.Default.fl5_produk1, Properties.Settings.Default.fl5_produk2, Properties.Settings.Default.fl5_produk3, Properties.Settings.Default.fl5_produk4,
+                        Properties.Settings.Default.fl5_produk5, Properties.Settings.Default.fl5_produk6, Properties.Settings.Default.fl5_produk7, Properties.Settings.Default.fl5_produk8,
+                        Properties.Settings.Default.fl5_produk9, Properties.Settings.Default.fl5_produk10, Properties.Settings.Default.fl5_produk11
+                    };
+                    flow_meter5.label_produk = list_produk[GetOPCDataValue<int>(100)];
+                    uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "produk/String", flow_meter5.label_produk);
+                }) },
             };
             foreach (var kvp in tagMapping.OrderBy(x => GetOPCDataValue<bool>(x.Key)))
             {
@@ -408,11 +439,11 @@ namespace SCADA
 
             return true;
         }
-        private bool log_to_db2(string _proses_mesin, string _batch, string _transfer_to, double _liter, double _k_factor)
+        private bool log_to_db2(string _proses_mesin, string _batch, string _produk, string _transfer_to, double _liter, double _k_factor)
         {
             var db = DbDataAccess.Db();
             if (db == null) { ShowErrorMessage("Koneksi database gagal. Periksa pengaturan koneksi atau hubungi administrator"); return false; }
-            var log_fl_data = new { proses_mesin = _proses_mesin, batch = _batch, transfer_to = _transfer_to, liter = Math.Round(_liter, 2), k_factor = Math.Round(_k_factor, 3), date_time = DateTime.Now, };
+            var log_fl_data = new { proses_mesin = _proses_mesin, batch = _batch, produk = _produk, transfer_to = _transfer_to, liter = Math.Round(_liter, 2), k_factor = Math.Round(_k_factor, 3), date_time = DateTime.Now, };
             Query query = db.Query(Properties.Settings.Default.tabel_db_flowmeter_3_4_5);
             try
             {
@@ -465,10 +496,16 @@ namespace SCADA
                 ShowErrorMessage($"Terjadi kesalahan: {ex.Message}");
             }
         }
-        private void menu_hmi_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_hmi);
-        private void menu_log_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_log);
+        private void menu_hmi_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_hmi, menu_hmi);
+        private void menu_log_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_log, menu_log);
+        private void menu_hmi_suhu_Click(object sender, EventArgs e) => show_to_main_panel(uc_x_hmi_suhu, menu_hmi_suhu);
         private void add_to_main_panel(UserControl uc_x) { uc_x.Dock = DockStyle.Fill; panel_main.Controls.Add(uc_x); uc_x.BringToFront(); }
-        private void show_to_main_panel(UserControl uc_x) => uc_x.BringToFront();
+        private void show_to_main_panel(UserControl uc_x, ToolStripMenuItem menu_items_select)
+        {
+            menu_hmi.BackColor = menu_log.BackColor = menu_hmi_suhu.BackColor = SystemColors.ActiveBorder;
+            menu_items_select.BackColor = SystemColors.Window;
+            uc_x.BringToFront();
+        }
         private void menu_connect_opc_Click(object sender, EventArgs e) => OPC1Connect_or_Disconnect(OPCStatus1.Connected);
         public void ShowWarningMessage(string message) => ShowMessage(message, "Warning", MessageBoxIcon.Warning);
         public void ShowErrorMessage(string message) => ShowMessage(message, "Error", MessageBoxIcon.Error);

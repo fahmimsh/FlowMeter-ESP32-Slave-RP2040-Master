@@ -218,7 +218,7 @@ namespace SCADA.UserControls
 
                             // Adding and merging the header for the second table
                             int startRow = 1;
-                            var header2 = worksheet.Range(startRow, 10, startRow, 16).Merge();
+                            var header2 = worksheet.Range(startRow, 10, startRow, 17).Merge();
                             header2.Value = $"Log Data hasil {Properties.Settings.Default.fl3_header}, {Properties.Settings.Default.fl4_header} dan {Properties.Settings.Default.fl5_header}";
                             header2.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                             header2.Style.Fill.BackgroundColor = XLColor.Green;

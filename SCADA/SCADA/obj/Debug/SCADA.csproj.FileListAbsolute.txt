@@ -158,3 +158,4 @@ C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\o
 C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.csproj.CopyComplete
 C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.exe
 C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.pdb
+C:\Users\fahmi\OneDrive\Documents\PlatformIO\Projects\FlowMeterMCU\SCADA\SCADA\obj\Debug\SCADA.UserControls.uc_hmi_suhu.resources

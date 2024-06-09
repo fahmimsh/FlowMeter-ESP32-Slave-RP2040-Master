@@ -13,7 +13,7 @@
 #include <time.h>
 #include <TimeLib.h>
 
-uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 124);
+uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 119);
 IPAddress gateway(192, 168, 1, 1), dns_server(192, 168, 110, 201), subnet(255,255,255,0);
 
 const int X[8] = {26, 25, 33, 32, 35, 34, 39, 36}, Y[6] = {14, 13, 15, 2, 4, 0};

@@ -43,6 +43,7 @@
             this.menu_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_minimize = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_connect_opc = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_hmi_suhu = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.status_txt = new System.Windows.Forms.ToolStripStatusLabel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -67,7 +68,8 @@
             this.menu_log,
             this.menu_exit,
             this.menu_minimize,
-            this.menu_connect_opc});
+            this.menu_connect_opc,
+            this.menu_hmi_suhu});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -138,16 +140,16 @@
             // 
             this.menu_hmi.Image = global::SCADA.Properties.Resources.icons7Segment;
             this.menu_hmi.Name = "menu_hmi";
-            this.menu_hmi.Size = new System.Drawing.Size(90, 24);
-            this.menu_hmi.Text = "View HMI";
+            this.menu_hmi.Size = new System.Drawing.Size(114, 24);
+            this.menu_hmi.Text = "View HMI Tera";
             this.menu_hmi.Click += new System.EventHandler(this.menu_hmi_Click);
             // 
             // menu_log
             // 
             this.menu_log.Image = global::SCADA.Properties.Resources.AddrSet;
             this.menu_log.Name = "menu_log";
-            this.menu_log.Size = new System.Drawing.Size(87, 24);
-            this.menu_log.Text = "View Log";
+            this.menu_log.Size = new System.Drawing.Size(111, 24);
+            this.menu_log.Text = "View Log Tera";
             this.menu_log.Click += new System.EventHandler(this.menu_log_Click);
             // 
             // menu_exit
@@ -177,6 +179,14 @@
             this.menu_connect_opc.Size = new System.Drawing.Size(98, 24);
             this.menu_connect_opc.Text = "Disconnect";
             this.menu_connect_opc.Click += new System.EventHandler(this.menu_connect_opc_Click);
+            // 
+            // menu_hmi_suhu
+            // 
+            this.menu_hmi_suhu.Image = global::SCADA.Properties.Resources.icons7Segment;
+            this.menu_hmi_suhu.Name = "menu_hmi_suhu";
+            this.menu_hmi_suhu.Size = new System.Drawing.Size(120, 24);
+            this.menu_hmi_suhu.Text = "View HMI Suhu";
+            this.menu_hmi_suhu.Click += new System.EventHandler(this.menu_hmi_suhu_Click);
             // 
             // statusStrip1
             // 
@@ -278,6 +288,7 @@
         private System.Windows.Forms.Timer timer_delete_glg_popup;
         public System.Windows.Forms.ToolStripStatusLabel status_txt;
         private System.Windows.Forms.Timer timer_handle_opc_tag3;
+        private System.Windows.Forms.ToolStripMenuItem menu_hmi_suhu;
     }
 }
 

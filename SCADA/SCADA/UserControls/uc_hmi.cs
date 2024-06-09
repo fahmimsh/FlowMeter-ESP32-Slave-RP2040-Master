@@ -19,7 +19,7 @@ namespace SCADA.UserControls
         public uc_hmi(form_main mainForm)
         {
             InitializeComponent();
-            form = mainForm; ;
+            form = mainForm;
             glgSetTag1 = new GlgSetTag();
             glgSetTag2 = new GlgSetTag();
             glgSetTag3 = new GlgSetTag();
@@ -51,6 +51,7 @@ namespace SCADA.UserControls
             glgSetTag2.SetSRsc(glgControl_hmi2, "text_batch", flow_meter2.label_batch);
 
             glgSetTag3.Initialize(this, glgControl_hmi3, Path.Combine(Application.StartupPath, "GUI_FL3_FL4_FL5.g"));
+            glgSetTag3.set_produk += GlgSetTag3_set_produk;
             glgSetTag3.set_batch += GlgSetTag3_set_batch;
             glgSetTag3.set_transfer += GlgSetTag3_set_transfer;
             glgSetTag3.set_value += GlgSetTag3_set_value;
@@ -65,6 +66,7 @@ namespace SCADA.UserControls
             glgSetTag3.SetSRsc(glgControl_hmi3, "proses_mesin/String", flow_meter3.label_proses_mesin);
 
             glgSetTag4.Initialize(this, glgControl_hmi4, Path.Combine(Application.StartupPath, "GUI_FL3_FL4_FL5.g"));
+            glgSetTag4.set_produk += GlgSetTag4_set_produk;
             glgSetTag4.set_batch += GlgSetTag4_set_batch;
             glgSetTag4.set_transfer += GlgSetTag4_set_transfer;
             glgSetTag4.set_value += GlgSetTag4_set_value;
@@ -79,6 +81,7 @@ namespace SCADA.UserControls
             glgSetTag4.SetSRsc(glgControl_hmi4, "proses_mesin/String", flow_meter4.label_proses_mesin);
 
             glgSetTag5.Initialize(this, glgControl_hmi5, Path.Combine(Application.StartupPath, "GUI_FL3_FL4_FL5.g"));
+            glgSetTag5.set_produk += GlgSetTag5_set_produk;
             glgSetTag5.set_batch += GlgSetTag5_set_batch;
             glgSetTag5.set_transfer += GlgSetTag5_set_transfer;
             glgSetTag5.set_value += GlgSetTag5_set_value;
@@ -242,6 +245,19 @@ namespace SCADA.UserControls
             if (!isCancle) return;
             form.OPCWriteAsync1(82, 1 + set_index);
         }
+        private void GlgSetTag3_set_produk(object sender, GlgObject e)
+        {
+            if (!OPCStatus1.Connected) return;
+            string[] list_produk = {
+                Properties.Settings.Default.fl3_produk1, Properties.Settings.Default.fl3_produk2, Properties.Settings.Default.fl3_produk3, Properties.Settings.Default.fl3_produk4,
+                Properties.Settings.Default.fl3_produk5, Properties.Settings.Default.fl3_produk6, Properties.Settings.Default.fl3_produk7, Properties.Settings.Default.fl3_produk8,
+                Properties.Settings.Default.fl3_produk9, Properties.Settings.Default.fl3_produk10, Properties.Settings.Default.fl3_produk11
+            };
+            bool isCancle;
+            int set_index = Prompt.set_label_("Set Produk", list_produk, out isCancle);
+            if (!isCancle) return;
+            form.OPCWriteAsync1(98, set_index);
+        }
         //=================================================================================================================================================================================
         private void GlgSetTag4_set_on_off(object sender, GlgObject e)
         {
@@ -290,6 +306,19 @@ namespace SCADA.UserControls
             if (!isCancle) return;
             form.OPCWriteAsync1(83, 1 + set_index);
         }
+        private void GlgSetTag4_set_produk(object sender, GlgObject e)
+        {
+            if (!OPCStatus1.Connected) return;
+            string[] list_produk = {
+                Properties.Settings.Default.fl4_produk1, Properties.Settings.Default.fl4_produk2, Properties.Settings.Default.fl4_produk3, Properties.Settings.Default.fl4_produk4,
+                Properties.Settings.Default.fl4_produk5, Properties.Settings.Default.fl4_produk6, Properties.Settings.Default.fl4_produk7, Properties.Settings.Default.fl4_produk8,
+                Properties.Settings.Default.fl4_produk9, Properties.Settings.Default.fl4_produk10, Properties.Settings.Default.fl4_produk11
+            };
+            bool isCancle;
+            int set_index = Prompt.set_label_("Set Produk", list_produk, out isCancle);
+            if (!isCancle) return;
+            form.OPCWriteAsync1(99, set_index);
+        }
         //=================================================================================================================================================================================
         private void GlgSetTag5_set_on_off(object sender, GlgObject e)
         {
@@ -337,6 +366,19 @@ namespace SCADA.UserControls
             int set_index = Prompt.set_label_("Set Batch", list_transfer, out isCancle);
             if (!isCancle) return;
             form.OPCWriteAsync1(97, 1 + set_index);
+        }
+        private void GlgSetTag5_set_produk(object sender, GlgObject e)
+        {
+            if (!OPCStatus1.Connected) return;
+            string[] list_produk = {
+                Properties.Settings.Default.fl5_produk1, Properties.Settings.Default.fl5_produk2, Properties.Settings.Default.fl5_produk3, Properties.Settings.Default.fl5_produk4,
+                Properties.Settings.Default.fl5_produk5, Properties.Settings.Default.fl5_produk6, Properties.Settings.Default.fl5_produk7, Properties.Settings.Default.fl5_produk8,
+                Properties.Settings.Default.fl5_produk9, Properties.Settings.Default.fl5_produk10, Properties.Settings.Default.fl5_produk11
+            };
+            bool isCancle;
+            int set_index = Prompt.set_label_("Set Produk", list_produk, out isCancle);
+            if (!isCancle) return;
+            form.OPCWriteAsync1(100, set_index);
         }
     }
 }

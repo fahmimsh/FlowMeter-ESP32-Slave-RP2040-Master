@@ -94,4 +94,7 @@
 {"Id":94,"Tag":"FlowMeter3.Register.FL1_Kfact"},
 {"Id":95,"Tag":"FlowMeter3.Register.FL1_Liter"},
 {"Id":96,"Tag":"FlowMeter3.Register.FL1_FlowRate"},
-{"Id":97,"Tag":"FlowMeter3.Register.FL1_no_batch"}]
+{"Id":97,"Tag":"FlowMeter3.Register.FL1_no_batch"},
+{"Id":98,"Tag":"FlowMeter2.Register.FL1_product"},
+{"Id":99,"Tag":"FlowMeter2.Register.FL2_product"},
+{"Id":100,"Tag":"FlowMeter3.Register.FL1_product"}]

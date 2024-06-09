@@ -10,8 +10,8 @@
 #include <nanomodbus.h>
 #define UNUSED_PARAM(x) ((void)(x))
 
-//uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 123);
-uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 124);
+//uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 120);
+uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 121);
 IPAddress gateway(192, 168, 1, 1), dns_server(192, 168, 110, 201), subnet(255,255,255,0);
 #define STACK_SIZE 200
 pin_size_t X[6] = {12, 13, 14, 15, 21, 22};
@@ -24,7 +24,7 @@ union mbFloatInt{
   } values;
   uint16_t words[15];
 };
-uint16_t batch1 = 1, batch2 = 1;
+uint16_t batch1 = 1, batch2 = 1, product1, product2;
 mbFloatInt mbFloat[MaxId], mbFloat_Write[MaxId];
 struct CoilBool { bool coil[5]; bool inputDiscrete[2]; };
 CoilBool coilBool[MaxId], coilBool_Write[MaxId];
@@ -35,7 +35,7 @@ unsigned long timePrevIsConnectTCP;
 bool stateLed, IsConnectTCP, mb_flagCoil[20];
 uint8_t mb_sizeDiscreateInput = ((sizeof(coilBool[0].inputDiscrete) / sizeof(coilBool[0].inputDiscrete[0])) * MaxId) + (sizeof(X) / sizeof(X[0]) + 6);
 uint8_t mb_sizeCoil = ((sizeof(coilBool[0].coil) / sizeof(coilBool[0].coil[0])) * MaxId) + (sizeof(Y) / sizeof(Y[0])) + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
-uint8_t mb_sizeHoldingRegister = ((sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0])) * MaxId) + 2;
+uint8_t mb_sizeHoldingRegister = ((sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0])) * MaxId) + 4;
 
 EthernetServer server(502);
 EthernetClient client;
@@ -68,7 +68,7 @@ void set_mb_flag(uint8_t index_flag, uint8_t index_start, uint8_t index_stop);
 void setup() {
   Serial.begin(115200);
   eth_wiz_reset(20);
-  mb_flagCoil[0] = mb_flagCoil[3] = mb_flagCoil[5] = mb_flagCoil[9] = true;
+  mb_flagCoil[0] = mb_flagCoil[3] = mb_flagCoil[5] = mb_flagCoil[9] = true; // tambah flag untuk produk
   Serial1.setRX(1); Serial1.setTX(0); Serial1.setFIFOSize(512); Serial1.setTimeout(100); Serial1.begin(9600); while(!Serial1) {}
   nmbs_platform_conf platform_confClient;
   platform_confClient.transport = NMBS_TRANSPORT_RTU;
@@ -272,6 +272,8 @@ nmbs_error handler_read_holding_registers(uint16_t address, uint16_t quantity, u
       else if(index >= 15 && index < 30) registers_out[i] = mbFloat[1].words[index - 15];
       else if(index == 30) registers_out[i] = batch1;
       else if(index == 31) registers_out[i] = batch2;
+      else if(index == 32) registers_out[i] = product1;
+      else if(index == 33) registers_out[i] = product2;
     }
    return NMBS_ERROR_NONE;
 }
@@ -285,6 +287,8 @@ nmbs_error handler_write_single_register(uint16_t address, uint16_t value, uint8
     }
     else if(address == 30) batch1 = value;
     else if(address == 31) batch2 = value;
+    else if(address == 32) product1 = value;
+    else if(address == 33) product2 = value;
     return NMBS_ERROR_NONE;
 }
 nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, const uint16_t *registers, uint8_t unit_id, void *arg){
@@ -303,6 +307,8 @@ nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, 
       }
       else if(index == 30) batch1 = registers[i];
       else if(index == 31) batch2 = registers[i];
+      else if(index == 32) product1 = registers[i];
+      else if(index == 33) product2 = registers[i];
     }
     if(flagWrite1) { startAddresWriteRH[0] = address; startAddresWriteRH_length[0] = _quantity[0];  flagWriteMbMasterRH[0] = true;}
     if(flagWrite2) { startAddresWriteRH[1] = address < 15 ? ((address + quantity) - 15) - _quantity[1] : address - 15; startAddresWriteRH_length[1] = _quantity[1]; flagWriteMbMasterRH[1] = true;}

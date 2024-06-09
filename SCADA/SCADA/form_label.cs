@@ -81,6 +81,42 @@ namespace SCADA
             tb_fl5_transfer_2.Text = Properties.Settings.Default.fl5_label_tf2;
             tb_fl5_transfer_3.Text = Properties.Settings.Default.fl5_label_tf3;
 
+            tb_fl3_produk1.Text = Properties.Settings.Default.fl3_produk1;
+            tb_fl3_produk2.Text = Properties.Settings.Default.fl3_produk2;
+            tb_fl3_produk3.Text = Properties.Settings.Default.fl3_produk3;
+            tb_fl3_produk4.Text = Properties.Settings.Default.fl3_produk4;
+            tb_fl3_produk5.Text = Properties.Settings.Default.fl3_produk5;
+            tb_fl3_produk6.Text = Properties.Settings.Default.fl3_produk6;
+            tb_fl3_produk7.Text = Properties.Settings.Default.fl3_produk7;
+            tb_fl3_produk8.Text = Properties.Settings.Default.fl3_produk8;
+            tb_fl3_produk9.Text = Properties.Settings.Default.fl3_produk9;
+            tb_fl3_produk10.Text = Properties.Settings.Default.fl3_produk10;
+            tb_fl3_produk11.Text = Properties.Settings.Default.fl3_produk11;
+
+            tb_fl4_produk1.Text = Properties.Settings.Default.fl4_produk1;
+            tb_fl4_produk2.Text = Properties.Settings.Default.fl4_produk2;
+            tb_fl4_produk3.Text = Properties.Settings.Default.fl4_produk3;
+            tb_fl4_produk4.Text = Properties.Settings.Default.fl4_produk4;
+            tb_fl4_produk5.Text = Properties.Settings.Default.fl4_produk5;
+            tb_fl4_produk6.Text = Properties.Settings.Default.fl4_produk6;
+            tb_fl4_produk7.Text = Properties.Settings.Default.fl4_produk7;
+            tb_fl4_produk8.Text = Properties.Settings.Default.fl4_produk8;
+            tb_fl4_produk9.Text = Properties.Settings.Default.fl4_produk9;
+            tb_fl4_produk10.Text = Properties.Settings.Default.fl4_produk10;
+            tb_fl4_produk11.Text = Properties.Settings.Default.fl4_produk11;
+
+            tb_fl5_produk1.Text = Properties.Settings.Default.fl5_produk1;
+            tb_fl5_produk2.Text = Properties.Settings.Default.fl5_produk2;
+            tb_fl5_produk3.Text = Properties.Settings.Default.fl5_produk3;
+            tb_fl5_produk4.Text = Properties.Settings.Default.fl5_produk4;
+            tb_fl5_produk5.Text = Properties.Settings.Default.fl5_produk5;
+            tb_fl5_produk6.Text = Properties.Settings.Default.fl5_produk6;
+            tb_fl5_produk7.Text = Properties.Settings.Default.fl5_produk7;
+            tb_fl5_produk8.Text = Properties.Settings.Default.fl5_produk8;
+            tb_fl5_produk9.Text = Properties.Settings.Default.fl5_produk9;
+            tb_fl5_produk10.Text = Properties.Settings.Default.fl5_produk10;
+            tb_fl5_produk11.Text = Properties.Settings.Default.fl5_produk11;
+
         }
         private void btn_cancle_Click(object sender, EventArgs e)
         {
@@ -144,6 +180,48 @@ namespace SCADA
             Properties.Settings.Default.fl5_label_tf1 = tb_fl5_transfer_1.Text;
             Properties.Settings.Default.fl5_label_tf2 = tb_fl5_transfer_2.Text;
             Properties.Settings.Default.fl5_label_tf3 = tb_fl5_transfer_3.Text;
+
+            Properties.Settings.Default.fl3_produk1 = tb_fl3_produk1.Text;
+            Properties.Settings.Default.fl3_produk2 = tb_fl3_produk2.Text;
+            Properties.Settings.Default.fl3_produk3 = tb_fl3_produk3.Text;
+            Properties.Settings.Default.fl3_produk4 = tb_fl3_produk4.Text;
+            Properties.Settings.Default.fl3_produk5 = tb_fl3_produk5.Text;
+            Properties.Settings.Default.fl3_produk6 = tb_fl3_produk6.Text;
+            Properties.Settings.Default.fl3_produk7 = tb_fl3_produk7.Text;
+            Properties.Settings.Default.fl3_produk8 = tb_fl3_produk8.Text;
+            Properties.Settings.Default.fl3_produk9 = tb_fl3_produk9.Text;
+            Properties.Settings.Default.fl3_produk10 = tb_fl3_produk10.Text;
+            Properties.Settings.Default.fl3_produk11 = tb_fl3_produk11.Text;
+
+            Properties.Settings.Default.fl4_produk1 = tb_fl4_produk1.Text;
+            Properties.Settings.Default.fl4_produk2 = tb_fl4_produk2.Text;
+            Properties.Settings.Default.fl4_produk3 = tb_fl4_produk3.Text;
+            Properties.Settings.Default.fl4_produk4 = tb_fl4_produk4.Text;
+            Properties.Settings.Default.fl4_produk5 = tb_fl4_produk5.Text;
+            Properties.Settings.Default.fl4_produk6 = tb_fl4_produk6.Text;
+            Properties.Settings.Default.fl4_produk7 = tb_fl4_produk7.Text;
+            Properties.Settings.Default.fl4_produk8 = tb_fl4_produk8.Text;
+            Properties.Settings.Default.fl4_produk9 = tb_fl4_produk9.Text;
+            Properties.Settings.Default.fl4_produk10 = tb_fl4_produk10.Text;
+            Properties.Settings.Default.fl4_produk11 = tb_fl4_produk11.Text;
+
+            Properties.Settings.Default.fl5_produk1 = tb_fl5_produk1.Text;
+            Properties.Settings.Default.fl5_produk2 = tb_fl5_produk2.Text;
+            Properties.Settings.Default.fl5_produk3 = tb_fl5_produk3.Text;
+            Properties.Settings.Default.fl5_produk4 = tb_fl5_produk4.Text;
+            Properties.Settings.Default.fl5_produk5 = tb_fl5_produk5.Text;
+            Properties.Settings.Default.fl5_produk6 = tb_fl5_produk6.Text;
+            Properties.Settings.Default.fl5_produk7 = tb_fl5_produk7.Text;
+            Properties.Settings.Default.fl5_produk8 = tb_fl5_produk8.Text;
+            Properties.Settings.Default.fl5_produk9 = tb_fl5_produk9.Text;
+            Properties.Settings.Default.fl5_produk10 = tb_fl5_produk10.Text;
+            Properties.Settings.Default.fl5_produk11 = tb_fl5_produk11.Text;
+
+            form.uc_x_hmi.label_header_hmi1.Text = $"{Properties.Settings.Default.fl1_header}      ";
+            form.uc_x_hmi.label_header_hmi2.Text = $"{Properties.Settings.Default.fl2_header}      ";
+            form.uc_x_hmi.label_header_hmi3.Text = $"{Properties.Settings.Default.fl3_header}      ";
+            form.uc_x_hmi.label_header_hmi4.Text = $"{Properties.Settings.Default.fl4_header}      ";
+            form.uc_x_hmi.label_header_hmi5.Text = $"{Properties.Settings.Default.fl5_header}      ";
 
             Properties.Settings.Default.Save();
             form.ShowMessage("Data Berhasil di Save", "DB Save", MessageBoxIcon.Information);

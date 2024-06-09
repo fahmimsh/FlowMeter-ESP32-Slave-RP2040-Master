@@ -9,6 +9,8 @@ namespace SCADA
     public class GlgSetTag
     {
         private GlgCallback callback;
+        private GlgCallback_suhu callback_suhu;
+        public event EventHandler<GlgObject> set_produk;
         public event EventHandler<GlgObject> set_batch;
         public event EventHandler<GlgObject> set_transfer;
         public event EventHandler<string> set_value;
@@ -20,11 +22,19 @@ namespace SCADA
             glg_object.DrawingFile = Path_p;
             callback = new GlgCallback(form_p);
             glg_object.AddListener(GlgCallbackType.INPUT_CB, callback);
+            callback.set_produk += Callback_set_produk;
             callback.set_batch += Callback_set_batch;
             callback.set_transfer += Callback_set_transfer;
             callback.set_value += Callback_set_value;
             callback.set_on_off += Callback_set_on_off;
             callback.set_proses_mesin += Callback_set_proses_mesin;
+        }
+        public void Initialize(uc_hmi_suhu form_p, dynamic glg_object, string Path_p)
+        {
+            glg_object.SetDResource("$config/GlgPickResolution", 1600.0);
+            glg_object.DrawingFile = Path_p;
+            callback_suhu = new GlgCallback_suhu(form_p);
+            glg_object.AddListener(GlgCallbackType.INPUT_CB, callback);
         }
         public Dictionary<string, string[]> TagMaps = new Dictionary<string, string[]>
         {
@@ -56,6 +66,7 @@ namespace SCADA
             glg_object.SetSResource($"{glgTag}/Label/String", !state_ ? label0 : label1);
         }
         public void SetSRsc(dynamic glg_object, string tag, string arg) => glg_object.SetSResource($"{tag}/String", arg);
+        private void Callback_set_produk(object sender, GlgObject e) => set_produk?.Invoke(sender, e);
         private void Callback_set_batch(object sender, GlgObject e) => set_batch?.Invoke(sender, e);
         private void Callback_set_on_off(object sender, GlgObject e) => set_on_off?.Invoke(sender, e);
         private void Callback_set_value(object sender, string e) => set_value?.Invoke(sender, e);
@@ -66,6 +77,7 @@ namespace SCADA
     {
         uc_hmi form;
         public GlgCallback(uc_hmi Form1_p) { form = Form1_p; }
+        public event EventHandler<GlgObject> set_produk;
         public event EventHandler<GlgObject> set_batch;
         public event EventHandler<GlgObject> set_transfer;
         public event EventHandler<string> set_value;
@@ -81,6 +93,7 @@ namespace SCADA
                 return;
             Dictionary<string, Action> originMethodMap = new Dictionary<string, Action>
                 {
+                    {"set_produk", () => set_produk?.Invoke(this, glg_object) },
                     {"set_batch", () => set_batch?.Invoke(this, glg_object) },
                     {"set_transfer", () => set_transfer?.Invoke(this, glg_object) },
                     {"set_setliter", () => set_value?.Invoke(this, "set_setliter") },
@@ -88,6 +101,25 @@ namespace SCADA
                     {"set_f-kurang", () => set_value?.Invoke(this, "set_f-kurang")   },
                     {"set_on_off", () => set_on_off?.Invoke(this, glg_object) },
                     {"set_proses_mesin", () => set_proses_mesin?.Invoke(this, glg_object) }
+                };
+            if (originMethodMap.ContainsKey(origin)) form.BeginInvoke((MethodInvoker)delegate { originMethodMap[origin].Invoke(); });
+        }
+    }
+    public class GlgCallback_suhu : GlgInputListener
+    {
+        uc_hmi_suhu form;
+        public GlgCallback_suhu(uc_hmi_suhu Form1_p) { form = Form1_p; }
+        public void InputCallback(GlgObject glg_object, GlgObject message)
+        {
+            string origin = message.GetSResource("Origin"); //name off obj
+            string format = message.GetSResource("Format"); //tipe
+            string action = message.GetSResource("Action"); //aksi saat mouse     
+            if (!format.Equals("Button")) return; //string subAction = message_obj.GetSResource("SubAction");\
+            if (!action.Equals("Activate"))
+                return;
+            Dictionary<string, Action> originMethodMap = new Dictionary<string, Action>
+                {
+                    //{"set_produk", () => set_produk?.Invoke(this, glg_object) },
                 };
             if (originMethodMap.ContainsKey(origin)) form.BeginInvoke((MethodInvoker)delegate { originMethodMap[origin].Invoke(); });
         }

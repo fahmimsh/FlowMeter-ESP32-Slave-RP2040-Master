@@ -115,6 +115,9 @@ namespace SCADA
         private string Batch { get; set; }
         [HeaderColumn("No Batch")]
         public string batch { get => Batch; set { Batch = value; OnPropertyChanged(nameof(Batch)); } }
+        private string Produk { get; set; }
+        [HeaderColumn("Produk")]
+        public string produk { get => Produk; set { Produk = value; OnPropertyChanged(nameof(Produk)); } }
         private double Liter { get; set; }
         [HeaderColumn("Hasil Liter")]
         public double liter { get => Liter; set { Liter = value; OnPropertyChanged(nameof(Liter)); } }
@@ -144,17 +147,20 @@ namespace SCADA
         public static string label_transfer { get; set; }
         public static string label_batch { get; set; }
         public static string label_proses_mesin { get; set; }
+        public static string label_produk { get; set; }
     }
     internal static class flow_meter4
     {
         public static string label_transfer { get; set; }
         public static string label_batch { get; set; }
         public static string label_proses_mesin { get; set; }
+        public static string label_produk { get; set; }
     }
     internal static class flow_meter5
     {
         public static string label_transfer { get; set; }
         public static string label_batch { get; set; }
         public static string label_proses_mesin { get; set; }
+        public static string label_produk { get; set; }
     }
 }

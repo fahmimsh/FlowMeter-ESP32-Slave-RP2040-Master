@@ -12,7 +12,7 @@
       <Value Profile="(Default)">localhost</Value>
     </Setting>
     <Setting Name="auto_connect_opc" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="fl1_label_tf1" Type="System.String" Scope="User">
       <Value Profile="(Default)">Tank T1</Value>
@@ -172,6 +172,105 @@
     </Setting>
     <Setting Name="fl5_label_pm2" Type="System.String" Scope="User">
       <Value Profile="(Default)">UHT</Value>
+    </Setting>
+    <Setting Name="fl3_produk1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Stroberi</Value>
+    </Setting>
+    <Setting Name="fl3_produk2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Anggur</Value>
+    </Setting>
+    <Setting Name="fl3_produk3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Lemon</Value>
+    </Setting>
+    <Setting Name="fl3_produk4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Jeruk</Value>
+    </Setting>
+    <Setting Name="fl3_produk5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Jambu</Value>
+    </Setting>
+    <Setting Name="fl3_produk6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Asam Jawa</Value>
+    </Setting>
+    <Setting Name="fl3_produk7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Teh Manis</Value>
+    </Setting>
+    <Setting Name="fl3_produk8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 1</Value>
+    </Setting>
+    <Setting Name="fl3_produk9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 2</Value>
+    </Setting>
+    <Setting Name="fl3_produk10" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 3</Value>
+    </Setting>
+    <Setting Name="fl3_produk11" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 4</Value>
+    </Setting>
+    <Setting Name="fl4_produk1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Stroberi</Value>
+    </Setting>
+    <Setting Name="fl4_produk2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Anggur</Value>
+    </Setting>
+    <Setting Name="fl4_produk3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Lemon</Value>
+    </Setting>
+    <Setting Name="fl4_produk4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Jeruk</Value>
+    </Setting>
+    <Setting Name="fl4_produk5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Jambu</Value>
+    </Setting>
+    <Setting Name="fl4_produk6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Asam Jawa</Value>
+    </Setting>
+    <Setting Name="fl4_produk7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Teh Manis</Value>
+    </Setting>
+    <Setting Name="fl4_produk8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 1</Value>
+    </Setting>
+    <Setting Name="fl4_produk9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 2</Value>
+    </Setting>
+    <Setting Name="fl4_produk10" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 3</Value>
+    </Setting>
+    <Setting Name="fl4_produk11" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 4</Value>
+    </Setting>
+    <Setting Name="fl5_produk1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Stroberi</Value>
+    </Setting>
+    <Setting Name="fl5_produk2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Anggur</Value>
+    </Setting>
+    <Setting Name="fl5_produk3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Lemon</Value>
+    </Setting>
+    <Setting Name="fl5_produk4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Jeruk</Value>
+    </Setting>
+    <Setting Name="fl5_produk5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Jambu</Value>
+    </Setting>
+    <Setting Name="fl5_produk6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Asam Jawa</Value>
+    </Setting>
+    <Setting Name="fl5_produk7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Teh Manis</Value>
+    </Setting>
+    <Setting Name="fl5_produk8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 1</Value>
+    </Setting>
+    <Setting Name="fl5_produk9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 2</Value>
+    </Setting>
+    <Setting Name="fl5_produk10" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 3</Value>
+    </Setting>
+    <Setting Name="fl5_produk11" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Baru 4</Value>
     </Setting>
   </Settings>
 </SettingsFile>

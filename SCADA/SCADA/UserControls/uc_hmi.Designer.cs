@@ -29,14 +29,6 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -45,10 +37,28 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panels_hmi_tabel = new System.Windows.Forms.Panel();
             this.panel_datagridview = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5 = new System.Windows.Forms.DataGridView();
             this.dataGridViewDataLog_hmi_fl1_fl2 = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flow_meter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.set_liter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.liter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.k_factor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.from_source = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transfer_to = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panels_hmi1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel_hmi1 = new System.Windows.Forms.Panel();
             this.glgControl_hmi1 = new GenLogic.GlgControl();
@@ -79,18 +89,10 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.produk = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.flow_meter = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.set_liter = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.liter = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.k_factor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.from_source = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transfer_to = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panels_hmi_tabel.SuspendLayout();
             this.panel_datagridview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDataLog_hmi_fl3_fl4_fl5)).BeginInit();
@@ -161,6 +163,7 @@
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn8,
             this.dataGridViewTextBoxColumn7,
+            this.produk,
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6,
             this.dataGridViewTextBoxColumn9});
@@ -183,14 +186,14 @@
             this.dataGridViewDataLog_hmi_fl1_fl2.AllowUserToResizeRows = false;
             this.dataGridViewDataLog_hmi_fl1_fl2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewDataLog_hmi_fl1_fl2.BackgroundColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.InactiveCaption;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewDataLog_hmi_fl1_fl2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.InactiveCaption;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewDataLog_hmi_fl1_fl2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewDataLog_hmi_fl1_fl2.ColumnHeadersHeight = 35;
             this.dataGridViewDataLog_hmi_fl1_fl2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridViewDataLog_hmi_fl1_fl2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -214,6 +217,107 @@
             this.dataGridViewDataLog_hmi_fl1_fl2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewDataLog_hmi_fl1_fl2.Size = new System.Drawing.Size(616, 190);
             this.dataGridViewDataLog_hmi_fl1_fl2.TabIndex = 2;
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "id";
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Id.DefaultCellStyle = dataGridViewCellStyle11;
+            this.Id.FillWeight = 25F;
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // flow_meter
+            // 
+            this.flow_meter.DataPropertyName = "flow_meter";
+            this.flow_meter.FillWeight = 80F;
+            this.flow_meter.HeaderText = "Nama FlowMeter";
+            this.flow_meter.MinimumWidth = 6;
+            this.flow_meter.Name = "flow_meter";
+            this.flow_meter.ReadOnly = true;
+            // 
+            // mode
+            // 
+            this.mode.DataPropertyName = "mode";
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mode.DefaultCellStyle = dataGridViewCellStyle12;
+            this.mode.FillWeight = 40F;
+            this.mode.HeaderText = "Mode";
+            this.mode.MinimumWidth = 6;
+            this.mode.Name = "mode";
+            this.mode.ReadOnly = true;
+            // 
+            // set_liter
+            // 
+            this.set_liter.DataPropertyName = "setLiter";
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.Format = "N2";
+            dataGridViewCellStyle13.NullValue = "0.00";
+            this.set_liter.DefaultCellStyle = dataGridViewCellStyle13;
+            this.set_liter.FillWeight = 50F;
+            this.set_liter.HeaderText = "Set Liter";
+            this.set_liter.MinimumWidth = 6;
+            this.set_liter.Name = "set_liter";
+            this.set_liter.ReadOnly = true;
+            // 
+            // liter
+            // 
+            this.liter.DataPropertyName = "liter";
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.Format = "N2";
+            dataGridViewCellStyle14.NullValue = "0.00";
+            this.liter.DefaultCellStyle = dataGridViewCellStyle14;
+            this.liter.FillWeight = 50F;
+            this.liter.HeaderText = "Liter";
+            this.liter.MinimumWidth = 6;
+            this.liter.Name = "liter";
+            this.liter.ReadOnly = true;
+            // 
+            // k_factor
+            // 
+            this.k_factor.DataPropertyName = "k_factor";
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.NullValue = "0";
+            this.k_factor.DefaultCellStyle = dataGridViewCellStyle15;
+            this.k_factor.FillWeight = 50F;
+            this.k_factor.HeaderText = "K-Factor";
+            this.k_factor.MinimumWidth = 6;
+            this.k_factor.Name = "k_factor";
+            this.k_factor.ReadOnly = true;
+            // 
+            // from_source
+            // 
+            this.from_source.DataPropertyName = "batch";
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.from_source.DefaultCellStyle = dataGridViewCellStyle16;
+            this.from_source.FillWeight = 50F;
+            this.from_source.HeaderText = "Batch";
+            this.from_source.Name = "from_source";
+            this.from_source.ReadOnly = true;
+            // 
+            // transfer_to
+            // 
+            this.transfer_to.DataPropertyName = "transfer_to";
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.transfer_to.DefaultCellStyle = dataGridViewCellStyle17;
+            this.transfer_to.FillWeight = 50F;
+            this.transfer_to.HeaderText = "Transfer To";
+            this.transfer_to.Name = "transfer_to";
+            this.transfer_to.ReadOnly = true;
+            // 
+            // date_time
+            // 
+            this.date_time.DataPropertyName = "date_time";
+            dataGridViewCellStyle18.Format = "G";
+            dataGridViewCellStyle18.NullValue = null;
+            this.date_time.DefaultCellStyle = dataGridViewCellStyle18;
+            this.date_time.FillWeight = 80F;
+            this.date_time.HeaderText = "Date Time";
+            this.date_time.MinimumWidth = 6;
+            this.date_time.Name = "date_time";
+            this.date_time.ReadOnly = true;
             // 
             // panels_hmi1
             // 
@@ -603,13 +707,24 @@
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             this.dataGridViewTextBoxColumn7.ReadOnly = true;
             // 
+            // produk
+            // 
+            this.produk.DataPropertyName = "produk";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.produk.DefaultCellStyle = dataGridViewCellStyle6;
+            this.produk.FillWeight = 50F;
+            this.produk.HeaderText = "Produk";
+            this.produk.Name = "produk";
+            this.produk.ReadOnly = true;
+            // 
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.DataPropertyName = "liter";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = "0.00";
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Format = "N2";
+            dataGridViewCellStyle7.NullValue = "0.00";
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewTextBoxColumn5.FillWeight = 50F;
             this.dataGridViewTextBoxColumn5.HeaderText = "Liter";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
@@ -619,9 +734,9 @@
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.DataPropertyName = "k_factor";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.NullValue = "0";
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.NullValue = "0";
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridViewTextBoxColumn6.FillWeight = 50F;
             this.dataGridViewTextBoxColumn6.HeaderText = "K-Factor";
             this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
@@ -631,115 +746,14 @@
             // dataGridViewTextBoxColumn9
             // 
             this.dataGridViewTextBoxColumn9.DataPropertyName = "date_time";
-            dataGridViewCellStyle8.Format = "G";
-            dataGridViewCellStyle8.NullValue = null;
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Format = "G";
+            dataGridViewCellStyle9.NullValue = null;
+            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTextBoxColumn9.FillWeight = 80F;
             this.dataGridViewTextBoxColumn9.HeaderText = "Date Time";
             this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "id";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Id.DefaultCellStyle = dataGridViewCellStyle10;
-            this.Id.FillWeight = 25F;
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // flow_meter
-            // 
-            this.flow_meter.DataPropertyName = "flow_meter";
-            this.flow_meter.FillWeight = 80F;
-            this.flow_meter.HeaderText = "Nama FlowMeter";
-            this.flow_meter.MinimumWidth = 6;
-            this.flow_meter.Name = "flow_meter";
-            this.flow_meter.ReadOnly = true;
-            // 
-            // mode
-            // 
-            this.mode.DataPropertyName = "mode";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mode.DefaultCellStyle = dataGridViewCellStyle11;
-            this.mode.FillWeight = 40F;
-            this.mode.HeaderText = "Mode";
-            this.mode.MinimumWidth = 6;
-            this.mode.Name = "mode";
-            this.mode.ReadOnly = true;
-            // 
-            // set_liter
-            // 
-            this.set_liter.DataPropertyName = "setLiter";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Format = "N2";
-            dataGridViewCellStyle12.NullValue = "0.00";
-            this.set_liter.DefaultCellStyle = dataGridViewCellStyle12;
-            this.set_liter.FillWeight = 50F;
-            this.set_liter.HeaderText = "Set Liter";
-            this.set_liter.MinimumWidth = 6;
-            this.set_liter.Name = "set_liter";
-            this.set_liter.ReadOnly = true;
-            // 
-            // liter
-            // 
-            this.liter.DataPropertyName = "liter";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Format = "N2";
-            dataGridViewCellStyle13.NullValue = "0.00";
-            this.liter.DefaultCellStyle = dataGridViewCellStyle13;
-            this.liter.FillWeight = 50F;
-            this.liter.HeaderText = "Liter";
-            this.liter.MinimumWidth = 6;
-            this.liter.Name = "liter";
-            this.liter.ReadOnly = true;
-            // 
-            // k_factor
-            // 
-            this.k_factor.DataPropertyName = "k_factor";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.NullValue = "0";
-            this.k_factor.DefaultCellStyle = dataGridViewCellStyle14;
-            this.k_factor.FillWeight = 50F;
-            this.k_factor.HeaderText = "K-Factor";
-            this.k_factor.MinimumWidth = 6;
-            this.k_factor.Name = "k_factor";
-            this.k_factor.ReadOnly = true;
-            // 
-            // from_source
-            // 
-            this.from_source.DataPropertyName = "batch";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.from_source.DefaultCellStyle = dataGridViewCellStyle15;
-            this.from_source.FillWeight = 50F;
-            this.from_source.HeaderText = "Batch";
-            this.from_source.Name = "from_source";
-            this.from_source.ReadOnly = true;
-            // 
-            // transfer_to
-            // 
-            this.transfer_to.DataPropertyName = "transfer_to";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.transfer_to.DefaultCellStyle = dataGridViewCellStyle16;
-            this.transfer_to.FillWeight = 50F;
-            this.transfer_to.HeaderText = "Transfer To";
-            this.transfer_to.Name = "transfer_to";
-            this.transfer_to.ReadOnly = true;
-            // 
-            // date_time
-            // 
-            this.date_time.DataPropertyName = "date_time";
-            dataGridViewCellStyle17.Format = "G";
-            dataGridViewCellStyle17.NullValue = null;
-            this.date_time.DefaultCellStyle = dataGridViewCellStyle17;
-            this.date_time.FillWeight = 80F;
-            this.date_time.HeaderText = "Date Time";
-            this.date_time.MinimumWidth = 6;
-            this.date_time.Name = "date_time";
-            this.date_time.ReadOnly = true;
             // 
             // uc_hmi
             // 
@@ -811,13 +825,6 @@
         public System.Windows.Forms.Label label_header_hmi4;
         public System.Windows.Forms.Label label_header_hmi3;
         public System.Windows.Forms.Label label_header_hmi5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn flow_meter;
         private System.Windows.Forms.DataGridViewTextBoxColumn mode;
@@ -827,5 +834,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn from_source;
         private System.Windows.Forms.DataGridViewTextBoxColumn transfer_to;
         private System.Windows.Forms.DataGridViewTextBoxColumn date_time;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn produk;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
     }
 }

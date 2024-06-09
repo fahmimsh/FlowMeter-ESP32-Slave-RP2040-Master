@@ -61,7 +61,7 @@ namespace SCADA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool auto_connect_opc {
             get {
                 return ((bool)(this["auto_connect_opc"]));
@@ -704,6 +704,402 @@ namespace SCADA.Properties {
             }
             set {
                 this["fl5_label_pm2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Stroberi")]
+        public string fl3_produk1 {
+            get {
+                return ((string)(this["fl3_produk1"]));
+            }
+            set {
+                this["fl3_produk1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Anggur")]
+        public string fl3_produk2 {
+            get {
+                return ((string)(this["fl3_produk2"]));
+            }
+            set {
+                this["fl3_produk2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Lemon")]
+        public string fl3_produk3 {
+            get {
+                return ((string)(this["fl3_produk3"]));
+            }
+            set {
+                this["fl3_produk3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Jeruk")]
+        public string fl3_produk4 {
+            get {
+                return ((string)(this["fl3_produk4"]));
+            }
+            set {
+                this["fl3_produk4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Jambu")]
+        public string fl3_produk5 {
+            get {
+                return ((string)(this["fl3_produk5"]));
+            }
+            set {
+                this["fl3_produk5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Asam Jawa")]
+        public string fl3_produk6 {
+            get {
+                return ((string)(this["fl3_produk6"]));
+            }
+            set {
+                this["fl3_produk6"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Teh Manis")]
+        public string fl3_produk7 {
+            get {
+                return ((string)(this["fl3_produk7"]));
+            }
+            set {
+                this["fl3_produk7"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 1")]
+        public string fl3_produk8 {
+            get {
+                return ((string)(this["fl3_produk8"]));
+            }
+            set {
+                this["fl3_produk8"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 2")]
+        public string fl3_produk9 {
+            get {
+                return ((string)(this["fl3_produk9"]));
+            }
+            set {
+                this["fl3_produk9"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 3")]
+        public string fl3_produk10 {
+            get {
+                return ((string)(this["fl3_produk10"]));
+            }
+            set {
+                this["fl3_produk10"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 4")]
+        public string fl3_produk11 {
+            get {
+                return ((string)(this["fl3_produk11"]));
+            }
+            set {
+                this["fl3_produk11"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Stroberi")]
+        public string fl4_produk1 {
+            get {
+                return ((string)(this["fl4_produk1"]));
+            }
+            set {
+                this["fl4_produk1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Anggur")]
+        public string fl4_produk2 {
+            get {
+                return ((string)(this["fl4_produk2"]));
+            }
+            set {
+                this["fl4_produk2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Lemon")]
+        public string fl4_produk3 {
+            get {
+                return ((string)(this["fl4_produk3"]));
+            }
+            set {
+                this["fl4_produk3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Jeruk")]
+        public string fl4_produk4 {
+            get {
+                return ((string)(this["fl4_produk4"]));
+            }
+            set {
+                this["fl4_produk4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Jambu")]
+        public string fl4_produk5 {
+            get {
+                return ((string)(this["fl4_produk5"]));
+            }
+            set {
+                this["fl4_produk5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Asam Jawa")]
+        public string fl4_produk6 {
+            get {
+                return ((string)(this["fl4_produk6"]));
+            }
+            set {
+                this["fl4_produk6"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Teh Manis")]
+        public string fl4_produk7 {
+            get {
+                return ((string)(this["fl4_produk7"]));
+            }
+            set {
+                this["fl4_produk7"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 1")]
+        public string fl4_produk8 {
+            get {
+                return ((string)(this["fl4_produk8"]));
+            }
+            set {
+                this["fl4_produk8"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 2")]
+        public string fl4_produk9 {
+            get {
+                return ((string)(this["fl4_produk9"]));
+            }
+            set {
+                this["fl4_produk9"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 3")]
+        public string fl4_produk10 {
+            get {
+                return ((string)(this["fl4_produk10"]));
+            }
+            set {
+                this["fl4_produk10"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 4")]
+        public string fl4_produk11 {
+            get {
+                return ((string)(this["fl4_produk11"]));
+            }
+            set {
+                this["fl4_produk11"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Stroberi")]
+        public string fl5_produk1 {
+            get {
+                return ((string)(this["fl5_produk1"]));
+            }
+            set {
+                this["fl5_produk1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Anggur")]
+        public string fl5_produk2 {
+            get {
+                return ((string)(this["fl5_produk2"]));
+            }
+            set {
+                this["fl5_produk2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Lemon")]
+        public string fl5_produk3 {
+            get {
+                return ((string)(this["fl5_produk3"]));
+            }
+            set {
+                this["fl5_produk3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Jeruk")]
+        public string fl5_produk4 {
+            get {
+                return ((string)(this["fl5_produk4"]));
+            }
+            set {
+                this["fl5_produk4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Jambu")]
+        public string fl5_produk5 {
+            get {
+                return ((string)(this["fl5_produk5"]));
+            }
+            set {
+                this["fl5_produk5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Asam Jawa")]
+        public string fl5_produk6 {
+            get {
+                return ((string)(this["fl5_produk6"]));
+            }
+            set {
+                this["fl5_produk6"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Teh Manis")]
+        public string fl5_produk7 {
+            get {
+                return ((string)(this["fl5_produk7"]));
+            }
+            set {
+                this["fl5_produk7"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 1")]
+        public string fl5_produk8 {
+            get {
+                return ((string)(this["fl5_produk8"]));
+            }
+            set {
+                this["fl5_produk8"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 2")]
+        public string fl5_produk9 {
+            get {
+                return ((string)(this["fl5_produk9"]));
+            }
+            set {
+                this["fl5_produk9"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 3")]
+        public string fl5_produk10 {
+            get {
+                return ((string)(this["fl5_produk10"]));
+            }
+            set {
+                this["fl5_produk10"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Baru 4")]
+        public string fl5_produk11 {
+            get {
+                return ((string)(this["fl5_produk11"]));
+            }
+            set {
+                this["fl5_produk11"] = value;
             }
         }
     }

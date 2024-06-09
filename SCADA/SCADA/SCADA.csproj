@@ -260,6 +260,12 @@
     <Compile Include="UserControls\uc_hmi.Designer.cs">
       <DependentUpon>uc_hmi.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\uc_hmi_suhu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\uc_hmi_suhu.Designer.cs">
+      <DependentUpon>uc_hmi_suhu.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\uc_log.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -288,6 +294,9 @@
     </Compile>
     <EmbeddedResource Include="UserControls\uc_hmi.resx">
       <DependentUpon>uc_hmi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\uc_hmi_suhu.resx">
+      <DependentUpon>uc_hmi_suhu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\uc_log.resx">
       <DependentUpon>uc_log.cs</DependentUpon>
