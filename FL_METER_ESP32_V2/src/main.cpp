@@ -53,13 +53,14 @@ bool flag_prev_log[2];
 bool mode_produksi_persiapan[2];
 uint8_t mb_sizeHoldingRegister = (sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0]) * 2) + sizeof(mb_int_date_time.words) / sizeof(mb_int_date_time.words[0]), mb_sizeCoil = 10 + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
 unsigned long timePrevOn[2], timePrevOff[2], timePrevIsConnectTCP;
-bool mode_prev[2];
+bool lastStates[] = {HIGH, HIGH};
+unsigned long debounceTimes[] = {0, 0};
 
 Bounce2::Button btn[2];
 Preferences prefs;
 EthernetServer server(502);
 EthernetClient client;
-nmbs_t nmbsTCP; nmbs_error errTCP;
+nmbs_t nmbsTCP, nmbsRTU; nmbs_error errTCP, errRTU;
 #define UNUSED_PARAM(x) ((void)(x))
 hw_timer_t *timer0 = NULL, *timer1 = NULL;
 portMUX_TYPE synch0 = portMUX_INITIALIZER_UNLOCKED, synch1 = portMUX_INITIALIZER_UNLOCKED;
@@ -81,6 +82,9 @@ void btnUpdate(uint8_t index);
 int32_t read_ethernet(uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg);
 int32_t write_ethernet(const uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg);
 void mbTCPpoll();
+int32_t read_serial2(uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg);
+int32_t write_serial2(const uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg);
+void mbRTUpoll();
 nmbs_error handle_read_discrete_inputs(uint16_t address, uint16_t quantity, uint8_t *inputs_out, uint8_t unit_id, void *arg);
 nmbs_error handle_read_coils(uint16_t address, uint16_t quantity, nmbs_bitfield coils_out, uint8_t unit_id, void *arg);
 nmbs_error hadle_write_single_coils(uint16_t address, bool value, uint8_t unit_id, void *arg);
@@ -92,17 +96,21 @@ void set_mb_flag(uint8_t index_flag, uint8_t index_start, uint8_t index_stop);
 
 void setup() {
   //nvs_flash_erase(); nvs_flash_init(); while(true); //erase the NVS partition
-  Serial.begin(9600);
+  Serial.begin(9600); while(!Serial) {}
+  Serial2.begin(9600); while(!Serial2) {}
   prefereces_partition1(true); vTaskDelay(1/portTICK_PERIOD_MS);
   prefereces_partition2(true); vTaskDelay(1/portTICK_PERIOD_MS);
   prefereces_partition_date_time(true); vTaskDelay(1/portTICK_PERIOD_MS);
   mb_flagCoil[0] = mb_flagCoil[5] = mb_flagCoil[9] = mb_flagCoil[19] = true;
   IsConnectTCP_Prev = !IsConnectTCP;
   for (int i = 0; i < 8; i++){
-    pinMode(X[i], INPUT);
-    if(i < 6) { pinMode(Y[i], OUTPUT); digitalWrite(Y[i], HIGH); }
+    pinMode(X[i], (i < 2) ? INPUT_PULLUP : INPUT);
+    if(i < 6) { 
+      pinMode(Y[i], OUTPUT); digitalWrite(Y[i], HIGH);
+    }
     if(i < 2){
       btn[i].attach(X[i+2], INPUT); btn[i].interval(70); btn[i].setPressedState(HIGH);
+      pinMode(X[i], INPUT_PULLUP);
     }
   }
   esp_task_wdt_init(75, true); esp_task_wdt_add(NULL);
@@ -111,6 +119,11 @@ void setup() {
   Ethernet.init(5);
   Ethernet.begin(_mac, ip,dns_server,gateway,subnet);
   server.begin();
+  nmbs_platform_conf platform_confRTU;
+  platform_confRTU.transport = NMBS_TRANSPORT_RTU;
+  platform_confRTU.read = read_serial2;
+  platform_confRTU.write = write_serial2;
+  platform_confRTU.arg = NULL;    // We will set the arg (socket fd) later
   nmbs_platform_conf platform_confTCP;
   platform_confTCP.transport = NMBS_TRANSPORT_TCP;
   platform_confTCP.read = read_ethernet;
@@ -128,6 +141,10 @@ void setup() {
   if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus connection TCP - %s\n", nmbs_strerror(errTCP));
   nmbs_set_read_timeout(&nmbsTCP, 1000);
   nmbs_set_byte_timeout(&nmbsTCP, 1000);
+  errRTU = nmbs_server_create(&nmbsRTU, idFlow, &platform_confRTU, &callbacks);
+  if (errRTU != NMBS_ERROR_NONE) Serial.printf("Error on modbus connection RTU Server - %s\n", nmbs_strerror(errRTU));
+  nmbs_set_read_timeout(&nmbsRTU, 1000);
+  nmbs_set_byte_timeout(&nmbsRTU, 100);
   setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); // --> setTime(hr,min,sec,day,mnth,yr);
   timer0 = timerBegin(0, 80, true); timerAttachInterrupt(timer0, &onTimer1, true); timerAlarmWrite(timer0, 10000, true);
   timer1 = timerBegin(1, 80, true); timerAttachInterrupt(timer1, &onTimer2, true); timerAlarmWrite(timer1, 10000, true);
@@ -143,12 +160,27 @@ void loop() {
   btnUpdate(0); btnUpdate(1);
   if(IsConnectTCP && millis() - timePrevIsConnectTCP >= 5000) IsConnectTCP = false;
   mbTCPpoll();
+  mbRTUpoll();
   vTaskDelay(1/portTICK_PERIOD_MS); // Delay 1ms, adjust as needed
 }
 void btnUpdate(uint8_t index){
+  ///////// motor deteksi
+  bool state = digitalRead(X[index + 6]);
+  if (state != lastStates[index] && (millis() - debounceTimes[index] > 500)) {
+    debounceTimes[index] = millis();
+    lastStates[index] = state;
+    if(!lastStates[index] && digitalRead(X[index+4])){
+      flagCoil[index][0] = true;
+      flagCoil[index][4] = true;
+    }else if(lastStates[index] && digitalRead(X[index+4])){
+      flagCoil[index][0] = false;
+      flagCoil[index][4] = true;  
+    }
+  }
+  /////////
  if(btn[index].update() && btn[index].pressed() || flagCoil[index][4]){
     if(flagCoil[index][4]) flagCoil[index][4] = false;
-    else if(!digitalRead(X[index+4]) && flagCoil[index][0]) return; // jika mode manual
+    else if(!digitalRead(X[index+4]) && flagCoil[index][0]) return; // jika mode auto
     else flagCoil[index][0] = !flagCoil[index][0];
     if(flagCoil[index][0] && digitalRead(Y[index * 2])){
       flagCoil[index][2] = true;
@@ -178,11 +210,13 @@ void btnUpdate(uint8_t index){
 }
 void eth_wiz_reset(uint8_t resetPin) { pinMode(resetPin, OUTPUT); digitalWrite(resetPin, HIGH); delay(250); digitalWrite(resetPin, LOW); delay(50); digitalWrite(resetPin, HIGH); delay(350); pinMode(resetPin, INPUT); }
 void InterruptPinChangeMode1(bool FlagInit){    
-  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[0]), plsFL1, FALLING); return; }
+  //if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[0]), plsFL1, FALLING); return; }
+  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[0]), plsFL1, RISING); return; }
   detachInterrupt(digitalPinToInterrupt(X[0]));
 }
 void InterruptPinChangeMode2(bool FlagInit){    
-  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[1]), plsFL2, FALLING); return; }
+  //if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[1]), plsFL2, FALLING); return; }
+  if(FlagInit){ attachInterrupt(digitalPinToInterrupt(X[1]), plsFL2, RISING); return; }
   detachInterrupt(digitalPinToInterrupt(X[1]));
 }
 float formulaLiter1(double &volume){
@@ -229,7 +263,7 @@ void calculate1(void *pvParameters) {
       double _Volume = _Flowrate / (60.0/_sec);
       mbFloat[0].values.Flowrate = _Flowrate;
       mbFloat[0].values.liter = formulaLiter1(_Volume);
-      
+      mbFloat[0].values.Freq = _freq;
     }
     vTaskDelay(1/portTICK_PERIOD_MS); // Delay 1ms, adjust as needed
   }
@@ -252,7 +286,7 @@ void calculate2(void *pvParameters) {
       double _Volume = _Flowrate / (60.0/_sec);
       mbFloat[1].values.Flowrate = _Flowrate;
       mbFloat[1].values.liter = formulaLiter2(_Volume);
-      
+      mbFloat[1].values.Freq = _freq;
     }
     vTaskDelay(1/portTICK_PERIOD_MS); // Delay 1ms, adjust as needed
   }
@@ -335,6 +369,19 @@ void mbTCPpoll(){
     }
   }else client.stop();
 }
+int32_t read_serial2(uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg) {
+  Serial2.setTimeout(byte_timeout_ms); return Serial2.readBytes(buf, count);
+}
+int32_t write_serial2(const uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg) {
+  Serial2.setTimeout(byte_timeout_ms); return Serial2.write(buf, count);
+}
+void mbRTUpoll(){
+  if(Serial2.available() > 0) {
+    errRTU = nmbs_server_poll(&nmbsRTU);
+    if (errTCP != NMBS_ERROR_NONE) Serial.printf("Error on modbus RTU - %s\n", nmbs_strerror(errTCP));
+    else Serial2.flush();
+  }
+}
 nmbs_error handle_read_discrete_inputs(uint16_t address, uint16_t quantity, uint8_t *inputs_out, uint8_t unit_id, void *arg){
     UNUSED_PARAM(arg); UNUSED_PARAM(unit_id);
     if (address + quantity > 6) return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
@@ -397,7 +444,7 @@ nmbs_error handle_write_multiple_coils(uint16_t address, uint16_t quantity, cons
         flagCoil[0][index - 6] = nmbs_bitfield_read(coils, i);
         if(index == 6){
           if(!digitalRead(X[4]) && !digitalRead(Y[0])){
-            if(!flagCoil[0][0]) flagCoil[0][0] = !flagCoil[0][0];
+            if(!flagCoil[0][0]) flagCoil[0][0] = !flagCoil[0][0]; //MANUAL
           }else flagCoil[0][4] = true;
         }
       }
@@ -405,7 +452,7 @@ nmbs_error handle_write_multiple_coils(uint16_t address, uint16_t quantity, cons
         flagCoil[1][index - 8] = nmbs_bitfield_read(coils, i);
         if(index == 8){
           if(!digitalRead(X[5]) && !digitalRead(Y[2])){
-            if(!flagCoil[1][0]) flagCoil[1][0] = !flagCoil[1][0];
+            if(!flagCoil[1][0]) flagCoil[1][0] = !flagCoil[1][0]; //MANUAL
           }else flagCoil[1][4] = true;
         }
       }
@@ -424,18 +471,18 @@ nmbs_error handler_read_holding_registers(uint16_t address, uint16_t quantity, u
     if (address + quantity > mb_sizeHoldingRegister + 1)  return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     for (int i = 0; i < quantity; i++){
       uint8_t index = address + i;
-      if(index < 15) registers_out[i] = mbFloat[0].words[index];
-      else if(index >= 15 && index < 30) registers_out[i] = mbFloat[1].words[index - 15];
-      else if(index >= 30 && index < 37) registers_out[i] = mb_int_date_time.words[index - 30];
+      if(index < 17) registers_out[i] = mbFloat[0].words[index];
+      else if(index >= 17 && index < 32) registers_out[i] = mbFloat[1].words[index - 17];
+      else if(index >= 32 && index < 39) registers_out[i] = mb_int_date_time.words[index - 32];
     }
    return NMBS_ERROR_NONE;
 }
 nmbs_error handler_write_single_register(uint16_t address, uint16_t value, uint8_t unit_id, void *arg){
     UNUSED_PARAM(arg); UNUSED_PARAM(unit_id);
     if (address > mb_sizeHoldingRegister + 1)  return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
-    if(address < 15) {mbFloat[0].words[address] = value; prefereces_partition1(false);}
-    else if(address >= 15 && address < 30) {mbFloat[1].words[address - 15] = value; prefereces_partition2(false);}
-    else if(address >= 30 && address < 37) {mb_int_date_time.words[address - 30] = value; prefereces_partition_date_time(false); setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); }
+    if(address < 17) {mbFloat[0].words[address] = value; prefereces_partition1(false);}
+    else if(address >= 17 && address < 32) {mbFloat[1].words[address - 17] = value; prefereces_partition2(false);}
+    else if(address >= 32 && address < 39) {mb_int_date_time.words[address - 32] = value; prefereces_partition_date_time(false); setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); }
     return NMBS_ERROR_NONE;
 }
 nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, const uint16_t *registers, uint8_t unit_id, void *arg){
@@ -443,9 +490,9 @@ nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, 
     if (address + quantity > mb_sizeHoldingRegister + 1)  return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     for (int i = 0; i < quantity; i++){
       int8_t index = address + i;
-      if(index < 15) {mbFloat[0].words[index] = registers[i]; prefereces_partition1(false);}
-      else if(index >= 15 && index < 30) {mbFloat[1].words[index - 15] = registers[i]; prefereces_partition2(false);}
-      else if(index >= 30 && index < 37) {mb_int_date_time.words[index - 30] = registers[i]; prefereces_partition_date_time(false); setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); }
+      if(index < 17) {mbFloat[0].words[index] = registers[i]; prefereces_partition1(false);}
+      else if(index >= 17 && index < 32) {mbFloat[1].words[index - 17] = registers[i]; prefereces_partition2(false);}
+      else if(index >= 32 && index < 39) {mb_int_date_time.words[index - 32] = registers[i]; prefereces_partition_date_time(false); setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); }
     }
     return NMBS_ERROR_NONE;
 }
