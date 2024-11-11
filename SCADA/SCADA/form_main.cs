@@ -197,6 +197,12 @@ namespace SCADA
                 return defaultValue;
             }
         }
+        public bool GetOPCDataQuality(int clientHandle)
+        {
+            var matchingData = OPCData_1.FirstOrDefault(dataItem => dataItem.ClientHandle == clientHandle);
+            if (matchingData == null) return false;
+            return matchingData.Quality == "Good" ? true : false;
+        }
         private void timer_handle_opc_tag1_Tick(object sender, EventArgs e)
         {
             Dictionary<int, Action> tagMapping = new Dictionary<int, Action> // Dictionary untuk menyimpan informasi terkait indeks dan fungsi delegate yang sesuai
@@ -214,8 +220,7 @@ namespace SCADA
                 { 5, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.BtnGlgSet(uc_x_hmi.glgControl_hmi1, "set_on_off", GetOPCDataValue<bool>(5), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
                 { 6, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(6) && !GetOPCDataValue<bool>(1)) {
-                        if(!log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(38) ? "Auto" : "Manual", GetOPCDataValue<double>(42), GetOPCDataValue<double>(44), GetOPCDataValue<double>(41), flow_meter1.label_batch, flow_meter1.label_transfer))
-                            log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(38) ? "Auto" : "Manual", GetOPCDataValue<double>(42), GetOPCDataValue<double>(44), GetOPCDataValue<double>(41), flow_meter1.label_batch, flow_meter1.label_transfer);
+                        log_to_db(Properties.Settings.Default.fl1_header, GetOPCDataValue<bool>(38) ? "Auto" : "Manual", GetOPCDataValue<double>(42), GetOPCDataValue<double>(44), GetOPCDataValue<double>(41), flow_meter1.label_batch, flow_meter1.label_transfer);
                         OPCWriteAsync1(6, false);
                         OPCStatus1.IsLogData = true;
                     }
@@ -223,8 +228,7 @@ namespace SCADA
                 { 7, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.BtnGlgSet(uc_x_hmi.glgControl_hmi2, "set_on_off", GetOPCDataValue<bool>(7), "ON", "OFF", 0.0, 0.725475, 0.0, 0.945892, 0.0, 0.0); }) },
                 { 8, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(8) && !GetOPCDataValue<bool>(3)) {
-                        if(!log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(39) ? "Auto" : "Manual", GetOPCDataValue<double>(47), GetOPCDataValue<double>(49), GetOPCDataValue<double>(46), flow_meter2.label_batch, flow_meter2.label_transfer))
-                            log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(39) ? "Auto" : "Manual", GetOPCDataValue<double>(47), GetOPCDataValue<double>(49), GetOPCDataValue<double>(46), flow_meter2.label_batch, flow_meter2.label_transfer);
+                        log_to_db(Properties.Settings.Default.fl2_header, GetOPCDataValue<bool>(39) ? "Auto" : "Manual", GetOPCDataValue<double>(47), GetOPCDataValue<double>(49), GetOPCDataValue<double>(46), flow_meter2.label_batch, flow_meter2.label_transfer);
                         OPCWriteAsync1(8, false);
                         OPCStatus1.IsLogData = true;
                     }
@@ -264,7 +268,12 @@ namespace SCADA
 
                 { 38, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetSRsc(uc_x_hmi.glgControl_hmi1, "text_mode", GetOPCDataValue<bool>(38) ? "Auto" : "Manual"); }) },
                 { 39, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag2.SetSRsc(uc_x_hmi.glgControl_hmi2, "text_mode", GetOPCDataValue<bool>(39) ? "Auto" : "Manual"); }) },
-                { 40, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.label_header_hmi2.Image = uc_x_hmi.label_header_hmi1.Image = GetOPCDataValue<bool>(40) ? Properties.Resources.icons8_connect : Properties.Resources.icons8_disconnect; }) },
+                { 40, () => BeginInvoke((MethodInvoker)delegate {
+                    bool connection_ = GetOPCDataQuality(40);
+                    uc_x_hmi.label_header_hmi2.Image = uc_x_hmi.label_header_hmi1.Image =  connection_ ? Properties.Resources.icons8_connect : Properties.Resources.icons8_disconnect;
+                    uc_x_hmi.btn_icon_connect_fl1.Text = uc_x_hmi.btn_icon_connect_fl2.Text = connection_ ? "Connect" : "Disconnect";
+                    uc_x_hmi.btn_icon_connect_fl1.BackColor = uc_x_hmi.btn_icon_connect_fl2.BackColor = connection_ ? Color.Green : Color.Red;
+                }) },
 
                 { 41, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, "val_k-factor/Value", GetOPCDataValue<double>(41)); }) },
                 { 42, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag1.SetDRsc(uc_x_hmi.glgControl_hmi1, uc_x_hmi.glgSetTag1.TagMaps["val_setliter"], GetOPCDataValue<double>(42)); }) },
@@ -310,8 +319,7 @@ namespace SCADA
                 { 58, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.BtnGlgSet(uc_x_hmi.glgControl_hmi3, "set_on_off", GetOPCDataValue<bool>(58), "STOP PRODUKSI", "PRODUKSI", 0.945892, 0.0, 0.0, 0.0, 0.725475, 0.0); }) },
                 { 59, () => BeginInvoke((MethodInvoker)delegate {
                    if(GetOPCDataValue<bool>(59)) {
-                        if(!log_to_db2(flow_meter3.label_proses_mesin, flow_meter3.label_batch, flow_meter3.label_produk, flow_meter3.label_transfer, GetOPCDataValue<double>(77), GetOPCDataValue<double>(76)))
-                            log_to_db2(flow_meter3.label_proses_mesin, flow_meter3.label_batch, flow_meter3.label_produk, flow_meter3.label_transfer, GetOPCDataValue<double>(77), GetOPCDataValue<double>(76));
+                        log_to_db2(flow_meter3.label_proses_mesin, flow_meter3.label_batch, flow_meter3.label_produk, flow_meter3.label_transfer, GetOPCDataValue<double>(77), GetOPCDataValue<double>(76));
                         OPCWriteAsync1(59, false);
                         OPCStatus1.IsLogData = true;
                     }
@@ -320,8 +328,7 @@ namespace SCADA
                 { 61, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.BtnGlgSet(uc_x_hmi.glgControl_hmi4, "set_on_off", GetOPCDataValue<bool>(61), "STOP PRODUKSI", "PRODUKSI", 0.945892, 0.0, 0.0, 0.0, 0.725475, 0.0); }) },
                 { 62, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(62)) {
-                        if(!log_to_db2(flow_meter4.label_proses_mesin, flow_meter4.label_batch, flow_meter4.label_produk, flow_meter4.label_transfer, GetOPCDataValue<double>(80), GetOPCDataValue<double>(79)))
-                            log_to_db2(flow_meter4.label_proses_mesin, flow_meter4.label_batch, flow_meter4.label_produk, flow_meter4.label_transfer, GetOPCDataValue<double>(80), GetOPCDataValue<double>(79));
+                        log_to_db2(flow_meter4.label_proses_mesin, flow_meter4.label_batch, flow_meter4.label_produk, flow_meter4.label_transfer, GetOPCDataValue<double>(80), GetOPCDataValue<double>(79));
                         OPCWriteAsync1(62, false);
                         OPCStatus1.IsLogData = true;
                     }
@@ -339,7 +346,12 @@ namespace SCADA
                 { 72, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(72)){ uc_x_hmi.glgSetTag4.SetSRsc(uc_x_hmi.glgControl_hmi4, "proses_mesin/String", Properties.Settings.Default.fl4_label_pm2); flow_meter4.label_proses_mesin = Properties.Settings.Default.fl4_label_pm2; } }) },
                 { 73, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, uc_x_hmi.glgSetTag3.TagMaps["valve_pipe"], GetOPCDataValue<bool>(73)); }) },
                 { 74, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag4.SetDRsc(uc_x_hmi.glgControl_hmi4, uc_x_hmi.glgSetTag4.TagMaps["valve_pipe"], GetOPCDataValue<bool>(74)); }) },
-                { 75, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.label_header_hmi4.Image = uc_x_hmi.label_header_hmi3.Image = GetOPCDataValue<bool>(75) ? Properties.Resources.icons8_connect : Properties.Resources.icons8_disconnect; }) },
+                { 75, () => BeginInvoke((MethodInvoker)delegate {
+                    bool connection_ = GetOPCDataQuality(75);
+                    uc_x_hmi.label_header_hmi4.Image = uc_x_hmi.label_header_hmi3.Image = connection_ ? Properties.Resources.icons8_connect : Properties.Resources.icons8_disconnect;
+                    uc_x_hmi.btn_icon_connect_fl4.Text = uc_x_hmi.btn_icon_connect_fl3.Text = connection_ ? "Connect" : "Disconnect";
+                    uc_x_hmi.btn_icon_connect_fl4.BackColor = uc_x_hmi.btn_icon_connect_fl3.BackColor = connection_ ? Color.Green : Color.Red;
+                }) },
                 { 76, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_k-factor/Value", GetOPCDataValue<double>(76)); }) },
                 { 77, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_liter/Value", GetOPCDataValue<double>(77)); }) },
                 { 78, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag3.SetDRsc(uc_x_hmi.glgControl_hmi3, "val_lpm/Value", GetOPCDataValue<double>(78)); }) },
@@ -367,8 +379,7 @@ namespace SCADA
                 { 85, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.BtnGlgSet(uc_x_hmi.glgControl_hmi5, "set_on_off", GetOPCDataValue<bool>(85), "STOP PRODUKSI", "PRODUKSI", 0.945892, 0.0, 0.0, 0.0, 0.725475, 0.0); }) },
                 { 86, () => BeginInvoke((MethodInvoker)delegate {
                     if(GetOPCDataValue<bool>(86)) {
-                        if(!log_to_db2(flow_meter5.label_proses_mesin, flow_meter5.label_batch, flow_meter5.label_produk, flow_meter5.label_transfer, GetOPCDataValue<double>(95), GetOPCDataValue<double>(94)))
-                            log_to_db2(flow_meter5.label_proses_mesin, flow_meter5.label_batch, flow_meter5.label_produk, flow_meter5.label_transfer, GetOPCDataValue<double>(95), GetOPCDataValue<double>(94));
+                        log_to_db2(flow_meter5.label_proses_mesin, flow_meter5.label_batch, flow_meter5.label_produk, flow_meter5.label_transfer, GetOPCDataValue<double>(95), GetOPCDataValue<double>(94));
                         OPCWriteAsync1(86, false);
                         OPCStatus1.IsLogData = true;
                     }
@@ -379,7 +390,12 @@ namespace SCADA
                 { 90, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(90)){ uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "proses_mesin/String", Properties.Settings.Default.fl5_label_pm1); flow_meter5.label_proses_mesin = Properties.Settings.Default.fl5_label_pm1; } }) },
                 { 91, () => BeginInvoke((MethodInvoker)delegate { if(GetOPCDataValue<bool>(91)){ uc_x_hmi.glgSetTag5.SetSRsc(uc_x_hmi.glgControl_hmi5, "proses_mesin/String", Properties.Settings.Default.fl5_label_pm2); flow_meter5.label_proses_mesin = Properties.Settings.Default.fl5_label_pm2; } }) },
                 { 92, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, uc_x_hmi.glgSetTag5.TagMaps["valve_pipe"], GetOPCDataValue<bool>(92)); }) },
-                { 93, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.label_header_hmi5.Image = GetOPCDataValue<bool>(93) ? Properties.Resources.icons8_connect : Properties.Resources.icons8_disconnect; }) },
+                { 93, () => BeginInvoke((MethodInvoker)delegate {
+                    bool connection_ = GetOPCDataQuality(93);
+                    uc_x_hmi.label_header_hmi5.Image = connection_ ? Properties.Resources.icons8_connect : Properties.Resources.icons8_disconnect;
+                    uc_x_hmi.btn_icon_connect_fl5.Text =  connection_ ? "Connect" : "Disconnect";
+                    uc_x_hmi.btn_icon_connect_fl5.BackColor = connection_ ? Color.Green : Color.Red;
+                }) },
                 { 94, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, "val_k-factor/Value", GetOPCDataValue<double>(94)); }) },
                 { 95, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, "val_liter/Value", GetOPCDataValue<double>(95)); }) },
                 { 96, () => BeginInvoke((MethodInvoker)delegate { uc_x_hmi.glgSetTag5.SetDRsc(uc_x_hmi.glgControl_hmi5, "val_lpm/Value", GetOPCDataValue<double>(96)); }) },

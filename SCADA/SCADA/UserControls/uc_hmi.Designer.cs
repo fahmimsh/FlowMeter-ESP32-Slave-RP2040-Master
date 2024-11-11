@@ -29,6 +29,14 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -38,17 +46,17 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panels_hmi_tabel = new System.Windows.Forms.Panel();
             this.panel_datagridview = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.produk = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewDataLog_hmi_fl1_fl2 = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flow_meter = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -85,14 +93,11 @@
             this.panel_header_hmi4 = new System.Windows.Forms.Panel();
             this.label_header_hmi4 = new System.Windows.Forms.Label();
             this.panel_hmi_all = new System.Windows.Forms.TableLayoutPanel();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.produk = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btn_icon_connect_fl1 = new System.Windows.Forms.Button();
+            this.btn_icon_connect_fl2 = new System.Windows.Forms.Button();
+            this.btn_icon_connect_fl3 = new System.Windows.Forms.Button();
+            this.btn_icon_connect_fl4 = new System.Windows.Forms.Button();
+            this.btn_icon_connect_fl5 = new System.Windows.Forms.Button();
             this.panels_hmi_tabel.SuspendLayout();
             this.panel_datagridview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDataLog_hmi_fl3_fl4_fl5)).BeginInit();
@@ -178,6 +183,96 @@
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.Size = new System.Drawing.Size(617, 190);
             this.dataGridViewDataLog_hmi_fl3_fl4_fl5.TabIndex = 3;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "id";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewTextBoxColumn1.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Id";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "proses_mesin";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewTextBoxColumn3.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Proses Mesin";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.DataPropertyName = "transfer_to";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridViewTextBoxColumn8.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn8.HeaderText = "Transfer To";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "batch";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dataGridViewTextBoxColumn7.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn7.HeaderText = "Batch";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            // 
+            // produk
+            // 
+            this.produk.DataPropertyName = "produk";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.produk.DefaultCellStyle = dataGridViewCellStyle6;
+            this.produk.FillWeight = 50F;
+            this.produk.HeaderText = "Produk";
+            this.produk.Name = "produk";
+            this.produk.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "liter";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Format = "N2";
+            dataGridViewCellStyle7.NullValue = "0.00";
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle7;
+            this.dataGridViewTextBoxColumn5.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn5.HeaderText = "Liter";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "k_factor";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.NullValue = "0";
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dataGridViewTextBoxColumn6.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn6.HeaderText = "K-Factor";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "date_time";
+            dataGridViewCellStyle9.Format = "G";
+            dataGridViewCellStyle9.NullValue = null;
+            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle9;
+            this.dataGridViewTextBoxColumn9.FillWeight = 80F;
+            this.dataGridViewTextBoxColumn9.HeaderText = "Date Time";
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
             // 
             // dataGridViewDataLog_hmi_fl1_fl2
             // 
@@ -367,6 +462,7 @@
             // panel_header_hmi1
             // 
             this.panel_header_hmi1.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel_header_hmi1.Controls.Add(this.btn_icon_connect_fl1);
             this.panel_header_hmi1.Controls.Add(this.label_header_hmi1);
             this.panel_header_hmi1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_header_hmi1.Location = new System.Drawing.Point(0, 0);
@@ -383,6 +479,7 @@
             this.label_header_hmi1.Image = global::SCADA.Properties.Resources.icons8_disconnect;
             this.label_header_hmi1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label_header_hmi1.Location = new System.Drawing.Point(3, 3);
+            this.label_header_hmi1.Margin = new System.Windows.Forms.Padding(0);
             this.label_header_hmi1.Name = "label_header_hmi1";
             this.label_header_hmi1.Size = new System.Drawing.Size(118, 18);
             this.label_header_hmi1.TabIndex = 0;
@@ -421,6 +518,7 @@
             // panel_header_hmi2
             // 
             this.panel_header_hmi2.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel_header_hmi2.Controls.Add(this.btn_icon_connect_fl2);
             this.panel_header_hmi2.Controls.Add(this.label_header_hmi2);
             this.panel_header_hmi2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_header_hmi2.Location = new System.Drawing.Point(0, 0);
@@ -542,6 +640,7 @@
             // panel_header_hmi3
             // 
             this.panel_header_hmi3.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel_header_hmi3.Controls.Add(this.btn_icon_connect_fl3);
             this.panel_header_hmi3.Controls.Add(this.label_header_hmi3);
             this.panel_header_hmi3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_header_hmi3.Location = new System.Drawing.Point(0, 0);
@@ -585,6 +684,7 @@
             // panel_header_hmi5
             // 
             this.panel_header_hmi5.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel_header_hmi5.Controls.Add(this.btn_icon_connect_fl5);
             this.panel_header_hmi5.Controls.Add(this.label_header_hmi5);
             this.panel_header_hmi5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_header_hmi5.Location = new System.Drawing.Point(0, 0);
@@ -628,6 +728,7 @@
             // panel_header_hmi4
             // 
             this.panel_header_hmi4.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel_header_hmi4.Controls.Add(this.btn_icon_connect_fl4);
             this.panel_header_hmi4.Controls.Add(this.label_header_hmi4);
             this.panel_header_hmi4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_header_hmi4.Location = new System.Drawing.Point(0, 0);
@@ -665,95 +766,65 @@
             this.panel_hmi_all.Size = new System.Drawing.Size(1243, 366);
             this.panel_hmi_all.TabIndex = 2;
             // 
-            // dataGridViewTextBoxColumn1
+            // btn_icon_connect_fl1
             // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "id";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewTextBoxColumn1.FillWeight = 25F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Id";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Visible = false;
+            this.btn_icon_connect_fl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_icon_connect_fl1.BackColor = System.Drawing.Color.Red;
+            this.btn_icon_connect_fl1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_icon_connect_fl1.Location = new System.Drawing.Point(227, 1);
+            this.btn_icon_connect_fl1.Name = "btn_icon_connect_fl1";
+            this.btn_icon_connect_fl1.Size = new System.Drawing.Size(74, 23);
+            this.btn_icon_connect_fl1.TabIndex = 1;
+            this.btn_icon_connect_fl1.Text = "Disconnect";
+            this.btn_icon_connect_fl1.UseVisualStyleBackColor = false;
             // 
-            // dataGridViewTextBoxColumn3
+            // btn_icon_connect_fl2
             // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "proses_mesin";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewTextBoxColumn3.FillWeight = 50F;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Proses Mesin";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.btn_icon_connect_fl2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_icon_connect_fl2.BackColor = System.Drawing.Color.Red;
+            this.btn_icon_connect_fl2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_icon_connect_fl2.Location = new System.Drawing.Point(227, 1);
+            this.btn_icon_connect_fl2.Name = "btn_icon_connect_fl2";
+            this.btn_icon_connect_fl2.Size = new System.Drawing.Size(74, 23);
+            this.btn_icon_connect_fl2.TabIndex = 2;
+            this.btn_icon_connect_fl2.Text = "Disconnect";
+            this.btn_icon_connect_fl2.UseVisualStyleBackColor = false;
             // 
-            // dataGridViewTextBoxColumn8
+            // btn_icon_connect_fl3
             // 
-            this.dataGridViewTextBoxColumn8.DataPropertyName = "transfer_to";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridViewTextBoxColumn8.FillWeight = 50F;
-            this.dataGridViewTextBoxColumn8.HeaderText = "Transfer To";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            this.btn_icon_connect_fl3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_icon_connect_fl3.BackColor = System.Drawing.Color.Red;
+            this.btn_icon_connect_fl3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_icon_connect_fl3.Location = new System.Drawing.Point(124, 1);
+            this.btn_icon_connect_fl3.Name = "btn_icon_connect_fl3";
+            this.btn_icon_connect_fl3.Size = new System.Drawing.Size(74, 23);
+            this.btn_icon_connect_fl3.TabIndex = 3;
+            this.btn_icon_connect_fl3.Text = "Disconnect";
+            this.btn_icon_connect_fl3.UseVisualStyleBackColor = false;
             // 
-            // dataGridViewTextBoxColumn7
+            // btn_icon_connect_fl4
             // 
-            this.dataGridViewTextBoxColumn7.DataPropertyName = "batch";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridViewTextBoxColumn7.FillWeight = 50F;
-            this.dataGridViewTextBoxColumn7.HeaderText = "Batch";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            this.btn_icon_connect_fl4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_icon_connect_fl4.BackColor = System.Drawing.Color.Red;
+            this.btn_icon_connect_fl4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_icon_connect_fl4.Location = new System.Drawing.Point(124, 1);
+            this.btn_icon_connect_fl4.Name = "btn_icon_connect_fl4";
+            this.btn_icon_connect_fl4.Size = new System.Drawing.Size(74, 23);
+            this.btn_icon_connect_fl4.TabIndex = 4;
+            this.btn_icon_connect_fl4.Text = "Disconnect";
+            this.btn_icon_connect_fl4.UseVisualStyleBackColor = false;
             // 
-            // produk
+            // btn_icon_connect_fl5
             // 
-            this.produk.DataPropertyName = "produk";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.produk.DefaultCellStyle = dataGridViewCellStyle6;
-            this.produk.FillWeight = 50F;
-            this.produk.HeaderText = "Produk";
-            this.produk.Name = "produk";
-            this.produk.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "liter";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = "0.00";
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dataGridViewTextBoxColumn5.FillWeight = 50F;
-            this.dataGridViewTextBoxColumn5.HeaderText = "Liter";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "k_factor";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.NullValue = "0";
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridViewTextBoxColumn6.FillWeight = 50F;
-            this.dataGridViewTextBoxColumn6.HeaderText = "K-Factor";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "date_time";
-            dataGridViewCellStyle9.Format = "G";
-            dataGridViewCellStyle9.NullValue = null;
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridViewTextBoxColumn9.FillWeight = 80F;
-            this.dataGridViewTextBoxColumn9.HeaderText = "Date Time";
-            this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.btn_icon_connect_fl5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_icon_connect_fl5.BackColor = System.Drawing.Color.Red;
+            this.btn_icon_connect_fl5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_icon_connect_fl5.Location = new System.Drawing.Point(125, 1);
+            this.btn_icon_connect_fl5.Name = "btn_icon_connect_fl5";
+            this.btn_icon_connect_fl5.Size = new System.Drawing.Size(74, 23);
+            this.btn_icon_connect_fl5.TabIndex = 5;
+            this.btn_icon_connect_fl5.Text = "Disconnect";
+            this.btn_icon_connect_fl5.UseVisualStyleBackColor = false;
             // 
             // uc_hmi
             // 
@@ -842,5 +913,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        internal System.Windows.Forms.Button btn_icon_connect_fl1;
+        internal System.Windows.Forms.Button btn_icon_connect_fl2;
+        internal System.Windows.Forms.Button btn_icon_connect_fl3;
+        internal System.Windows.Forms.Button btn_icon_connect_fl5;
+        internal System.Windows.Forms.Button btn_icon_connect_fl4;
     }
 }

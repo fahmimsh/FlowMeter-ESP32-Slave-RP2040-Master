@@ -10,8 +10,8 @@
 #include <nanomodbus.h>
 #define UNUSED_PARAM(x) ((void)(x))
 
-//uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 120);
-uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 121);
+//uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 120); int mac_id = 0;
+uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 121); int mac_id = 1;
 IPAddress gateway(192, 168, 1, 1), dns_server(192, 168, 110, 201), subnet(255,255,255,0);
 #define STACK_SIZE 200
 pin_size_t X[6] = {12, 13, 14, 15, 21, 22};
@@ -76,7 +76,7 @@ void setup() {
   platform_confClient.write = write_serial1;
   Ethernet.init(17);
   byte mac[][6] = {{0x30, 0xC6, 0xF7, 0x2F, 0x58, 0xB4}, {0xC0, 0x49, 0xEF, 0xF9, 0xAD, 0x10}, {0x58, 0xBF, 0x25, 0x18, 0xBA, 0x88}};
-  Ethernet.begin(mac[idFlow], ip,dns_server,gateway,subnet);
+  Ethernet.begin(mac[mac_id], ip,dns_server,gateway,subnet);
   server.begin();
   nmbs_platform_conf platform_confTCP;
   platform_confTCP.transport = NMBS_TRANSPORT_TCP;
