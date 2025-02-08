@@ -10,7 +10,6 @@
 #include <Preferences.h>
 #include <nvs_flash.h>
 #include <time.h>
-#include <TimeLib.h>
 
 uint8_t idFlow = 1; IPAddress ip(192, 168, 1, 104);
 IPAddress gateway(192, 168, 1, 1), dns_server(192, 168, 110, 201), subnet(255,255,255,0);
@@ -35,23 +34,13 @@ union mbFloatInt {
   uint16_t words[16];
 };
 mbFloatInt mbFloat[2];
-union mb_Int_Date_Time {
-  struct {
-    uint16_t day; //17
-    uint16_t month; //18
-    uint16_t year; //19
-    uint16_t hour; //20
-    uint16_t minute; //21
-    uint16_t second; //22
-  } values;
-  uint16_t words[7];
-};
-mb_Int_Date_Time mb_int_date_time;
 /* OnOffFlow, FlagLog, flagOn, flagOff, flagEventOnOff, flagOffPrev, flagPrintserial */
 bool flagCoil[2][7], mb_flagCoil[29], IsConnectTCP, IsConnectTCP_Prev;
 bool flag_prev_log[2];
 bool mode_produksi_persiapan[2];
-uint8_t mb_sizeHoldingRegister = (sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0]) * 2) + sizeof(mb_int_date_time.words) / sizeof(mb_int_date_time.words[0]), mb_sizeCoil = 10 + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
+uint8_t mb_sizeHoldingRegister = (sizeof(mbFloat[0].words) / sizeof(mbFloat[0].words[0]) * 2) + 10;
+uint8_t mb_sizeCoil = 10 + (sizeof(mb_flagCoil) / sizeof(mb_flagCoil[0]));
+uint16_t batch1 = 1, batch2 = 1, product1, product2, statusSavePengurangan1, statusSavePengurangan2, filling1, filling2;
 unsigned long timePrevOn[2], timePrevOff[2], timePrevIsConnectTCP;
 bool lastStates[] = {HIGH, HIGH};
 unsigned long debounceTimes[] = {0, 0};
@@ -77,7 +66,6 @@ void calculate2(void *pvParameters);
 void eth_wiz_reset(uint8_t resetPin);
 void prefereces_partition1(bool ReadOrWrite);
 void prefereces_partition2(bool ReadOrWrite);
-void prefereces_partition_date_time(bool ReadOrWrite);
 void btnUpdate(uint8_t index);
 int32_t read_ethernet(uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg);
 int32_t write_ethernet(const uint8_t* buf, uint16_t count, int32_t byte_timeout_ms, void* arg);
@@ -100,8 +88,6 @@ void setup() {
   Serial2.begin(9600); while(!Serial2) {}
   prefereces_partition1(true); vTaskDelay(1/portTICK_PERIOD_MS);
   prefereces_partition2(true); vTaskDelay(1/portTICK_PERIOD_MS);
-  prefereces_partition_date_time(true); vTaskDelay(1/portTICK_PERIOD_MS);
-  mb_flagCoil[0] = mb_flagCoil[5] = mb_flagCoil[9] = mb_flagCoil[19] = true;
   IsConnectTCP_Prev = !IsConnectTCP;
   for (int i = 0; i < 8; i++){
     pinMode(X[i], (i < 2) ? INPUT_PULLUP : INPUT);
@@ -145,7 +131,6 @@ void setup() {
   if (errRTU != NMBS_ERROR_NONE) Serial.printf("Error on modbus connection RTU Server - %s\n", nmbs_strerror(errRTU));
   nmbs_set_read_timeout(&nmbsRTU, 1000);
   nmbs_set_byte_timeout(&nmbsRTU, 100);
-  setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); // --> setTime(hr,min,sec,day,mnth,yr);
   timer0 = timerBegin(0, 80, true); timerAttachInterrupt(timer0, &onTimer1, true); timerAlarmWrite(timer0, 10000, true);
   timer1 = timerBegin(1, 80, true); timerAttachInterrupt(timer1, &onTimer2, true); timerAlarmWrite(timer1, 10000, true);
   timerAlarmEnable(timer0); timerAlarmEnable(timer1);
@@ -333,25 +318,6 @@ void prefereces_partition2(bool ReadOrWrite){
   }
   prefs.end();
 }
-void prefereces_partition_date_time(bool ReadOrWrite){
-  prefs.begin("file-app", false);
-  if(ReadOrWrite){
-    mb_int_date_time.values.day = prefs.getUInt("hari", 1);
-    mb_int_date_time.values.month = prefs.getUInt("bulan", 1);
-    mb_int_date_time.values.year = prefs.getUInt("tahun", 2024);
-    mb_int_date_time.values.hour = prefs.getUInt("jam", 0);
-    mb_int_date_time.values.minute = prefs.getUInt("menit", 0);
-    mb_int_date_time.values.second = prefs.getUInt("detik", 0);
-  }else{
-    prefs.putUInt("hari", mb_int_date_time.values.day);
-    prefs.putUInt("bulan", mb_int_date_time.values.month);
-    prefs.putUInt("tahun", mb_int_date_time.values.year);
-    prefs.putUInt("jam", mb_int_date_time.values.hour);
-    prefs.putUInt("menit", mb_int_date_time.values.minute);
-    prefs.putUInt("detik", mb_int_date_time.values.second);
-  }
-  prefs.end();
-}
 int32_t read_ethernet(uint8_t* buf, uint16_t count, int32_t timeout_ms, void* arg) {
   client.setTimeout(timeout_ms); return client.readBytes(buf, count);
 }
@@ -384,7 +350,7 @@ void mbRTUpoll(){
 }
 nmbs_error handle_read_discrete_inputs(uint16_t address, uint16_t quantity, uint8_t *inputs_out, uint8_t unit_id, void *arg){
     UNUSED_PARAM(arg); UNUSED_PARAM(unit_id);
-    if (address + quantity > 6) return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
+    if (address + quantity > 16) return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     for (int i = 0; i < quantity; i++) {
         uint8_t index = address + i;
         if(index < 4) nmbs_bitfield_write(inputs_out, i, !digitalRead(X[index + 4]));
@@ -472,8 +438,15 @@ nmbs_error handler_read_holding_registers(uint16_t address, uint16_t quantity, u
     for (int i = 0; i < quantity; i++){
       uint8_t index = address + i;
       if(index < 17) registers_out[i] = mbFloat[0].words[index];
-      else if(index >= 17 && index < 32) registers_out[i] = mbFloat[1].words[index - 17];
-      else if(index >= 32 && index < 39) registers_out[i] = mb_int_date_time.words[index - 32];
+      else if(index >= 17 && index < 34) registers_out[i] = mbFloat[1].words[index - 17];
+      else if(index == 34) registers_out[i] = batch1;
+      else if(index == 35) registers_out[i] = batch2;
+      else if(index == 36) registers_out[i] = product1;
+      else if(index == 37) registers_out[i] = product2;
+      else if(index == 38) registers_out[i] = statusSavePengurangan1;
+      else if(index == 39) registers_out[i] = statusSavePengurangan2;
+      else if(index == 40) registers_out[i] = filling1;
+      else if(index == 41) registers_out[i] = filling2;
     }
    return NMBS_ERROR_NONE;
 }
@@ -481,8 +454,15 @@ nmbs_error handler_write_single_register(uint16_t address, uint16_t value, uint8
     UNUSED_PARAM(arg); UNUSED_PARAM(unit_id);
     if (address > mb_sizeHoldingRegister + 1)  return NMBS_EXCEPTION_ILLEGAL_DATA_ADDRESS;
     if(address < 17) {mbFloat[0].words[address] = value; prefereces_partition1(false);}
-    else if(address >= 17 && address < 32) {mbFloat[1].words[address - 17] = value; prefereces_partition2(false);}
-    else if(address >= 32 && address < 39) {mb_int_date_time.words[address - 32] = value; prefereces_partition_date_time(false); setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); }
+    else if(address >= 17 && address < 34) {mbFloat[1].words[address - 17] = value; prefereces_partition2(false);}
+    else if(address == 34) batch1 = value;
+    else if(address == 35) batch2 = value;
+    else if(address == 36) product1 = value;
+    else if(address == 37) product2 = value;
+    else if(address == 38) statusSavePengurangan1 = value;
+    else if(address == 39) statusSavePengurangan2 = value;
+    else if(address == 40) filling1 = value;
+    else if(address == 41) filling2 = value;
     return NMBS_ERROR_NONE;
 }
 nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, const uint16_t *registers, uint8_t unit_id, void *arg){
@@ -491,8 +471,15 @@ nmbs_error handle_write_multiple_registers(uint16_t address, uint16_t quantity, 
     for (int i = 0; i < quantity; i++){
       int8_t index = address + i;
       if(index < 17) {mbFloat[0].words[index] = registers[i]; prefereces_partition1(false);}
-      else if(index >= 17 && index < 32) {mbFloat[1].words[index - 17] = registers[i]; prefereces_partition2(false);}
-      else if(index >= 32 && index < 39) {mb_int_date_time.words[index - 32] = registers[i]; prefereces_partition_date_time(false); setTime(mb_int_date_time.values.hour, mb_int_date_time.values.minute, mb_int_date_time.values.second, mb_int_date_time.values.day, mb_int_date_time.values.month, mb_int_date_time.values.year); }
+      else if(index >= 17 && index < 34) {mbFloat[1].words[index - 17] = registers[i]; prefereces_partition2(false);}
+      else if(index == 34) batch1 = registers[i];
+      else if(index == 35) batch2 = registers[i];
+      else if(index == 36) product1 = registers[i];
+      else if(index == 37) product2 = registers[i];
+      else if(index == 38) statusSavePengurangan1 = registers[i];
+      else if(index == 39) statusSavePengurangan2 = registers[i];
+      else if(index == 40) filling1 = registers[i];
+      else if(index == 41) filling2 = registers[i];
     }
     return NMBS_ERROR_NONE;
 }
